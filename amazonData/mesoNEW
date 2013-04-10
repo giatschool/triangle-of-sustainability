@@ -1,0 +1,13 @@
+@prefix xsd:     			<http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     			<http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:				<http://www.w3.org/2000/01/rdf-schema#> .
+@prefix br-meso:			<http://spatial.linkedscience.org/context/brazilian-mesoregion/> .
+@prefix foaf:				<http://xmlns.com/foaf/0.1/> .
+@prefix dbpedia:			<http://www.dbpedia.org/resource/> .
+
+br-meso:BRAZIL_MESO_REGION_1501 foaf:name "Baixo Amazonas"^^xsd:string ;  rdfs:label "BRAZILIAN MESO REGION BAIXO AMAZONAS"^^xsd:string ;  rdf:type dbpedia:Mesoregion .
+br-meso:BRAZIL_MESO_REGION_1502 foaf:name "Marajó "^^xsd:string ;  rdfs:label "BRAZILIAN MESO REGION MARAJÓ "^^xsd:string ;  rdf:type dbpedia:Mesoregion .
+br-meso:BRAZIL_MESO_REGION_1503 foaf:name "Metropolitana de Belém"^^xsd:string ;  rdfs:label "BRAZILIAN MESO REGION METROPOLITANA DE BELÉM"^^xsd:string ;  rdf:type dbpedia:Mesoregion .
+br-meso:BRAZIL_MESO_REGION_1504 foaf:name "Nordeste Paraense"^^xsd:string ;  rdfs:label "BRAZILIAN MESO REGION NORDESTE PARAENSE"^^xsd:string ;  rdf:type dbpedia:Mesoregion .
+br-meso:BRAZIL_MESO_REGION_1505 foaf:name "Sudoeste Paraense"^^xsd:string ;  rdfs:label "BRAZILIAN MESO REGION SUDOESTE PARAENSE"^^xsd:string ;  rdf:type dbpedia:Mesoregion .
+br-meso:BRAZIL_MESO_REGION_1506 foaf:name "Sudeste Paraense"^^xsd:string ;  rdfs:label "BRAZILIAN MESO REGION SUDESTE PARAENSE"^^xsd:string ;  rdf:type dbpedia:Mesoregion .

@@ -1,0 +1,294 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix amazon:  <http://spatial.linkedscience.org/context/amazon/> .
+@prefix lsv:     <http://linkedscience.org/lsv/ns#> .
+@prefix br-town:        <http://spatial.linkedscience.org/context/brazilian-town/> .
+
+
+br-town:BRAZIL_MUNICIPALITY_150010
+br-town:cattle_inventory_2005 "3791"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150013
+br-town:cattle_inventory_2005 "75080"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150020
+br-town:cattle_inventory_2005 "17636"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150030
+br-town:cattle_inventory_2005 "4380"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150034
+br-town:cattle_inventory_2005 "575520"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150040
+br-town:cattle_inventory_2005 "151468"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150050
+br-town:cattle_inventory_2005 "23278"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150060
+br-town:cattle_inventory_2005 "339517"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150070
+br-town:cattle_inventory_2005 "750"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150080
+br-town:cattle_inventory_2005 "315"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150085
+br-town:cattle_inventory_2005 "139260"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150090
+br-town:cattle_inventory_2005 "3153"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150095
+br-town:cattle_inventory_2005 "108465"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150100
+br-town:cattle_inventory_2005 "25604"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150110
+br-town:cattle_inventory_2005 "1650"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150120
+br-town:cattle_inventory_2005 "52468"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150125
+br-town:cattle_inventory_2005 "201557"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150130
+br-town:cattle_inventory_2005 "3547"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150140
+br-town:cattle_inventory_2005 "451"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150145
+br-town:cattle_inventory_2005 "17730"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150150
+br-town:cattle_inventory_2005 "2758"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150157
+br-town:cattle_inventory_2005 "185253"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150160
+br-town:cattle_inventory_2005 "9007"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150170
+br-town:cattle_inventory_2005 "25215"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150172
+br-town:cattle_inventory_2005 "263254"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150175
+br-town:cattle_inventory_2005 "146422"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150178
+br-town:cattle_inventory_2005 "126092"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150180
+br-town:cattle_inventory_2005 "2250"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150190
+br-town:cattle_inventory_2005 "8212"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150200
+br-town:cattle_inventory_2005 "49470"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150195
+br-town:cattle_inventory_2005 "16557"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150210
+br-town:cattle_inventory_2005 "2115"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150215
+br-town:cattle_inventory_2005 "269864"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150220
+br-town:cattle_inventory_2005 "30526"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150230
+br-town:cattle_inventory_2005 "72388"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150240
+br-town:cattle_inventory_2005 "37224"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150250
+br-town:cattle_inventory_2005 "76860"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150260
+br-town:cattle_inventory_2005 "400"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150270
+br-town:cattle_inventory_2005 "318060"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150275
+br-town:cattle_inventory_2005 "17515"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150276
+br-town:cattle_inventory_2005 "549673"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150277
+br-town:cattle_inventory_2005 "290159"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150280
+br-town:cattle_inventory_2005 "110"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150285
+br-town:cattle_inventory_2005 "18674"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150290
+br-town:cattle_inventory_2005 "1128"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150293
+br-town:cattle_inventory_2005 "142543"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150295
+br-town:cattle_inventory_2005 "303018"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150300
+br-town:cattle_inventory_2005 "7646"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150304
+br-town:cattle_inventory_2005 "193822"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150307
+br-town:cattle_inventory_2005 "40376"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150309
+br-town:cattle_inventory_2005 "264437"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150310
+br-town:cattle_inventory_2005 "4152"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150320
+br-town:cattle_inventory_2005 "18229"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150330
+br-town:cattle_inventory_2005 "1761"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150340
+br-town:cattle_inventory_2005 "17035"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150345
+br-town:cattle_inventory_2005 "110001"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150350
+br-town:cattle_inventory_2005 "71290"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150360
+br-town:cattle_inventory_2005 "243759"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150370
+br-town:cattle_inventory_2005 "328838"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150375
+br-town:cattle_inventory_2005 "6802"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150380
+br-town:cattle_inventory_2005 "229775"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150390
+br-town:cattle_inventory_2005 "32000"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150400
+br-town:cattle_inventory_2005 "10"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150405
+br-town:cattle_inventory_2005 "70732"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150410
+br-town:cattle_inventory_2005 "770"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150420
+br-town:cattle_inventory_2005 "759651"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150430
+br-town:cattle_inventory_2005 "3472"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150440
+br-town:cattle_inventory_2005 "4060"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150442
+br-town:cattle_inventory_2005 "920"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150445
+br-town:cattle_inventory_2005 "137864"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150450
+br-town:cattle_inventory_2005 "1478"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150460
+br-town:cattle_inventory_2005 "9091"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150470
+br-town:cattle_inventory_2005 "53770"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150480
+br-town:cattle_inventory_2005 "177451"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150490
+br-town:cattle_inventory_2005 "13935"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150495
+br-town:cattle_inventory_2005 "18865"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150497
+br-town:cattle_inventory_2005 "125138"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150500
+br-town:cattle_inventory_2005 "11310"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150503
+br-town:cattle_inventory_2005 "463784"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150506
+br-town:cattle_inventory_2005 "451503"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150510
+br-town:cattle_inventory_2005 "128394"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150520
+br-town:cattle_inventory_2005 "1842"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150530
+br-town:cattle_inventory_2005 "131563"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150540
+br-town:cattle_inventory_2005 "15383"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150543
+br-town:cattle_inventory_2005 "216980"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150548
+br-town:cattle_inventory_2005 "313579"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150549
+br-town:cattle_inventory_2005 "67688"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150550
+br-town:cattle_inventory_2005 "448030"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150553
+br-town:cattle_inventory_2005 "284751"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150555
+br-town:cattle_inventory_2005 "146647"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150560
+br-town:cattle_inventory_2005 "14288"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150563
+br-town:cattle_inventory_2005 "281685"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150565
+br-town:cattle_inventory_2005 "74174"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150570
+br-town:cattle_inventory_2005 "39250"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150580
+br-town:cattle_inventory_2005 "12805"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150590
+br-town:cattle_inventory_2005 "20241"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150600
+br-town:cattle_inventory_2005 "95497"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150610
+br-town:cattle_inventory_2005 "3715"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150611
+br-town:cattle_inventory_2005 "1449"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150613
+br-town:cattle_inventory_2005 "376011"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150616
+br-town:cattle_inventory_2005 "303264"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150618
+br-town:cattle_inventory_2005 "360598"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150619
+br-town:cattle_inventory_2005 "105872"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150620
+br-town:cattle_inventory_2005 "222"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150630
+br-town:cattle_inventory_2005 "15504"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150635
+br-town:cattle_inventory_2005 "1137"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150640
+br-town:cattle_inventory_2005 "32946"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150650
+br-town:cattle_inventory_2005 "16894"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150655
+br-town:cattle_inventory_2005 "83039"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150658
+br-town:cattle_inventory_2005 "596981"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150660
+br-town:cattle_inventory_2005 "14300"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150670
+br-town:cattle_inventory_2005 "571606"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150680
+br-town:cattle_inventory_2005 "133218"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150690
+br-town:cattle_inventory_2005 "5102"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150700
+br-town:cattle_inventory_2005 "6500"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150710
+br-town:cattle_inventory_2005 "693"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150715
+br-town:cattle_inventory_2005 "180095"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150720
+br-town:cattle_inventory_2005 "21578"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150730
+br-town:cattle_inventory_2005 "1581518"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150740
+br-town:cattle_inventory_2005 "12635"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150745
+br-town:cattle_inventory_2005 "392648"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150746
+br-town:cattle_inventory_2005 "900"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150747
+br-town:cattle_inventory_2005 "3668"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150750
+br-town:cattle_inventory_2005 "56519"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150760
+br-town:cattle_inventory_2005 "42225"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150770
+br-town:cattle_inventory_2005 "377"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150775
+br-town:cattle_inventory_2005 "190417"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150780
+br-town:cattle_inventory_2005 "45432"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150790
+br-town:cattle_inventory_2005 "93197"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150795
+br-town:cattle_inventory_2005 "99584"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150796
+br-town:cattle_inventory_2005 "6930"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150797
+br-town:cattle_inventory_2005 "52000"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150800
+br-town:cattle_inventory_2005 "149572"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150803
+br-town:cattle_inventory_2005 "16207"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150805
+br-town:cattle_inventory_2005 "44053"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150808
+br-town:cattle_inventory_2005 "359975"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150810
+br-town:cattle_inventory_2005 "60752"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150812
+br-town:cattle_inventory_2005 "110360"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150815
+br-town:cattle_inventory_2005 "250739"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150820
+br-town:cattle_inventory_2005 "3750"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150830
+br-town:cattle_inventory_2005 "41981"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150835
+br-town:cattle_inventory_2005 "250002"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150840
+br-town:cattle_inventory_2005 "490613"^^xsd:integer .

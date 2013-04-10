@@ -1,0 +1,31 @@
+@prefix xsd:     			<http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     			<http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:				<http://www.w3.org/2000/01/rdf-schema#> .
+@prefix br-micro:			<http://spatial.linkedscience.org/context/brazilian-microregion/> .
+@prefix br-meso:			<http://spatial.linkedscience.org/context/brazilian-mesoregion/> .
+@prefix foaf:				<http://xmlns.com/foaf/0.1/> .
+@prefix spatial-rel:		<http://data.ordnancesurvey.co.uk/ontology/spatialrelations/> .
+@prefix dbpedia:			<http://www.dbpedia.org/resource/> .
+
+br-micro:BRAZIL_MICRO_REGION_15001 foaf:name "Óbidos"^^xsd:string ;  rdfs:label "BRAZILIAN MICRO REGION ÓBIDOS"^^xsd:string ;  rdf:type dbpedia:Microregion ;  spatial-rel:within br-meso:BRAZIL_MESO_REGION_1501 . 
+br-micro:BRAZIL_MICRO_REGION_15002 foaf:name "Santarém"^^xsd:string ;  rdfs:label "BRAZILIAN MICRO REGION SANTARÉM"^^xsd:string ;  rdf:type dbpedia:Microregion ;  spatial-rel:within br-meso:BRAZIL_MESO_REGION_1501 . 
+br-micro:BRAZIL_MICRO_REGION_15003 foaf:name "Almeirim"^^xsd:string ;  rdfs:label "BRAZILIAN MICRO REGION ALMEIRIM"^^xsd:string ;  rdf:type dbpedia:Microregion ;  spatial-rel:within br-meso:BRAZIL_MESO_REGION_1501 . 
+br-micro:BRAZIL_MICRO_REGION_15004 foaf:name "Portel"^^xsd:string ;  rdfs:label "BRAZILIAN MICRO REGION PORTEL"^^xsd:string ;  rdf:type dbpedia:Microregion ;  spatial-rel:within br-meso:BRAZIL_MESO_REGION_1502 . 
+br-micro:BRAZIL_MICRO_REGION_15005 foaf:name "Furos de Breves"^^xsd:string ;  rdfs:label "BRAZILIAN MICRO REGION FUROS DE BREVES"^^xsd:string ;  rdf:type dbpedia:Microregion ;  spatial-rel:within br-meso:BRAZIL_MESO_REGION_1502 . 
+br-micro:BRAZIL_MICRO_REGION_15006 foaf:name "Arari"^^xsd:string ;  rdfs:label "BRAZILIAN MICRO REGION ARARI"^^xsd:string ;  rdf:type dbpedia:Microregion ;  spatial-rel:within br-meso:BRAZIL_MESO_REGION_1502 . 
+br-micro:BRAZIL_MICRO_REGION_15007 foaf:name "Belém"^^xsd:string ;  rdfs:label "BRAZILIAN MICRO REGION BELÉM"^^xsd:string ;  rdf:type dbpedia:Microregion ;  spatial-rel:within br-meso:BRAZIL_MESO_REGION_1503 . 
+br-micro:BRAZIL_MICRO_REGION_15008 foaf:name "Castanhal"^^xsd:string ;  rdfs:label "BRAZILIAN MICRO REGION CASTANHAL"^^xsd:string ;  rdf:type dbpedia:Microregion ;  spatial-rel:within br-meso:BRAZIL_MESO_REGION_1503 . 
+br-micro:BRAZIL_MICRO_REGION_15009 foaf:name "Salgado"^^xsd:string ;  rdfs:label "BRAZILIAN MICRO REGION SALGADO"^^xsd:string ;  rdf:type dbpedia:Microregion ;  spatial-rel:within br-meso:BRAZIL_MESO_REGION_1504 . 
+br-micro:BRAZIL_MICRO_REGION_15010 foaf:name "Bragantina"^^xsd:string ;  rdfs:label "BRAZILIAN MICRO REGION BRAGANTINA"^^xsd:string ;  rdf:type dbpedia:Microregion ;  spatial-rel:within br-meso:BRAZIL_MESO_REGION_1504 . 
+br-micro:BRAZIL_MICRO_REGION_15011 foaf:name "Cametá "^^xsd:string ;  rdfs:label "BRAZILIAN MICRO REGION CAMETÁ "^^xsd:string ;  rdf:type dbpedia:Microregion ;  spatial-rel:within br-meso:BRAZIL_MESO_REGION_1504 . 
+br-micro:BRAZIL_MICRO_REGION_15012 foaf:name "Tomé-Açu"^^xsd:string ;  rdfs:label "BRAZILIAN MICRO REGION TOMÉ-AÇU"^^xsd:string ;  rdf:type dbpedia:Microregion ;  spatial-rel:within br-meso:BRAZIL_MESO_REGION_1504 . 
+br-micro:BRAZIL_MICRO_REGION_15013 foaf:name "Guamá "^^xsd:string ;  rdfs:label "BRAZILIAN MICRO REGION GUAMÁ "^^xsd:string ;  rdf:type dbpedia:Microregion ;  spatial-rel:within br-meso:BRAZIL_MESO_REGION_1504 . 
+br-micro:BRAZIL_MICRO_REGION_15014 foaf:name "Itaituba"^^xsd:string ;  rdfs:label "BRAZILIAN MICRO REGION ITAITUBA"^^xsd:string ;  rdf:type dbpedia:Microregion ;  spatial-rel:within br-meso:BRAZIL_MESO_REGION_1505 . 
+br-micro:BRAZIL_MICRO_REGION_15015 foaf:name "Altamira"^^xsd:string ;  rdfs:label "BRAZILIAN MICRO REGION ALTAMIRA"^^xsd:string ;  rdf:type dbpedia:Microregion ;  spatial-rel:within br-meso:BRAZIL_MESO_REGION_1505 . 
+br-micro:BRAZIL_MICRO_REGION_15016 foaf:name "Tucuruí "^^xsd:string ;  rdfs:label "BRAZILIAN MICRO REGION TUCURUÍ "^^xsd:string ;  rdf:type dbpedia:Microregion ;  spatial-rel:within br-meso:BRAZIL_MESO_REGION_1506 . 
+br-micro:BRAZIL_MICRO_REGION_15017 foaf:name "Paragominas"^^xsd:string ;  rdfs:label "BRAZILIAN MICRO REGION PARAGOMINAS"^^xsd:string ;  rdf:type dbpedia:Microregion ;  spatial-rel:within br-meso:BRAZIL_MESO_REGION_1506 . 
+br-micro:BRAZIL_MICRO_REGION_15018 foaf:name "São Félix do Xingu"^^xsd:string ;  rdfs:label "BRAZILIAN MICRO REGION SÃO FÉLIX DO XINGU"^^xsd:string ;  rdf:type dbpedia:Microregion ;  spatial-rel:within br-meso:BRAZIL_MESO_REGION_1506 . 
+br-micro:BRAZIL_MICRO_REGION_15019 foaf:name "Parauapebas"^^xsd:string ;  rdfs:label "BRAZILIAN MICRO REGION PARAUAPEBAS"^^xsd:string ;  rdf:type dbpedia:Microregion ;  spatial-rel:within br-meso:BRAZIL_MESO_REGION_1506 . 
+br-micro:BRAZIL_MICRO_REGION_15020 foaf:name "Marabá "^^xsd:string ;  rdfs:label "BRAZILIAN MICRO REGION MARABÁ "^^xsd:string ;  rdf:type dbpedia:Microregion ;  spatial-rel:within br-meso:BRAZIL_MESO_REGION_1506 . 
+br-micro:BRAZIL_MICRO_REGION_15021 foaf:name "Redenção"^^xsd:string ;  rdfs:label "BRAZILIAN MICRO REGION REDENÇÃO"^^xsd:string ;  rdf:type dbpedia:Microregion ;  spatial-rel:within br-meso:BRAZIL_MESO_REGION_1506 . 
+br-micro:BRAZIL_MICRO_REGION_15022 foaf:name "Conceição do Araguaia"^^xsd:string ;  rdfs:label "BRAZILIAN MICRO REGION CONCEIÇÃO DO ARAGUAIA"^^xsd:string ;  rdf:type dbpedia:Microregion ;  spatial-rel:within br-meso:BRAZIL_MESO_REGION_1506 . 

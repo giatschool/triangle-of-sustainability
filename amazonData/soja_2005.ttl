@@ -1,0 +1,293 @@
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix amazon:  <http://spatial.linkedscience.org/context/amazon/> .
+@prefix lsv:     <http://linkedscience.org/lsv/ns#> .
+@prefix br-town:        <http://spatial.linkedscience.org/context/brazilian-town/> .
+
+br-town:BRAZIL_MUNICIPALITY_150010
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150013
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150020
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150030
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150034
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150040
+br-town:soja_produced_2005 "907"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150050
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150060
+br-town:soja_produced_2005 "200"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150070
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150080
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150085
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150090
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150095
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150100
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150110
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150120
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150125
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150130
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150140
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150145
+br-town:soja_produced_2005 "21141"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150150
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150157
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150160
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150170
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150172
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150175
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150178
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150180
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150190
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150200
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150195
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150210
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150215
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150220
+br-town:soja_produced_2005 "360"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150230
+br-town:soja_produced_2005 "1560"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150240
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150250
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150260
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150270
+br-town:soja_produced_2005 "907"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150275
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150276
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150277
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150280
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150285
+br-town:soja_produced_2005 "480"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150290
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150293
+br-town:soja_produced_2005 "5280"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150295
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150300
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150304
+br-town:soja_produced_2005 "2143"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150307
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150309
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150310
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150320
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150330
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150340
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150345
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150350
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150360
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150370
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150375
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150380
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150390
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150400
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150405
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150410
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150420
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150430
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150440
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150442
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150445
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150450
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150460
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150470
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150480
+br-town:soja_produced_2005 "151"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150490
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150495
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150497
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150500
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150503
+br-town:soja_produced_2005 "256"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150506
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150510
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150520
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150530
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150540
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150543
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150548
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150549
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150550
+br-town:soja_produced_2005 "8703"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150553
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150555
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150560
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150563
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150565
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150570
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150580
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150590
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150600
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150610
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150611
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150613
+br-town:soja_produced_2005 "1005"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150616
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150618
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150619
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150620
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150630
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150635
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150640
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150650
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150655
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150658
+br-town:soja_produced_2005 "913"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150660
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150670
+br-town:soja_produced_2005 "12474"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150680
+br-town:soja_produced_2005 "36960"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150690
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150700
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150710
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150715
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150720
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150730
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150740
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150745
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150746
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150747
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150750
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150760
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150770
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150775
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150780
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150790
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150795
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150796
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150797
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150800
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150803
+br-town:soja_produced_2005 "540"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150805
+br-town:soja_produced_2005 "89"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150808
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150810
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150812
+br-town:soja_produced_2005 "9228"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150815
+br-town:soja_produced_2005 "294"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150820
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150830
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150835
+br-town:soja_produced_2005 "0"^^xsd:integer .
+br-town:BRAZIL_MUNICIPALITY_150840
+br-town:soja_produced_2005 "0"^^xsd:integer .
