@@ -2,7 +2,7 @@
 
 Parts of the code are taken from the Kinect Open Source Programming Secrets book from Dr. Andrew Davison (http://fivedots.coe.psu.ac.th/~ad/kinect/)
 
-
+Amazon Data is licensed under the Creative Commons Attribution-ShareAlike 3.0 Unported License. To view a copy of this license, visit http://creativecommons.org/licenses/by-sa/3.0/.
 
 NASA WORLD WIND is licensed under:
 
