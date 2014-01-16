@@ -13,7 +13,7 @@ For running this code you need:
 
 Even if you are running a 64 Bit OS, you should use the 32 Bit versions.
 
-Installation instructions:
+##Installation instructions:
 
 Don't plug in the Kinect yet!!!!!
 
