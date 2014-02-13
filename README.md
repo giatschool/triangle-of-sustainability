@@ -13,4 +13,14 @@ For running this code you need:
 
 Even if you are running a 64 Bit OS, you should use the 32 Bit versions.
 
-Installation Instructions coming soon.
+##Installation instructions:
+
+Don't plug in the Kinect yet!!!!!
+
+If you have the official Kinect SDK installed, uninstall all Kinect SDK things including all drivers.
+
+Then install in this order:
+* java
+* openni
+* SensorKinect driver
+* NITE
