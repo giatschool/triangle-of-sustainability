@@ -2,18 +2,48 @@ package kinect;
 
 //Skeletons.java
 //Andrew Davison, December 2011, ad@fivedots.psu.ac.th
-//heavily modified by Gerald Pape June 2012.
 
+/* Skeletons sets up four 'observers' (listeners) so that 
+ when a new user is detected in the scene, a standard pose for that 
+ user is detected, the user skeleton is calibrated in the pose, and then the
+ skeleton is tracked. The start of tracking adds a skeleton entry to userSkels.
+
+ Each call to update() updates the joint positions for each user's
+ skeleton.
+
+ Each call to draw() draws each user's skeleton, with a rotated HEAD_FNM
+ image for their head, and status text at the body's center-of-mass.
+
+
+ ========== Changes (December 2011) ================
+
+ Added SkeletonsGestures and GestureSequences gesture detector objects.
+ SkeletonsGestures looks for the starting and stopping of basic gestures 
+ in a user's skeleton, and notifies a watcher (TrackerPanel in this code).
+
+ GestureSequences stores the sequence of a user's gestures so that more
+ sub-sequences of gestures, making up higher-level gestures, can
+ be detected, and reported to the watcher.
+
+ CalibrationCompleteObserver and LostUserObserver have been modified to add and
+ remove users to the detectors.
+ */
 
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import javax.imageio.ImageIO;
 
 import org.OpenNI.CalibrationProgressEventArgs;
 import org.OpenNI.CalibrationProgressStatus;
 import org.OpenNI.DepthGenerator;
+import org.OpenNI.FieldOfView;
 import org.OpenNI.IObservable;
 import org.OpenNI.IObserver;
 import org.OpenNI.Point3D;
@@ -29,12 +59,17 @@ import org.OpenNI.UserGenerator;
 
 public class Skeletons {
 
+	private static final String HEAD_FNM = "images/gorilla.png";
+
+	private BufferedImage headImage;
+
 	private static final int MAX_POINTS = 4;
 
 	// used to color a user's limbs so they're different from the user's body
 	// color
 	private Color USER_COLORS[] = { Color.RED, Color.BLUE, Color.CYAN,
 			Color.GREEN, Color.MAGENTA, Color.PINK, Color.YELLOW, Color.WHITE };
+	// same user colors as in TrackersPanel
 
 	// OpenNI
 	private UserGenerator userGen;
@@ -57,6 +92,19 @@ public class Skeletons {
 	private Point3D leftShoulder;
 	private Point3D rightShoulder;
 
+	private float rightArmLength = 10000f;
+	private float leftArmLength = 10000f;;
+
+	public boolean user1 = false;
+	public boolean userE = false;
+	public boolean userL = false;
+	/*
+	 * userSkels maps user IDs --> a joints map (i.e. a skeleton) skeleton maps
+	 * joints --> positions (was positions + orientations)
+	 */
+
+	// gesture detectors (NEW)
+	private GestureSequences gestSeqs;
 	private SkeletonsGestures skelsGests;
 
 	public Skeletons(UserGenerator userGen, DepthGenerator depthGen,
@@ -64,23 +112,42 @@ public class Skeletons {
 		this.userGen = userGen;
 		this.depthGen = depthGen;
 
+		headImage = loadImage(HEAD_FNM);
+
 		configure();
 		userSkels = new HashMap<Integer, HashMap<SkeletonJoint, SkeletonJointPosition>>();
 
-		skelsGests = new SkeletonsGestures(watcher, userSkels);
+		// create the two gesture detectors, and tell them who to notify (NEW)
+		gestSeqs = new GestureSequences(watcher);
+		skelsGests = new SkeletonsGestures(watcher, userSkels, gestSeqs);
 
 		leftHandCoords = new ArrayList<Point3D>(MAX_POINTS);
 		rightHandCoords = new ArrayList<Point3D>(MAX_POINTS);
 		headPoint = new Point3D();
 		leftShoulder = new Point3D();
 		rightShoulder = new Point3D();
+	} // end of Skeletons()
+
+	private BufferedImage loadImage(String fnm)
+	// load the image from fnm
+	{
+		BufferedImage im = null;
+		try {
+			im = ImageIO.read(new File(fnm));
+			System.out.println("Loaded image from " + fnm);
+		} catch (Exception e) {
+			System.out.println("Unable to load image from " + fnm);
+		}
+
+		return im;
 	}
 
+	private void configure()
 	/*
 	 * create pose and skeleton detection capabilities for the user generator,
 	 * and set up observers (listeners)
 	 */
-	private void configure() {
+	{
 		try {
 			// setup UserGenerator pose and skeleton detection capabilities;
 			// should really check these using
@@ -91,33 +158,44 @@ public class Skeletons {
 			calibPoseName = skelCap.getSkeletonCalibrationPose(); // the 'psi'
 																	// pose
 			skelCap.setSkeletonProfile(SkeletonProfile.ALL);
+			// other possible values: UPPER_BODY, LOWER_BODY, HEAD_HANDS
 
 			skelCap.setSmoothing(0.2f);
 
 			// set up four observers
-			userGen.getNewUserEvent().addObserver(new NewUserObserver()); // new
-																			// user
-																			// found
+			if (user1 == false) { 
+				userGen.getNewUserEvent().addObserver(new NewUserObserver()); // new
+																				// user
+																				// found
+//				userGen.getLostUserEvent().addObserver(new LostUserObserver()); // lost
+																				// a
+																				// user
 
-			userGen.getUserExitEvent().addObserver(new UserExitObserver());
+				userGen.getUserExitEvent().addObserver(new UserExitObserver());
 
-			// for when a pose is detected
-			poseDetectionCap.getPoseDetectedEvent().addObserver(
-					new PoseDetectedObserver());
+				poseDetectionCap.getPoseDetectedEvent().addObserver(
+						new PoseDetectedObserver());
+				// for when a pose is detected
 
-			skelCap.getCalibrationCompleteEvent().addObserver(
-					new CalibrationCompleteObserver());
-
+				skelCap.getCalibrationCompleteEvent().addObserver(
+						new CalibrationCompleteObserver());
+			} 
 		} catch (Exception e) {
 			System.out.println(e);
 			System.exit(1);
 		}
-	}
+	} // end of configure()
 
 	// --------------- updating ----------------------------
 
+	public void update()
 	// update skeleton of each user
-	public void update() {
+	{
+		if (userE == false && userL == false)
+			user1 = false;
+		System.out.println("User1: " + user1);
+		System.out.println("UserE: " + userE);
+		System.out.println("UserL: " + userL);
 		try {
 			int[] userIDs = userGen.getUsers(); // there may be many users in
 												// the scene
@@ -142,6 +220,8 @@ public class Skeletons {
 					rightShoulder = getJointPos(userSkels.get(userID),
 							SkeletonJoint.RIGHT_SHOULDER);
 
+					// gesture start/finish
+					gestSeqs.checkSeqs(userID); // NEW
 					skelsGests.checkGests(userID);
 					skelReady = true;
 				}
@@ -150,10 +230,11 @@ public class Skeletons {
 		} catch (StatusException e) {
 			System.out.println(e);
 		}
-	}
+	} // end of update()
 
+	private void updateJoints(int userID)
 	// update all the joints for this userID in userSkels
-	private void updateJoints(int userID) {
+	{
 		HashMap<SkeletonJoint, SkeletonJointPosition> skel = userSkels
 				.get(userID);
 
@@ -177,15 +258,17 @@ public class Skeletons {
 		updateJoint(skel, userID, SkeletonJoint.RIGHT_HIP);
 		updateJoint(skel, userID, SkeletonJoint.RIGHT_KNEE);
 		updateJoint(skel, userID, SkeletonJoint.RIGHT_FOOT);
-	}
+		// computeArmLength(userID);
+	} // end of updateJoints()
 
+	private void updateJoint(
+			HashMap<SkeletonJoint, SkeletonJointPosition> skel, int userID,
+			SkeletonJoint joint)
 	/*
 	 * update the position of the specified user's joint by looking at the
 	 * skeleton capability
 	 */
-	private void updateJoint(
-			HashMap<SkeletonJoint, SkeletonJointPosition> skel, int userID,
-			SkeletonJoint joint) {
+	{
 		try {
 			// report unavailable joints (should not happen)
 			if (!skelCap.isJointAvailable(joint)
@@ -213,7 +296,7 @@ public class Skeletons {
 		} catch (StatusException e) {
 			System.out.println(e);
 		}
-	}
+	} // end of updateJoint()
 
 	public synchronized void addLeftHandPoint(Point3D realPt) {
 		leftHandCoords.add(realPt);
@@ -230,8 +313,9 @@ public class Skeletons {
 
 	// -------------------- drawing --------------------------------
 
+	public void draw(Graphics2D g2d)
 	// draw skeleton of each user, with a head image, and user status
-	public void draw(Graphics2D g2d) {
+	{
 		if (skelReady) {
 			g2d.setStroke(new BasicStroke(8));
 
@@ -247,27 +331,73 @@ public class Skeletons {
 						HashMap<SkeletonJoint, SkeletonJointPosition> skel = userSkels
 								.get(userIDs[i]);
 						drawSkeleton(g2d, skel);
+						// drawHead(g2d, skel);
 					}
+					// drawUserStatus(g2d, userIDs[i]);
 				}
 			} catch (StatusException e) {
 				System.out.println(e);
 			}
 		}
+	} // end of draw()
+
+	private void drawHead(Graphics2D g2d,
+			HashMap<SkeletonJoint, SkeletonJointPosition> skel)
+	// draw a head image rotated around the z-axis to follow the neck-->head
+	// line
+	{
+		if (headImage == null)
+			return;
+
+		Point3D headPt = getJointPos(skel, SkeletonJoint.HEAD);
+		Point3D neckPt = getJointPos(skel, SkeletonJoint.NECK);
+		if ((headPt == null) || (neckPt == null))
+			return;
+		else {
+			int angle = 90 - ((int) Math.round(Math.toDegrees(Math.atan2(
+					neckPt.getY() - headPt.getY(),
+					headPt.getX() - neckPt.getX()))));
+			// System.out.println("Head image rotated from vertical by " + angle
+			// + " degrees");
+			drawRotatedHead(g2d, headPt, headImage, angle);
+		}
 	}
 
+	private void drawRotatedHead(Graphics2D g2d, Point3D headPt,
+			BufferedImage headImage, int angle) {
+		AffineTransform origTF = g2d.getTransform(); // store original
+														// orientation
+		AffineTransform newTF = (AffineTransform) (origTF.clone());
+
+		// center of rotation is the head joint
+		newTF.rotate(Math.toRadians(angle), (int) headPt.getX(),
+				(int) headPt.getY());
+		g2d.setTransform(newTF);
+
+		// draw image centered at head joint
+		int x = (int) headPt.getX() - (headImage.getWidth() / 2);
+		int y = (int) headPt.getY() - (headImage.getHeight() / 2);
+		g2d.drawImage(headImage, x, y, null);
+
+		g2d.setTransform(origTF); // reset original orientation
+	}
+
+	private void setLimbColor(Graphics2D g2d, int userID)
 	/*
 	 * use the 'opposite' of the user ID color for the limbs, so they stand out
 	 * against the colored body
 	 */
-	private void setLimbColor(Graphics2D g2d, int userID) {
+	{
 		Color c = USER_COLORS[userID % USER_COLORS.length];
 		Color oppColor = new Color(255 - c.getRed(), 255 - c.getGreen(),
 				255 - c.getBlue());
 		g2d.setColor(oppColor);
-	}
+	} // end of setLimbColor()
 
 	public boolean firstSkeletonIsReady() {
 		return skelReady;
+		// && userSkels.get(UserID).get(SkeletonJoint.LEFT_HAND) != null
+		// && userSkels.get(UserID).get(SkeletonJoint.RIGHT_HAND) != null;
 	}
 
 	public Point3D getHeadPos() {
@@ -307,10 +437,10 @@ public class Skeletons {
 		return rightHandCoords.get(0);
 	}
 
-	// draw skeleton as lines (limbs) between its joints;
-	// hardwired to avoid non-implemented joints
 	private void drawSkeleton(Graphics2D g2d,
 			HashMap<SkeletonJoint, SkeletonJointPosition> skel)
+	// draw skeleton as lines (limbs) between its joints;
+	// hardwired to avoid non-implemented joints
 	{
 		drawLine(g2d, skel, SkeletonJoint.HEAD, SkeletonJoint.NECK);
 
@@ -337,28 +467,34 @@ public class Skeletons {
 		drawLine(g2d, skel, SkeletonJoint.RIGHT_HIP, SkeletonJoint.RIGHT_KNEE);
 		drawLine(g2d, skel, SkeletonJoint.RIGHT_KNEE, SkeletonJoint.RIGHT_FOOT);
 
-	}
+	} // end of drawSkeleton()
 
-	// draw a line (limb) between the two joints (if they have positions)
 	private void drawLine(Graphics2D g2d,
 			HashMap<SkeletonJoint, SkeletonJointPosition> skel,
-			SkeletonJoint j1, SkeletonJoint j2){
+			SkeletonJoint j1, SkeletonJoint j2)
+	// draw a line (limb) between the two joints (if they have positions)
+	{
 		Point3D p1 = getJointPos(skel, j1);
 		Point3D p2 = getJointPos(skel, j2);
 		if ((p1 != null) && (p2 != null))
 			g2d.drawLine((int) p1.getX(), (int) p1.getY(), (int) p2.getX(),
 					(int) p2.getY());
-	}
+	} // end of drawLine()
 
-	// get the (x, y, z) coordinate for the joint (or return null)
 	private Point3D getJointPos(
-			HashMap<SkeletonJoint, SkeletonJointPosition> skel, SkeletonJoint j){
+			HashMap<SkeletonJoint, SkeletonJointPosition> skel, SkeletonJoint j)
+	// get the (x, y, z) coordinate for the joint (or return null)
+	{
 		SkeletonJointPosition pos = skel.get(j);
 		if (pos == null)
 			return null;
 
+		// if (pos.getConfidence() == 0)
+		// return null; // don't draw a line to a joint with a zero-confidence
+		// pos
+
 		return pos.getPosition();
-	}
+	} // end of getJointPos()
 
 	// --------------------- 4 observers -----------------------
 	/*
@@ -378,12 +514,25 @@ public class Skeletons {
 				// try to detect a pose for the new user
 				poseDetectionCap
 						.StartPoseDetection(calibPoseName, args.getId()); // big-S
-																			// ?
+				// ?
 			} catch (StatusException e) {
 				e.printStackTrace();
 			}
 		}
-	}
+	} // end of NewUserObserver inner class
+
+	class LostUserObserver implements IObserver<UserEventArgs> {
+		public void update(IObservable<UserEventArgs> observable,
+				UserEventArgs args) {
+			int userID = args.getId();
+			System.out.println("Lost track of user " + userID);
+			userL = false;
+			// remove user from the gesture detectors (NEW)
+			// userSkels.remove(userID);
+			// gestSeqs.removeUser(userID);
+			// skelReady = false;
+		}
+	} // end of LostUserObserver inner class
 
 	class PoseDetectedObserver implements IObserver<PoseDetectionEventArgs> {
 		public void update(IObservable<PoseDetectionEventArgs> observable,
@@ -399,7 +548,7 @@ public class Skeletons {
 				e.printStackTrace();
 			}
 		}
-	}
+	} // end of PoseDetectedObserver inner class
 
 	class CalibrationCompleteObserver implements
 			IObserver<CalibrationProgressEventArgs> {
@@ -419,6 +568,11 @@ public class Skeletons {
 					userSkels
 							.put(new Integer(userID),
 									new HashMap<SkeletonJoint, SkeletonJointPosition>());
+					// create new skeleton map for the user
+					gestSeqs.addUser(userID);
+					user1 = true;
+					userE = true;
+//					userL = true;
 				} else
 					// calibration failed; return to pose detection
 					poseDetectionCap.StartPoseDetection(calibPoseName, userID); // big-S
@@ -428,14 +582,19 @@ public class Skeletons {
 			}
 		}
 
-	}
+	} // end of CalibrationCompleteObserver inner class
 
 	class UserExitObserver implements IObserver<UserEventArgs> {
 		public void update(IObservable<UserEventArgs> observable,
 				UserEventArgs args) {
 			int userID = args.getId();
 			System.out.println("User " + userID + " exit");
+
+			// remove user from the gesture detectors (NEW)
 			userSkels.remove(userID);
+			gestSeqs.removeUser(userID);
+			userE = false;
+			// if (userSkels.containsKey(userGen)) {
 			try {
 
 				skelCap.stopTracking(userID);
@@ -444,9 +603,47 @@ public class Skeletons {
 			} catch (StatusException e) {
 				// e.printStackTrace();
 			}
+			// }
 			skelReady = false;
 		}
 	}
 
-}
+	private void computeArmLength(int userID) {
+		Point3D rightHand = getJointPos(userSkels.get(userID),
+				SkeletonJoint.RIGHT_HAND);
+		Point3D rightElbow = getJointPos(userSkels.get(userID),
+				SkeletonJoint.RIGHT_ELBOW);
+		Point3D rightShoulder = getJointPos(userSkels.get(userID),
+				SkeletonJoint.RIGHT_SHOULDER);
+
+		Point3D leftHand = getJointPos(userSkels.get(userID),
+				SkeletonJoint.LEFT_HAND);
+		Point3D leftElbow = getJointPos(userSkels.get(userID),
+				
+				SkeletonJoint.LEFT_ELBOW);
+		Point3D leftShoulder = getJointPos(userSkels.get(userID),
+				SkeletonJoint.LEFT_SHOULDER);
+
+		// System.out.println("hand to Elbow "+distApart(rightHand,
+		// rightElbow)+" elbow to shoulder "+distApart(rightElbow,
+		// rightShoulder)+ " hand to shoulder "+distApart(rightHand,
+		// rightShoulder));
+		rightArmLength = distApart(rightHand, rightElbow)
+				+ distApart(rightElbow, rightShoulder);
+		leftArmLength = distApart(leftHand, leftElbow)
+				+ distApart(leftElbow, leftShoulder);
+
+	}
+
+	private float distApart(Point3D p1, Point3D p2)
+	// the Euclidian distance between the two points
+	{
+		float dist = (float) Math.sqrt((p1.getX() - p2.getX())
+				* (p1.getX() - p2.getX()) + (p1.getY() - p2.getY())
+				* (p1.getY() - p2.getY()) + (p1.getZ() - p2.getZ())
+				* (p1.getZ() - p2.getZ()));
+		return dist;
+	} // end of distApart()
+
+} // end of Skeletons class
 
