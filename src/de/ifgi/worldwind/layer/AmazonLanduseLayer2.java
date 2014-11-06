@@ -1,5 +1,22 @@
 package de.ifgi.worldwind.layer;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Insets;
+import java.awt.Point;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+
+import com.hp.hpl.jena.rdf.model.Literal;
+import com.hp.hpl.jena.reasoner.rulesys.builtins.GreaterThan;
+
+import de.ifgi.data.MesoRegion;
+import de.ifgi.data.MicroRegion;
+import de.ifgi.data.MunicipalityDataItem;
+
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.geom.LatLon;
@@ -12,32 +29,30 @@ import gov.nasa.worldwind.render.ExtrudedPolygon;
 import gov.nasa.worldwind.render.GlobeAnnotation;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Polyline;
+
 import gov.nasa.worldwind.render.ScreenAnnotation;
 import gov.nasa.worldwind.render.ShapeAttributes;
+import gov.nasa.worldwind.render.airspaces.AirspaceAttributes;
+import gov.nasa.worldwind.render.airspaces.Curtain;
 import gov.nasa.worldwind.render.airspaces.Polygon;
 import gov.nasa.worldwind.render.airspaces.Route;
 import gov.nasa.worldwindx.examples.util.PowerOfTwoPaddedImage;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Insets;
-import java.awt.Point;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-
-import de.ifgi.data.MesoRegion;
-import de.ifgi.data.MunicipalityDataItem;
-
-/**
- * 
- * @author Umut Tas
- *
- */
 public class AmazonLanduseLayer2 extends RenderableLayer {
-		
+	
+//	static ArrayList<Literal> border;
+//	static ArrayList<Literal> label;
+//	static ArrayList<Literal> pop0;
+//	static ArrayList<Literal> pop1;
+//	static ArrayList<Literal> pop2;
+//	static ArrayList<Literal> pop3;
+//	static ArrayList<Literal> pop4;
+//	static ArrayList<Literal> pop5;
+//	static ArrayList<Literal> pop6;
+//	static ArrayList<Literal> pop7;
+//	static ArrayList<Literal> pop8;
+//	static ArrayList<Literal> pop9;
+	
 	ShapeAttributes sideAttributesPlain;
 	ShapeAttributes sideHighlightAttributesPlain;
 	ShapeAttributes capAttributesPlain;
@@ -84,26 +99,45 @@ public class AmazonLanduseLayer2 extends RenderableLayer {
 	double minpop =1000000000;
 	double maxpop = 0;
 	
-
+    private final static PowerOfTwoPaddedImage redPic =
+            PowerOfTwoPaddedImage.fromPath("images/red.png");
+    private final static PowerOfTwoPaddedImage greenPic =
+            PowerOfTwoPaddedImage.fromPath("images/green.png");
   
     private final static PowerOfTwoPaddedImage brownPic =
             PowerOfTwoPaddedImage.fromPath("images/brown.jpg");
     private final static PowerOfTwoPaddedImage yellowPic =
             PowerOfTwoPaddedImage.fromPath("images/yellow2.jpg");
   
-
+    private final static PowerOfTwoPaddedImage ifgiPic =
+            PowerOfTwoPaddedImage.fromPath("images/logo-rgb-ifgi-text-de.jpg");
     private final static PowerOfTwoPaddedImage columnPic =
             PowerOfTwoPaddedImage.fromPath("images/columnLegend.jpg");
     private final static PowerOfTwoPaddedImage arcPic =
             PowerOfTwoPaddedImage.fromPath("images/exportLegend.jpg");
     
-
+    private final static PowerOfTwoPaddedImage trees =
+            PowerOfTwoPaddedImage.fromPath("images/b‰ume3.jpg");
+    private final static PowerOfTwoPaddedImage badPic =
+            PowerOfTwoPaddedImage.fromPath("images/luftbild.jpg");
     
 	public AmazonLanduseLayer2(ArrayList<MunicipalityDataItem> muniData, ArrayList<MesoRegion> mesoRegions, String year){
 		super();
 		this.year = year;
 		this.muniData = muniData;
 		this.mesoRegions = mesoRegions;
+//		this.border = border;
+//		this.label = label;
+//		this.pop0 = pop0;
+//		this.pop1 = pop1;
+//		this.pop2 = pop2;
+//		this.pop3 = pop3;
+//		this.pop4 = pop4;
+//		this.pop5 = pop5;
+//		this.pop6 = pop6;
+//		this.pop7 = pop7;
+//		this.pop8 = pop8;
+//		this.pop9 = pop9;
 		setAttributes();
 		drawPolygons();
 		
@@ -232,6 +266,7 @@ public class AmazonLanduseLayer2 extends RenderableLayer {
 	public void drawPolygons(){
 		  ExtrudedPolygon pgon;
 		  Polygon pgon2;
+		  Polygon pgon3;
 
 		  double pop = 0;
         	
@@ -582,7 +617,7 @@ public class AmazonLanduseLayer2 extends RenderableLayer {
         ukRoute.getAttributes().setDrawInterior(true);
         Iterator<? extends LatLon> posis =ukRoute.getLocations().iterator();
         posis.next();
-        addRenderable(exportAnnotation(new Position(posis.next(), 42000.0), "Gro√übritannien: "+f2.format(unitedKingdomExport)));
+        addRenderable(exportAnnotation(new Position(posis.next(), 42000.0), "Groﬂbritannien: "+f2.format(unitedKingdomExport)));
         addRenderable(ukRoute);
         
         
@@ -666,7 +701,7 @@ public class AmazonLanduseLayer2 extends RenderableLayer {
         egyptRoute.getAttributes().setOpacity(0.8);
         Iterator<? extends LatLon> posis4 =egyptRoute.getLocations().iterator();
         posis4.next();
-        addRenderable(exportAnnotation(new Position(posis4.next(), 42000.0), "√Ñgypten: "+f2.format(egyptExport)));
+        addRenderable(exportAnnotation(new Position(posis4.next(), 42000.0), "ƒgypten: "+f2.format(egyptExport)));
        //  attributesPlain.setInteriorOpacity(1);
         egyptRoute.getAttributes().setOutlineMaterial(Material.BLACK);
         egyptRoute.getAttributes().setDrawOutline(true);
@@ -774,7 +809,7 @@ public class AmazonLanduseLayer2 extends RenderableLayer {
 //        defaultAttributes.setLeaderGapWidth(14);
 //        defaultAttributes.setDrawOffset(new Point(20, 40));
 //		
-//        ScreenAnnotation sa = new ScreenAnnotation("Gesamte- und j√§hrliche Abholzung des Regenwaldes in Par√°, Brazilien", new Point(900, 1000));
+//        ScreenAnnotation sa = new ScreenAnnotation("Gesamte- und J‰hrliche Abholzung des Regenwaldes in Par„, Brazilien", new Point(900, 1000));
 //        sa.getAttributes().setDefaults(defaultAttributes);
 //        sa.getAttributes().setCornerRadius(0);
 //        sa.getAttributes().setFont(Font.decode("Arial-BOLD-36"));
@@ -809,7 +844,7 @@ public class AmazonLanduseLayer2 extends RenderableLayer {
 //        defaultAttributes2.setHighlightScale(1);             // No highlighting either
 //        defaultAttributes2.setCornerRadius(0);
 //        
-//        ScreenAnnotation legendHeader = new ScreenAnnotation("J√§hrliche Abholzung des Regenwaldes in % (" + year +")", new Point(1750, 125));
+//        ScreenAnnotation legendHeader = new ScreenAnnotation("J‰hrliche Abholzung des Regenwaldes in % (" + year +")", new Point(1750, 125));
 //        legendHeader.getAttributes().setDefaults(defaultAttributes2);
 //        legendHeader.getAttributes().setBackgroundColor(new Color(0.2f, 0.2f, 0.2f, .5f));
 //        legendHeader.getAttributes().setCornerRadius(0);
@@ -903,8 +938,8 @@ public AnnotationLayer addAnnotations(){
         defaultAttributes.setLeaderGapWidth(14);
         defaultAttributes.setDrawOffset(new Point(20, 40));
 		
-        ScreenAnnotation sa = new ScreenAnnotation("Abholzung und Bodennutzung in Par√° & Fleisch Exporte Brasiliens ", new Point(470, 700));
-       //  ScreenAnnotation sa = new ScreenAnnotation("Deforestation and population in Par√°, Brazilien", new Point(470, 700));
+        ScreenAnnotation sa = new ScreenAnnotation("Abholzung und Bodennutzung in Par„ & Fleisch Exporte Brasiliens ", new Point(470, 700));
+       //  ScreenAnnotation sa = new ScreenAnnotation("Deforestation and population in Par„, Brazilien", new Point(470, 700));
 
         sa.getAttributes().setDefaults(defaultAttributes);
         sa.getAttributes().setCornerRadius(0);
@@ -962,7 +997,7 @@ public AnnotationLayer addAnnotations(){
         arcLegend.setAlwaysOnTop(false);
         this.addRenderable(arcLegend);
         
-        ScreenAnnotation legendHeader = new ScreenAnnotation("Abgeholzte Fl√§che", new Point(920, 225));
+        ScreenAnnotation legendHeader = new ScreenAnnotation("Abgeholzte Fl‰che", new Point(920, 225));
       //  legendHeader.getAttributes().setDefaults(defaultAttributes2);
         legendHeader.getAttributes().setTextColor(Color.WHITE);
         legendHeader.getAttributes().setAdjustWidthToText(AVKey.SIZE_FIXED);
@@ -982,7 +1017,7 @@ public AnnotationLayer addAnnotations(){
         legendHeader.getAttributes().setHighlightScale(1);             // No highlighting either
     //    legend.getAttributes().setImageOffset(new Point(1, 1));
         
-        ScreenAnnotation legend = new ScreenAnnotation("-genutzt f√ºr Landwirtschaft und Viehzucht", new Point(920, 285));
+        ScreenAnnotation legend = new ScreenAnnotation("-genutzt f¸r Landwirtschaft und Viehzucht", new Point(920, 285));
         legend.getAttributes().setDefaults(defaultAttributes2);
         legend.getAttributes().setImageSource(brownPic.getPowerOfTwoImage());
         legend.getAttributes().setImageRepeat(AVKey.REPEAT_NONE);
@@ -998,7 +1033,7 @@ public AnnotationLayer addAnnotations(){
         annotationLayer.addAnnotation(legend);
        
 
-        ScreenAnnotation legend2 = new ScreenAnnotation("-genutzt f√ºr nicht landwirtschaftliche Zwecke", new Point(920, 225));
+        ScreenAnnotation legend2 = new ScreenAnnotation("-genutzt f¸r nicht landwirtschaftliche Zwecke", new Point(920, 225));
         legend2.getAttributes().setDefaults(defaultAttributes2);
         legend2.getAttributes().setImageSource(yellowPic.getPowerOfTwoImage());
         legend2.getAttributes().setImageRepeat(AVKey.REPEAT_NONE);
@@ -1027,7 +1062,7 @@ public AnnotationLayer addAnnotations(){
 //
 //        annotationLayer.addAnnotation(ifgiLogo);
 
-        ScreenAnnotation heightLegend = new ScreenAnnotation("H√∂he entspricht der gesamten Abholzung in Prozent", new Point(920,65));
+        ScreenAnnotation heightLegend = new ScreenAnnotation("Hˆhe entspricht der gesamten Abholzung in Prozent", new Point(920,65));
 //        ScreenAnnotation wwuLogo = new ScreenAnnotation("", new Point(950, 730));
         	heightLegend.getAttributes().setDefaults(defaultAttributes2);
         	heightLegend.getAttributes().setFont(Font.decode("Arial-BOLD-15"));
@@ -1252,36 +1287,36 @@ public AnnotationLayer generalInformationLayer(){
        
         if(year == "2002"){
         	factAnnotation.setText("2002");
-        	statAnnotation.setText("Par√° \n Fl√§che: " +f2.format((int)totalArea) + " km¬≤\n Abgeholzte Fl√§che: ~"+ f2.format((int)totalDeforestArea) +" km¬≤\n\n Rindfleisch Export Brasiliens: "+ f2.format((int)totalExport) + " Tonnen");
+        	statAnnotation.setText("Par„ \n Fl‰che: " +f2.format((int)totalArea) + " km≤\n Abgeholzte Fl‰che: ~"+ f2.format((int)totalDeforestArea) +" km≤\n\n Rindfleisch Export Brasiliens: "+ f2.format((int)totalExport) + " Tonnen");
         }
         if(year == "2003"){
         	factAnnotation.setText("2003");
-        	statAnnotation.setText("Par√° \n Fl√§che: " +f2.format((int)totalArea) + " km¬≤\n Abgeholzte Fl√§che: ~"+ f2.format((int)totalDeforestArea) +" km¬≤\n\n Rindfleisch Export Brasiliens: "+ f2.format((int)totalExport) + " Tonnen");
+        	statAnnotation.setText("Par„ \n Fl‰che: " +f2.format((int)totalArea) + " km≤\n Abgeholzte Fl‰che: ~"+ f2.format((int)totalDeforestArea) +" km≤\n\n Rindfleisch Export Brasiliens: "+ f2.format((int)totalExport) + " Tonnen");
 
         }
         if(year == "2004"){
         	factAnnotation.setText("Die ersten Rinder kamen 1493 mit Kolumbus nach S√ºdamerika.");
-        	statAnnotation.setText("Par√° \n Fl√§che: " +f2.format((int)totalArea) + " km¬≤\n Abgeholzte Fl√§che: ~"+ f2.format((int)totalDeforestArea) +" km¬≤\n\n Rindfleisch Export Brasiliens: "+ f2.format((int)totalExport) + " Tonnen");
+        	statAnnotation.setText("Par„ \n Fl‰che: " +f2.format((int)totalArea) + " km≤\n Abgeholzte Fl‰che: ~"+ f2.format((int)totalDeforestArea) +" km≤\n\n Rindfleisch Export Brasiliens: "+ f2.format((int)totalExport) + " Tonnen");
 
         }
         if(year == "2005"){
-        	factAnnotation.setText("Im Jahr 2005 gab es "+f2.format(cattleInventory) + " Rinder in Par√°.");
-        	statAnnotation.setText("Par√° \n Fl√§che: " +f2.format((int)totalArea) + " km¬≤\n Abgeholzte Fl√§che: ~"+ f2.format((int)totalDeforestArea) +" km¬≤\n\n Rindfleisch Export Brasiliens: "+ f2.format((int)totalExport) + " Tonnen");
+        	factAnnotation.setText("Im Jahr 2005 gab es "+f2.format(cattleInventory) + " Rinder in Par„.");
+        	statAnnotation.setText("Par„ \n Fl‰che: " +f2.format((int)totalArea) + " km≤\n Abgeholzte Fl‰che: ~"+ f2.format((int)totalDeforestArea) +" km≤\n\n Rindfleisch Export Brasiliens: "+ f2.format((int)totalExport) + " Tonnen");
 
         }
         if(year == "2006"){
-        	factAnnotation.setText("Brasiliens Fleisch Exporte stiegen um 14% j√§hrlich zwischen 2002 und 2007.");
-        	statAnnotation.setText("Par√° \n Fl√§che: " +f2.format((int)totalArea) + " km¬≤\n Abgeholzte Fl√§che: ~"+ f2.format((int)totalDeforestArea) +" km¬≤\n\n Rindfleisch Export Brasiliens: "+ f2.format((int)totalExport) + " Tonnen");
+        	factAnnotation.setText("Brasiliens Fleisch Exporte stiegen um 14% J‰hrlich zwischen 2002 und 2007.");
+        	statAnnotation.setText("Par„ \n Fl‰che: " +f2.format((int)totalArea) + " km≤\n Abgeholzte Fl‰che: ~"+ f2.format((int)totalDeforestArea) +" km≤\n\n Rindfleisch Export Brasiliens: "+ f2.format((int)totalExport) + " Tonnen");
 
         }
         if(year == "2007"){
         	factAnnotation.setText("Brasilien ist der gr√∂√üte Fleischexporteur der Welt, mit 34% Anteil am globalen Markt.");
-        	statAnnotation.setText("Par√° \n Fl√§che: " +f2.format((int)totalArea) + " km¬≤\n Abgeholzte Fl√§che: ~"+ f2.format((int)totalDeforestArea) +" km¬≤\n\n Rindfleisch Export Brasiliens: "+ f2.format((int)totalExport) + " Tonnen");
+        	statAnnotation.setText("Par„ \n Fl‰che: " +f2.format((int)totalArea) + " km≤\n Abgeholzte Fl‰che: ~"+ f2.format((int)totalDeforestArea) +" km≤\n\n Rindfleisch Export Brasiliens: "+ f2.format((int)totalExport) + " Tonnen");
 
         }
         if(year == "2008"){
-        	factAnnotation.setText("37% der Besch√§ftigten Brasiliens arbeiten in der Landwirtschaft.");
-        	statAnnotation.setText("Par√° \n Fl√§che: " +f2.format((int)totalArea) + " km¬≤\n Abgeholzte Fl√§che: ~"+ f2.format((int)totalDeforestArea) +" km¬≤\n\n Rindfleisch Export Brasiliens: "+ f2.format((int)totalExport) + " Tonnen");
+        	factAnnotation.setText("37% der Besch‰ftigten Brasiliens arbeiten in der Landwirtschaft.");
+        	statAnnotation.setText("Par„ \n Fl‰che: " +f2.format((int)totalArea) + " km≤\n Abgeholzte Fl‰che: ~"+ f2.format((int)totalDeforestArea) +" km≤\n\n Rindfleisch Export Brasiliens: "+ f2.format((int)totalExport) + " Tonnen");
 
         }
         
