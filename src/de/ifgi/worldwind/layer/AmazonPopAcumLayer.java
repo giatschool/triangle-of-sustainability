@@ -1,8 +1,21 @@
 package de.ifgi.worldwind.layer;
 
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Insets;
+import java.awt.Point;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+
+import com.hp.hpl.jena.rdf.model.Literal;
+
+import de.ifgi.data.MunicipalityDataItem;
+
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.avlist.AVKey;
+import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.AnnotationLayer;
@@ -15,22 +28,9 @@ import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Polyline;
 import gov.nasa.worldwind.render.ScreenAnnotation;
 import gov.nasa.worldwind.render.ShapeAttributes;
+import gov.nasa.worldwind.util.Logging;
 import gov.nasa.worldwindx.examples.util.PowerOfTwoPaddedImage;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Insets;
-import java.awt.Point;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-
-import de.ifgi.data.MunicipalityDataItem;
-/**
- * 
- * @author Umut Tas
- *
- */
 public class AmazonPopAcumLayer extends RenderableLayer {
 	
 //	static ArrayList<Literal> border;
@@ -99,7 +99,12 @@ public class AmazonPopAcumLayer extends RenderableLayer {
             PowerOfTwoPaddedImage.fromPath("images/yellowFinal.png");
     private final static PowerOfTwoPaddedImage darkYellowPic =
             PowerOfTwoPaddedImage.fromPath("images/darkYellowFinal.png");
-        
+    
+    private final static PowerOfTwoPaddedImage ifgiPic =
+            PowerOfTwoPaddedImage.fromPath("images/logo-rgb-ifgi-text-de.jpg");
+    private final static PowerOfTwoPaddedImage wwuPic =
+            PowerOfTwoPaddedImage.fromPath("images/wwu_logo.jpg");
+    
     private final static PowerOfTwoPaddedImage heightPic =
             PowerOfTwoPaddedImage.fromPath("images/height2.png");
     
@@ -107,7 +112,7 @@ public class AmazonPopAcumLayer extends RenderableLayer {
             PowerOfTwoPaddedImage.fromPath("images/deforestationPic.jpg");
  	
  	final static PowerOfTwoPaddedImage trees =
-            PowerOfTwoPaddedImage.fromPath("images/bÃ¤ume.jpg");
+            PowerOfTwoPaddedImage.fromPath("images/bäume.jpg");
  	
     
 //    final static PowerOfTwoPaddedImage badPic =
@@ -476,8 +481,8 @@ public class AmazonPopAcumLayer extends RenderableLayer {
        			addPictureLayer(Position.fromDegrees(Double.parseDouble(splitStr[1]), Double.parseDouble(splitStr[0]), pop), trees,0.2);
 
        		}
-         	 if(muniData.get(i).getName().equals("SantarÃ©m") || muniData.get(i).getName().contains("BelÃ©m") || muniData.get(i).getName().contains("Altamira")){
-         	   GlobeAnnotation ga2 = new GlobeAnnotation(muniData.get(i).getName()+"\nBevÃ¶lkerung: "+f2.format(pop),Position.fromDegrees(Double.parseDouble(splitStr[1]), Double.parseDouble(splitStr[0]), pop), Font.decode("Arial-BOLD-12"));
+         	 if(muniData.get(i).getName().equals("SantarÃ©m") || muniData.get(i).getName().contains("Belém") || muniData.get(i).getName().contains("Altamira")){
+         	   GlobeAnnotation ga2 = new GlobeAnnotation(muniData.get(i).getName()+"\nBevölkerung: "+f2.format(pop),Position.fromDegrees(Double.parseDouble(splitStr[1]), Double.parseDouble(splitStr[0]), pop), Font.decode("Arial-BOLD-12"));
               ga2.getAttributes().setBorderColor(Color.BLACK);
               ga2.getAttributes().setBackgroundColor(new Color(0.2f, 0.2f, 0.2f, .5f));
               ga2.getAttributes().setTextColor(Color.WHITE);
@@ -524,8 +529,8 @@ public class AmazonPopAcumLayer extends RenderableLayer {
         defaultAttributes.setLeaderGapWidth(14);
         defaultAttributes.setDrawOffset(new Point(20, 40));
 		
-        ScreenAnnotation sa = new ScreenAnnotation("Abholzung des Regenwaldes und BevÃ¶lkerung in ParÃ¡, Brasilien", new Point(470, 700));
-       //  ScreenAnnotation sa = new ScreenAnnotation("Deforestation and population in ParÃ¡, Brazilien", new Point(470, 700));
+        ScreenAnnotation sa = new ScreenAnnotation("Abholzung des Regenwaldes und Bevölkerung in Pará, Brasilien", new Point(470, 700));
+       //  ScreenAnnotation sa = new ScreenAnnotation("Deforestation and population in Pará, Brazilien", new Point(470, 700));
 
         sa.getAttributes().setDefaults(defaultAttributes);
         sa.getAttributes().setCornerRadius(0);
@@ -676,7 +681,7 @@ public class AmazonPopAcumLayer extends RenderableLayer {
 //
 //        annotationLayer.addAnnotation(ifgiLogo);
 
-        ScreenAnnotation heightLegend = new ScreenAnnotation("HÃ¶he entspricht der absoluten BevÃ¶lkerung", new Point(920,65));
+        ScreenAnnotation heightLegend = new ScreenAnnotation("Höhe entspricht der absoluten Bevölkerung", new Point(920,65));
 //        ScreenAnnotation wwuLogo = new ScreenAnnotation("", new Point(950, 730));
         	heightLegend.getAttributes().setDefaults(defaultAttributes2);
         	heightLegend.getAttributes().setFont(Font.decode("Arial-BOLD-15"));
@@ -893,7 +898,7 @@ public AnnotationLayer generalInformationLayer(){
         generalAnnotationLayer.addAnnotation(statAnnotation);
 
         
-//        ScreenAnnotation populationAnnotation = new ScreenAnnotation("BevÃ¶lkerung: "+ population, new Point(30,190));
+//        ScreenAnnotation populationAnnotation = new ScreenAnnotation("Bevölkerung: "+ population, new Point(30,190));
 //        populationAnnotation.getAttributes().setDefaults(defaultAttributes2);
 //        populationAnnotation.getAttributes().setCornerRadius(0);
 ////        legend.getAttributes().setSize(new Dimension(50, 0));
@@ -917,7 +922,7 @@ public AnnotationLayer generalInformationLayer(){
 //        totalDeforestationAnnotation.setAlwaysOnTop(true);
 //        generalAnnotationLayer.addAnnotation(totalDeforestationAnnotation);
 //        
-//        ScreenAnnotation yearlyDeforestationAnnotation = new ScreenAnnotation("JÃ¤hrliche Abholzungsrate: "+ f.format(averageDefor*100) +"%", new Point(30, 120));
+//        ScreenAnnotation yearlyDeforestationAnnotation = new ScreenAnnotation("jährliche Abholzungsrate: "+ f.format(averageDefor*100) +"%", new Point(30, 120));
 //        yearlyDeforestationAnnotation.getAttributes().setDefaults(defaultAttributes2);
 //        yearlyDeforestationAnnotation.getAttributes().setCornerRadius(0);
 ////        legend.getAttributes().setSize(new Dimension(50, 0));
@@ -942,44 +947,44 @@ public AnnotationLayer generalInformationLayer(){
 //        generalAnnotationLayer.addAnnotation(gdpAnnotation);
        
         if(year == "2002"){
-        	factAnnotation.setText("ParÃ¡ ist Brasiliens zweit grÃ¶ÃŸter Bundesstaat.");
-        	statAnnotation.setText("ParÃ¡ \n BevÃ¶lkerung: " +f2.format((int)population) + "\n Gesamte Abholzung: "+f.format(averageAcumDefor*100) +"%\n BevÃ¶lkerungsentwicklung: "+f2.format(population-populationLastYear));
+        	factAnnotation.setText("Pará ist Brasiliens zweit größter Bundesstaat.");
+        	statAnnotation.setText("Pará \n Bevölkerung: " +f2.format((int)population) + "\n Gesamte Abholzung: "+f.format(averageAcumDefor*100) +"%\n Bevölkerungsentwicklung: "+f2.format(population-populationLastYear));
         }
         if(year == "2003"){
-        	factAnnotation.setText("BelÃ©m, ParÃ¡s Hauptstadt, ist Brasiliens 11. grÃ¶ÃŸte Stadt. ");
-        	statAnnotation.setText("ParÃ¡ \n BevÃ¶lkerung: " +f2.format((int)population) + "\n Gesamte Abholzung: "+f.format(averageAcumDefor*100) +"%\n BevÃ¶lkerungsentwicklung: "+f2.format(population-populationLastYear));
+        	factAnnotation.setText("Belém, Parás Hauptstadt, ist Brasiliens 11. größte Stadt. ");
+        	statAnnotation.setText("Pará \n Bevölkerung: " +f2.format((int)population) + "\n Gesamte Abholzung: "+f.format(averageAcumDefor*100) +"%\n Bevölkerungsentwicklung: "+f2.format(population-populationLastYear));
 
         }
         if(year == "2004"){
-        	factAnnotation.setText("In ParÃ¡ gibt es mehr Rinder ("+f2.format(cattleInventory)+") als Einwohner in den Niederlanden (~16.000.000).");
-        	statAnnotation.setText("ParÃ¡ \n BevÃ¶lkerung: " +f2.format((int)population) + "\n Gesamte Abholzung: "+f.format(averageAcumDefor*100) +"%\n BevÃ¶lkerungsentwicklung: "+f2.format(population-populationLastYear));
+        	factAnnotation.setText("In Pará gibt es mehr Rinder ("+f2.format(cattleInventory)+") als Einwohner in den Niederlanden (~16.000.000).");
+        	statAnnotation.setText("Pará \n Bevölkerung: " +f2.format((int)population) + "\n Gesamte Abholzung: "+f.format(averageAcumDefor*100) +"%\n Bevölkerungsentwicklung: "+f2.format(population-populationLastYear));
 
         }
         if(year == "2005"){
-        	factAnnotation.setText("BelÃ©m wurde 1616 von den Portugiesen gegrÃ¼ndet.");
-        	statAnnotation.setText("ParÃ¡ \n BevÃ¶lkerung: " +f2.format((int)population) + "\n Gesamte Abholzung: "+f.format(averageAcumDefor*100) +"%\n BevÃ¶lkerungsentwicklung: "+f2.format(population-populationLastYear));
+        	factAnnotation.setText("Belém wurde 1616 von den Portugiesen gegründet.");
+        	statAnnotation.setText("Pará \n Bevölkerung: " +f2.format((int)population) + "\n Gesamte Abholzung: "+f.format(averageAcumDefor*100) +"%\n Bevölkerungsentwicklung: "+f2.format(population-populationLastYear));
 
         }
         if(year == "2006"){
-        	factAnnotation.setText("In ParÃ¡ leben "+ f2.format(cattleInventory) +" Rinder, das entspricht "+f.format(cattleInventory/population) + " Rindern pro Einwohner.");
-        	statAnnotation.setText("ParÃ¡ \n BevÃ¶lkerung: " +f2.format((int)population) + "\n Gesamte Abholzung: "+f.format(averageAcumDefor*100) +"%\n BevÃ¶lkerungsentwicklung: "+f2.format(population-populationLastYear));
+        	factAnnotation.setText("In Pará leben "+ f2.format(cattleInventory) +" Rinder, das entspricht "+f.format(cattleInventory/population) + " Rindern pro Einwohner.");
+        	statAnnotation.setText("Pará \n Bevölkerung: " +f2.format((int)population) + "\n Gesamte Abholzung: "+f.format(averageAcumDefor*100) +"%\n Bevölkerungsentwicklung: "+f2.format(population-populationLastYear));
 
         }
         if(year == "2007"){
-        	factAnnotation.setText("ParÃ¡ gehÃ¶rt zu den Ã¤rmeren Bundesstaaten Brasiliens.");
-        	statAnnotation.setText("ParÃ¡ \n BevÃ¶lkerung: " +f2.format((int)population) + "\n Gesamte Abholzung: "+f.format(averageAcumDefor*100) +"%\n BevÃ¶lkerungsentwicklung: "+f2.format(population-populationLastYear));
+        	factAnnotation.setText("Pará gehört zu den ärmeren Bundesstaaten Brasiliens.");
+        	statAnnotation.setText("Pará \n Bevölkerung: " +f2.format((int)population) + "\n Gesamte Abholzung: "+f.format(averageAcumDefor*100) +"%\n Bevölkerungsentwicklung: "+f2.format(population-populationLastYear));
 
         }
         if(year == "2008"){
-        	factAnnotation.setText("Die BevÃ¶lkerung ParÃ¡Â´s entspricht ungefÃ¤hr der BevÃ¶lkerung der Schweiz auf "+ f.format(totalArea/41285) +" mal der FlÃ¤che.");
-        	statAnnotation.setText("ParÃ¡ \n BevÃ¶lkerung: " +f2.format((int)population) + "\n Gesamte Abholzung: "+f.format(averageAcumDefor*100) +"%\n BevÃ¶lkerungsentwicklung: "+f2.format(population-populationLastYear));
+        	factAnnotation.setText("Die Bevölkerung Pará's entspricht ungefähr der Bevölkerung der Schweiz auf "+ f.format(totalArea/41285) +" mal der Fläche.");
+        	statAnnotation.setText("Pará \n Bevölkerung: " +f2.format((int)population) + "\n Gesamte Abholzung: "+f.format(averageAcumDefor*100) +"%\n Bevölkerungsentwicklung: "+f2.format(population-populationLastYear));
 
         }
         
         
         //ADDING STATEMENTS FOR YEARS
 //        if(year=="2005"){
-//        	ScreenAnnotation statement2005Annotation = new ScreenAnnotation("\"Brasiliens Fleisch Exporte steigen um 14% jÃ¤hrlich\"", new Point(165, 380));
+//        	ScreenAnnotation statement2005Annotation = new ScreenAnnotation("\"Brasiliens Fleisch Exporte steigen um 14% Jährlich\"", new Point(165, 380));
 //        	statement2005Annotation.getAttributes().setDefaults(defaultAttributes2);
 //        	statement2005Annotation.getAttributes().setBackgroundColor(new Color(0.2f, 0.2f, 0.2f, .5f));
 //          // backgroundAnnotation.getAttributes().setOpacity(0.5);
@@ -995,7 +1000,7 @@ public AnnotationLayer generalInformationLayer(){
 //            generalAnnotationLayer.addAnnotation(statement2005Annotation);
 //        }
 //        if(year=="2006"){
-//        	ScreenAnnotation statement2006Annotation = new ScreenAnnotation("\"Brasiliens Fleisch Exporte steigen um 14% jÃ¤hrlich\"", new Point(165, 380));
+//        	ScreenAnnotation statement2006Annotation = new ScreenAnnotation("\"Brasiliens Fleisch Exporte steigen um 14% Jährlich\"", new Point(165, 380));
 //        	statement2006Annotation.getAttributes().setDefaults(defaultAttributes2);
 //        	statement2006Annotation.getAttributes().setBackgroundColor(new Color(0.2f, 0.2f, 0.2f, .5f));
 //          // backgroundAnnotation.getAttributes().setOpacity(0.5);
@@ -1011,7 +1016,7 @@ public AnnotationLayer generalInformationLayer(){
 //            generalAnnotationLayer.addAnnotation(statement2006Annotation);
 //        }
 //        if(year=="2007"){
-//        	ScreenAnnotation statement2007Annotation = new ScreenAnnotation("\"Brasilien ist der grÃ¶ÃŸte Fleischexporteur der Welt, mit 34% Anteil am globalen Markt.\"", new Point(165, 380));
+//        	ScreenAnnotation statement2007Annotation = new ScreenAnnotation("\"Brasilien ist der größte Fleischexporteur der Welt, mit 34% Anteil am globalen Markt.\"", new Point(165, 380));
 //        	statement2007Annotation.getAttributes().setDefaults(defaultAttributes2);
 //        	statement2007Annotation.getAttributes().setBackgroundColor(new Color(0.2f, 0.2f, 0.2f, .5f));
 //          // backgroundAnnotation.getAttributes().setOpacity(0.5);
@@ -1025,7 +1030,7 @@ public AnnotationLayer generalInformationLayer(){
 //            generalAnnotationLayer.addAnnotation(statement2007Annotation);
 //        }
 //        if(year=="2008"){
-//        	ScreenAnnotation statement2008Annotation = new ScreenAnnotation("\"37% der BeschÃ¤ftigten Brasiliens arbeiten in der Landwirtschaft\"", new Point(165, 380));
+//        	ScreenAnnotation statement2008Annotation = new ScreenAnnotation("\"37% der Beschäftigten Brasiliens arbeiten in der Landwirtschaft\"", new Point(165, 380));
 //        	statement2008Annotation.getAttributes().setDefaults(defaultAttributes2);
 //        	statement2008Annotation.getAttributes().setBackgroundColor(new Color(0.2f, 0.2f, 0.2f, .5f));
 //          // backgroundAnnotation.getAttributes().setOpacity(0.5);

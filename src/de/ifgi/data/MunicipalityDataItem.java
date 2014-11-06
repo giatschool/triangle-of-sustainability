@@ -1,17 +1,16 @@
 package de.ifgi.data;
 
 import java.util.ArrayList;
-/**
- * 
- * @author Umut Tas
- *
- */
-public class MunicipalityDataItem implements Comparable<MunicipalityDataItem> {
 
+import com.hp.hpl.jena.rdf.model.Literal;
+
+public class MunicipalityDataItem implements Comparable {
+	
+	
 	private String uri;
 	private String mesoRegion;
 	private String microRegion;
-
+	
 	private ArrayList<String> cellURI = new ArrayList<String>();
 	private ArrayList<Double> defor2002 = new ArrayList<Double>();
 	private ArrayList<Double> defor2003 = new ArrayList<Double>();
@@ -26,7 +25,7 @@ public class MunicipalityDataItem implements Comparable<MunicipalityDataItem> {
 	private ArrayList<Double> acum2007 = new ArrayList<Double>();
 	private ArrayList<Double> acum2008 = new ArrayList<Double>();
 	private ArrayList<Double> past06 = new ArrayList<Double>();
-
+	
 	private ArrayList<Double> tempAgr06 = new ArrayList<Double>();
 	private ArrayList<Double> permAgr06 = new ArrayList<Double>();
 
@@ -37,7 +36,7 @@ public class MunicipalityDataItem implements Comparable<MunicipalityDataItem> {
 	private double totalDefor2006;
 	private double totalDefor2007;
 	private double totalDefor2008;
-
+	
 	private double soja04;
 	private double soja05;
 	private double soja06;
@@ -49,7 +48,7 @@ public class MunicipalityDataItem implements Comparable<MunicipalityDataItem> {
 	private double cattle06;
 	private double cattle07;
 	private double cattle08;
-
+	
 	private double gdp04;
 	private double gdp05;
 	private double gdp06;
@@ -66,31 +65,42 @@ public class MunicipalityDataItem implements Comparable<MunicipalityDataItem> {
 	private double pop2007;
 	private double pop2008;
 	private double pop2009;
-
+	
 	private double area;
-
+	
 	private String name;
 	private String centroid;
 	private int numberOfCells;
-
+	
 	private String border;
 	private String mesoBorder;
 	private String microBorder;
-
-	public MunicipalityDataItem(String uri, String cellURI, double defor2002,
-			double defor2003, double defor2004, double defor2005,
-			double defor2006, double defor2007, double defor2008,
-			String border, double overlapArea, double overlapRatio,
-			double pop2000, double pop2001, double pop2002, double pop2003,
-			double pop2004, double pop2005, double pop2006, double pop2007,
-			double pop2008, double pop2009, double acum2002, double acum2007,
-			double acum2008, double past06, double soja04, double soja05,
-			double soja06, double soja07, double soja08, double cattle04,
-			double cattle05, double cattle06, double cattle07, double cattle08,
-			double gdp04, double gdp05, double gdp06, double gdp07,
-			double gdp08, double tempAgr06, double permAgr06,
-			String mesoRegion, String microRegion, String mesoBorder,
-			String microBorder, String name, String centroid) {
+	
+	public MunicipalityDataItem(String uri, String cellURI,
+			double defor2002, double defor2003,
+			double defor2004, double defor2005,
+			double defor2006, double defor2007,
+			double defor2008, String border, 
+			double overlapArea, double overlapRatio,
+			double pop2000, double pop2001, 
+			double pop2002, double pop2003, 
+			double pop2004, double pop2005, 
+			double pop2006, double pop2007, 
+			double pop2008, double pop2009, 
+			double acum2002, double acum2007, 
+			double acum2008, double past06,
+			double soja04, double soja05, 
+			double soja06, double soja07,
+			double soja08, double cattle04,
+			double cattle05, double cattle06, 
+			double cattle07, double cattle08, 
+			double gdp04, double gdp05, 
+			double gdp06, double gdp07,
+			double gdp08,
+			double tempAgr06, double permAgr06, 
+			String mesoRegion, String microRegion,
+			String mesoBorder, String microBorder,
+			String name, String centroid) {
 		super();
 		this.uri = uri;
 		this.cellURI.add(cellURI);
@@ -105,32 +115,32 @@ public class MunicipalityDataItem implements Comparable<MunicipalityDataItem> {
 		this.acum2007.add(acum2007);
 		this.acum2008.add(acum2008);
 		this.past06.add(past06);
-		this.soja04 = soja04;
-		this.soja05 = soja05;
-		this.soja06 = soja06;
-		this.soja07 = soja07;
-		this.soja08 = soja08;
+		this.soja04 =soja04;
+		this.soja05 =soja05;
+		this.soja06 =soja06;
+		this.soja07 =soja07;
+		this.soja08 =soja08;
+		
+		this.cattle04 =cattle04;
+		this.cattle05 =cattle05;
+		this.cattle06 =cattle06;
+		this.cattle07 =cattle07;
+		this.cattle08 =cattle08;
 
-		this.cattle04 = cattle04;
-		this.cattle05 = cattle05;
-		this.cattle06 = cattle06;
-		this.cattle07 = cattle07;
-		this.cattle08 = cattle08;
-
-		this.gdp04 = gdp04;
-		this.gdp05 = gdp05;
-		this.gdp06 = gdp06;
-		this.gdp07 = gdp07;
-		this.gdp08 = gdp08;
+		this.gdp04 =gdp04;
+		this.gdp05 =gdp05;
+		this.gdp06 =gdp06;
+		this.gdp07 =gdp07;
+		this.gdp08 =gdp08;
 
 		this.tempAgr06.add(tempAgr06);
 		this.permAgr06.add(permAgr06);
-
+		
 		this.microRegion = microRegion;
 		this.mesoRegion = mesoRegion;
 		this.microBorder = microBorder;
 		this.mesoBorder = mesoBorder;
-
+		
 		this.overlapArea.add(overlapArea);
 		this.overlapPercentage.add(overlapRatio);
 		this.border = border;
@@ -149,13 +159,16 @@ public class MunicipalityDataItem implements Comparable<MunicipalityDataItem> {
 		numberOfCells = 1;
 	}
 
-	public void addEntry(String cellURI, double defor2002, double defor2003,
-			double defor2004, double defor2005, double defor2006,
-			double defor2007, double defor2008, double overlapArea,
-			double overlapRatio, double acum2002, double acum2007,
-			double acum2008, double past06, double soja04, double tempAgr06,
-			double permAgr06) {
-
+	public void addEntry(String cellURI,
+			double defor2002, double defor2003,
+			double defor2004, double defor2005,
+			double defor2006, double defor2007,
+			double defor2008, double overlapArea, 
+			double overlapRatio, double acum2002 , 
+			double acum2007, double acum2008, 
+			double past06, double soja04, 
+			double tempAgr06, double permAgr06) {
+			
 		this.cellURI.add(cellURI);
 		this.defor2002.add(defor2002);
 		this.defor2003.add(defor2003);
@@ -173,15 +186,19 @@ public class MunicipalityDataItem implements Comparable<MunicipalityDataItem> {
 
 		this.overlapArea.add(overlapArea);
 		this.overlapPercentage.add(overlapRatio);
-		numberOfCells++;
+		numberOfCells ++;
 	}
 
+
+	
+	
 	@Override
-	public int compareTo(MunicipalityDataItem obj) {
-		if (this.uri.equals(((MunicipalityDataItem) obj).getUri())) {
-			return 0;
-		} else {
-			return -1;
+	public int compareTo(Object obj) {
+		if(this.uri.equals(((MunicipalityDataItem) obj).getUri())){
+		return 0;
+		}
+		else{
+		return -1;
 		}
 	}
 
@@ -272,149 +289,147 @@ public class MunicipalityDataItem implements Comparable<MunicipalityDataItem> {
 	public void setOverlapArea(ArrayList<Double> overlapArea) {
 		this.overlapArea = overlapArea;
 	}
-
+	
 	public Double getTotalAcum2002() {
-
+		
 		double totalArea = 0;
 		double acumTimesArea = 0;
-
-		for (int i = 0; i < cellURI.size(); i++) {
-			acumTimesArea += acum2002.get(i) * overlapArea.get(i);
+		
+		for(int i=0; i< cellURI.size();i++){
+			acumTimesArea +=acum2002.get(i) * overlapArea.get(i);
 			totalArea += overlapArea.get(i);
-
+			
 		}
-		double totalAcum2002 = acumTimesArea / totalArea;
-
+		double totalAcum2002 = acumTimesArea/totalArea;
+		
 		return totalAcum2002;
 	}
-
+	
 	public Double getTotalAcum2003() {
-
+		
 		double totalAcum2002 = getTotalAcum2002();
-
-		double rest = 100.0 - totalAcum2002;
-		double totalAcum2003 = totalAcum2002 + rest / 100 * getTotalDefor2003();
-
+		
+		double rest =100.0-totalAcum2002;
+		double totalAcum2003 =totalAcum2002 +rest/100 *getTotalDefor2003();
+		
 		return totalAcum2003;
 	}
-
 	public Double getTotalAcum2004() {
-
+		
 		double totalAcum2003 = getTotalAcum2003();
-
-		double rest = 100.0 - totalAcum2003;
-		double totalAcum2004 = totalAcum2003 + rest / 100 * getTotalDefor2004();
-
+		
+		double rest =100.0-totalAcum2003;
+		double totalAcum2004 =totalAcum2003 +rest/100 *getTotalDefor2004();
+		
 		return totalAcum2004;
 	}
-
 	public Double getTotalAcum2005() {
-
+		
 		double totalAcum2004 = getTotalAcum2004();
-
-		double rest = 100.0 - totalAcum2004;
-		double totalAcum2005 = totalAcum2004 + rest / 100 * getTotalDefor2005();
-
+		
+		double rest =100.0-totalAcum2004;
+		double totalAcum2005 =totalAcum2004 +rest/100 *getTotalDefor2005();
+		
 		return totalAcum2005;
 	}
-
 	public Double getTotalAcum2006() {
-
+		
 		double totalAcum2005 = getTotalAcum2005();
-
-		double rest = 100.0 - totalAcum2005;
-		double totalAcum2006 = totalAcum2005 + rest / 100 * getTotalDefor2006();
-
+		
+		double rest =100.0-totalAcum2005;
+		double totalAcum2006 =totalAcum2005 +rest/100 *getTotalDefor2006();
+		
 		return totalAcum2006;
 	}
-
-	public Double getTotalAcum2007() {
-
+	
+	
+public Double getTotalAcum2007() {
+		
 		double totalArea = 0;
 		double acumTimesArea = 0;
-
-		for (int i = 0; i < cellURI.size(); i++) {
-			acumTimesArea += acum2007.get(i) * overlapArea.get(i);
+		
+		for(int i=0; i< cellURI.size();i++){
+			acumTimesArea +=acum2007.get(i) * overlapArea.get(i);
 			totalArea += overlapArea.get(i);
-
+			
 		}
-		double totalAcum2007 = acumTimesArea / totalArea;
-
+		double totalAcum2007 = acumTimesArea/totalArea;
+		
 		return totalAcum2007;
 	}
 
-	public Double getTotalAcum2008() {
-
-		double totalArea = 0;
-		double acumTimesArea = 0;
-
-		for (int i = 0; i < cellURI.size(); i++) {
-			acumTimesArea += acum2008.get(i) * overlapArea.get(i);
-			totalArea += overlapArea.get(i);
-
-		}
-		double totalAcum2008 = acumTimesArea / totalArea;
-
-		return totalAcum2008;
+public Double getTotalAcum2008() {
+	
+	double totalArea = 0;
+	double acumTimesArea = 0;
+	
+	for(int i=0; i< cellURI.size();i++){
+		acumTimesArea +=acum2008.get(i) * overlapArea.get(i);
+		totalArea += overlapArea.get(i);
+		
 	}
+	double totalAcum2008 = acumTimesArea/totalArea;
+	
+	return totalAcum2008;
+}
 
-	public Double getTotalPast06() {
-
-		double totalArea = 0;
-		double acumTimesArea = 0;
-
-		for (int i = 0; i < cellURI.size(); i++) {
-			acumTimesArea += past06.get(i) * overlapArea.get(i);
-			totalArea += overlapArea.get(i);
-
-		}
-		double past06 = acumTimesArea / totalArea;
-
-		return past06;
+public Double getTotalPast06() {
+	
+	double totalArea = 0;
+	double acumTimesArea = 0;
+	
+	for(int i=0; i< cellURI.size();i++){
+		acumTimesArea +=past06.get(i) * overlapArea.get(i);
+		totalArea += overlapArea.get(i);
+		
 	}
+	double past06 = acumTimesArea/totalArea;
+	
+	return past06;
+}
 
-	public Double getTotalPermAgr06() {
-
-		double totalArea = 0;
-		double acumTimesArea = 0;
-
-		for (int i = 0; i < cellURI.size(); i++) {
-			acumTimesArea += permAgr06.get(i) * overlapArea.get(i);
-			totalArea += overlapArea.get(i);
-
-		}
-		double permAgr06 = acumTimesArea / totalArea;
-
-		return permAgr06;
+public Double getTotalPermAgr06() {
+	
+	double totalArea = 0;
+	double acumTimesArea = 0;
+	
+	for(int i=0; i< cellURI.size();i++){
+		acumTimesArea +=permAgr06.get(i) * overlapArea.get(i);
+		totalArea += overlapArea.get(i);
+		
 	}
+	double permAgr06 = acumTimesArea/totalArea;
+	
+	return permAgr06;
+}
 
-	public Double getTotalTempAgr06() {
-
-		double totalArea = 0;
-		double acumTimesArea = 0;
-
-		for (int i = 0; i < cellURI.size(); i++) {
-			acumTimesArea += tempAgr06.get(i) * overlapArea.get(i);
-			totalArea += overlapArea.get(i);
-
-		}
-		double tempAgr06 = acumTimesArea / totalArea;
-
-		return tempAgr06;
+public Double getTotalTempAgr06() {
+	
+	double totalArea = 0;
+	double acumTimesArea = 0;
+	
+	for(int i=0; i< cellURI.size();i++){
+		acumTimesArea +=tempAgr06.get(i) * overlapArea.get(i);
+		totalArea += overlapArea.get(i);
+		
 	}
+	double tempAgr06 = acumTimesArea/totalArea;
+	
+	return tempAgr06;
+}
 
 	public Double getTotalDefor2002() {
-
+		
 		double totalArea = 0;
 		double deforTimesArea = 0;
-
-		for (int i = 0; i < cellURI.size(); i++) {
-			deforTimesArea += defor2002.get(i) * overlapArea.get(i);
+		
+		for(int i=0; i< cellURI.size();i++){
+			deforTimesArea +=defor2002.get(i) * overlapArea.get(i);
 			totalArea += overlapArea.get(i);
-
+			
 		}
-		totalDefor2002 = deforTimesArea / totalArea;
-
+		totalDefor2002 = deforTimesArea/totalArea;
+		
 		return totalDefor2002;
 	}
 
@@ -425,14 +440,15 @@ public class MunicipalityDataItem implements Comparable<MunicipalityDataItem> {
 	public Double getTotalDefor2003() {
 		double totalArea = 0;
 		double deforTimesArea = 0;
-
-		for (int i = 0; i < cellURI.size(); i++) {
-			deforTimesArea += defor2003.get(i) * overlapArea.get(i);
+		
+		for(int i=0; i< cellURI.size();i++){
+			deforTimesArea +=defor2003.get(i) * overlapArea.get(i);
 			totalArea += overlapArea.get(i);
-
+			
 		}
-		totalDefor2003 = deforTimesArea / totalArea;
-
+		totalDefor2003 = deforTimesArea/totalArea;
+		
+		
 		return totalDefor2003;
 	}
 
@@ -443,14 +459,15 @@ public class MunicipalityDataItem implements Comparable<MunicipalityDataItem> {
 	public Double getTotalDefor2004() {
 		double totalArea = 0;
 		double deforTimesArea = 0;
-
-		for (int i = 0; i < cellURI.size(); i++) {
-			deforTimesArea += defor2004.get(i) * overlapArea.get(i);
+		
+		for(int i=0; i< cellURI.size();i++){
+			deforTimesArea +=defor2004.get(i) * overlapArea.get(i);
 			totalArea += overlapArea.get(i);
-
+			
 		}
-		totalDefor2004 = deforTimesArea / totalArea;
-
+		totalDefor2004 = deforTimesArea/totalArea;
+		
+		
 		return totalDefor2004;
 	}
 
@@ -461,14 +478,15 @@ public class MunicipalityDataItem implements Comparable<MunicipalityDataItem> {
 	public Double getTotalDefor2005() {
 		double totalArea = 0;
 		double deforTimesArea = 0;
-
-		for (int i = 0; i < cellURI.size(); i++) {
-			deforTimesArea += defor2005.get(i) * overlapArea.get(i);
+		
+		for(int i=0; i< cellURI.size();i++){
+			deforTimesArea +=defor2005.get(i) * overlapArea.get(i);
 			totalArea += overlapArea.get(i);
-
+			
 		}
-		totalDefor2005 = deforTimesArea / totalArea;
-
+		totalDefor2005 = deforTimesArea/totalArea;
+		
+		
 		return totalDefor2005;
 	}
 
@@ -479,14 +497,15 @@ public class MunicipalityDataItem implements Comparable<MunicipalityDataItem> {
 	public Double getTotalDefor2006() {
 		double totalArea = 0;
 		double deforTimesArea = 0;
-
-		for (int i = 0; i < cellURI.size(); i++) {
-			deforTimesArea += defor2006.get(i) * overlapArea.get(i);
+		
+		for(int i=0; i< cellURI.size();i++){
+			deforTimesArea +=defor2006.get(i) * overlapArea.get(i);
 			totalArea += overlapArea.get(i);
-
+			
 		}
-		totalDefor2006 = deforTimesArea / totalArea;
-
+		totalDefor2006 = deforTimesArea/totalArea;
+		
+		
 		return totalDefor2006;
 	}
 
@@ -497,14 +516,15 @@ public class MunicipalityDataItem implements Comparable<MunicipalityDataItem> {
 	public Double getTotalDefor2007() {
 		double totalArea = 0;
 		double deforTimesArea = 0;
-
-		for (int i = 0; i < cellURI.size(); i++) {
-			deforTimesArea += defor2007.get(i) * overlapArea.get(i);
+		
+		for(int i=0; i< cellURI.size();i++){
+			deforTimesArea +=defor2007.get(i) * overlapArea.get(i);
 			totalArea += overlapArea.get(i);
-
+			
 		}
-		totalDefor2007 = deforTimesArea / totalArea;
-
+		totalDefor2007 = deforTimesArea/totalArea;
+		
+		
 		return totalDefor2007;
 	}
 
@@ -515,14 +535,15 @@ public class MunicipalityDataItem implements Comparable<MunicipalityDataItem> {
 	public Double getTotalDefor2008() {
 		double totalArea = 0;
 		double deforTimesArea = 0;
-
-		for (int i = 0; i < cellURI.size(); i++) {
-			deforTimesArea += defor2008.get(i) * overlapArea.get(i);
+		
+		for(int i=0; i< cellURI.size();i++){
+			deforTimesArea +=defor2008.get(i) * overlapArea.get(i);
 			totalArea += overlapArea.get(i);
-
+			
 		}
-		totalDefor2008 = deforTimesArea / totalArea;
-
+		totalDefor2008 = deforTimesArea/totalArea;
+		
+		
 		return totalDefor2008;
 	}
 
@@ -653,6 +674,8 @@ public class MunicipalityDataItem implements Comparable<MunicipalityDataItem> {
 	public void setTotalDefor2008(double totalDefor2008) {
 		this.totalDefor2008 = totalDefor2008;
 	}
+
+
 
 	public ArrayList<Double> getAcum2002() {
 		return acum2002;
@@ -815,10 +838,10 @@ public class MunicipalityDataItem implements Comparable<MunicipalityDataItem> {
 	}
 
 	public double getArea() {
-		double tempArea = 0;
-		for (double area : overlapArea)
-			tempArea += area;
-		this.area = tempArea;
+		double tempArea =0;
+		for(double area: overlapArea)
+			tempArea +=area;
+		this.area= tempArea;
 		return tempArea;
 	}
 
@@ -882,4 +905,5 @@ public class MunicipalityDataItem implements Comparable<MunicipalityDataItem> {
 		this.centroid = centroid;
 	}
 
+	
 }

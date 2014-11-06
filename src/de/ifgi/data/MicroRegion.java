@@ -1,11 +1,7 @@
 package de.ifgi.data;
 
 import java.util.ArrayList;
-/**
- * 
- * @author Umut Tas
- *
- */
+
 public class MicroRegion {
 
 	private String border;

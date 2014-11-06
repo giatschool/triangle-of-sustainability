@@ -37,6 +37,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.awt.Toolkit;
 
 import javax.imageio.ImageIO;
 
@@ -167,7 +168,7 @@ public class Skeletons {
 				userGen.getNewUserEvent().addObserver(new NewUserObserver()); // new
 																				// user
 																				// found
-//				userGen.getLostUserEvent().addObserver(new LostUserObserver()); // lost
+				userGen.getLostUserEvent().addObserver(new LostUserObserver()); // lost
 																				// a
 																				// user
 
@@ -193,6 +194,7 @@ public class Skeletons {
 	{
 		if (userE == false && userL == false)
 			user1 = false;
+//		if(userE == false && userL == true)Toolkit.getDefaultToolkit().beep();
 		System.out.println("User1: " + user1);
 		System.out.println("UserE: " + userE);
 		System.out.println("UserL: " + userL);
@@ -572,7 +574,7 @@ public class Skeletons {
 					gestSeqs.addUser(userID);
 					user1 = true;
 					userE = true;
-//					userL = true;
+					userL = true;
 				} else
 					// calibration failed; return to pose detection
 					poseDetectionCap.StartPoseDetection(calibPoseName, userID); // big-S

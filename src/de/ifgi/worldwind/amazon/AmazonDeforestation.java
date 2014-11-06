@@ -136,17 +136,17 @@ public class AmazonDeforestation {
 
 			/*
 			 * 
-			 * FÃ¼r die Seiten
+			 * für die Seiten
 			 */
 
 //			 addGDPlayer(dataR); //economical
 
 			 addLanduseLayer(dataR); // ecological
 
-			 // year2002 = true;		   //social
-			 // addAcumPoplayer(dataR); //social
+//			  year2002 = true;		   //social
+//			  addAcumPoplayer(dataR); //social
 
-//			updater.start();
+			updater.start();
 			removeCompass(this.getWwd());
 
 			initKinectHandler();

@@ -1,4 +1,4 @@
-package de.ifgi.worldwind.amazon;
+package de.ifgi.worldwind.htc;
 
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.awt.WorldWindowGLCanvas;
@@ -12,7 +12,7 @@ import gov.nasa.worldwind.view.orbit.OrbitView;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 
-import de.ifgi.worldwind.amazon.AmazonDeforestation.AppFrame;
+import de.ifgi.worldwind.htc.HelloWorldWind.AppFrame;
 
 public class AppFrameController {
 
@@ -28,6 +28,7 @@ public class AppFrameController {
 		this.view = (OrbitView)canvas.getView();
 	}
 	
+
 	public void center(LatLon center){
 		Angle lat=center.getLatitude();
 		Angle lon=center.getLongitude();
@@ -52,11 +53,11 @@ public class AppFrameController {
 		 setCenterLatLon(
                  this.view.getCenterPosition().getLatitude().add(prevPosition.getLatitude()).subtract(curPosition.getLatitude()),
                  this.view.getCenterPosition().getLongitude().add(prevPosition.getLongitude()).subtract(curPosition.getLongitude()));
-//  		System.out.println("pan position");
+//		System.out.println("pan position");
 	}
 	
 	
-	public synchronized void pan(double moveY, double moveX){
+	public void pan(double moveY, double moveX){
 		double sinHeading = view.getHeading().sin();
 		double cosHeading = view.getHeading().cos();
 		double latFactor = (cosHeading * moveY + sinHeading * moveX) / 10.0;
@@ -76,16 +77,16 @@ public class AppFrameController {
 		
 	}
 
-	public synchronized void zoom(double ratio){
+	public void zoom(double ratio){
 		if (this.view == null)
             return;
 		
 		final double zoomFactor = this.view.getZoom();
-//		System.out.println(zoomFactor);
-		int newzoom = (int) (zoomFactor*ratio);
+		System.out.println(zoomFactor);
+		
      //   this.view.stopStateIterators();
-		if(newzoom >= 1071941 && newzoom <= 18437542){
-		    this.view.setZoom(newzoom);
+		if(zoomFactor > 10 && zoomFactor < 18437542){
+		    this.view.setZoom(zoomFactor*ratio);
 		    this.view.firePropertyChange(AVKey.VIEW, null, this.view);
 		}
 //        System.out.println("zoom");
@@ -253,362 +254,157 @@ public class AppFrameController {
 	
 	
 	public void yearForward() {
-		
-		if (appFrame.isYear2002()){
 
 		if (appFrame.getLayerChanger() == 0) {
 			appFrame.getWwd().getModel().getLayers()
-					.remove(appFrame.getAma2002());
+					.remove(appFrame.getAmaPopAcumLayer2002());
 			appFrame.getWwd().getModel().getLayers()
 					.remove(appFrame.getAnoLayer2002());
-			appFrame.getWwd().getModel().getLayers()
-			.remove(appFrame.getGeneralAnoLayer2002());
-
 
 			appFrame.getWwd().getModel().getLayers()
-					.add(appFrame.getAma2003());
+					.add(appFrame.getAmaPopAcumLayer2003());
 			appFrame.getWwd().getModel().getLayers()
 					.add(appFrame.getAnoLayer2003());
-			appFrame.getWwd().getModel().getLayers()
-			.add(appFrame.getGeneralAnoLayer2003());
 			appFrame.setLayerChanger(appFrame.getLayerChanger() + 1);
-			
 		} else if (appFrame.getLayerChanger() == 1) {
 			appFrame.getWwd().getModel().getLayers()
-					.remove(appFrame.getAma2003());
+					.remove(appFrame.getAmaPopAcumLayer2003());
 			appFrame.getWwd().getModel().getLayers()
 					.remove(appFrame.getAnoLayer2003());
-			appFrame.getWwd().getModel().getLayers()
-			.remove(appFrame.getGeneralAnoLayer2003());
 
 			appFrame.getWwd().getModel().getLayers()
-					.add(appFrame.getAma2004());
+					.add(appFrame.getAmaPopAcumLayer2004());
 			appFrame.getWwd().getModel().getLayers()
 					.add(appFrame.getAnoLayer2004());
-			appFrame.getWwd().getModel().getLayers()
-			.add(appFrame.getGeneralAnoLayer2004());
 			appFrame.setLayerChanger(appFrame.getLayerChanger() + 1);
 
 		} else if (appFrame.getLayerChanger() == 2) {
 			appFrame.getWwd().getModel().getLayers()
-					.remove(appFrame.getAma2004());
+					.remove(appFrame.getAmaPopAcumLayer2004());
 			appFrame.getWwd().getModel().getLayers()
 					.remove(appFrame.getAnoLayer2004());
-			appFrame.getWwd().getModel().getLayers()
-			.remove(appFrame.getGeneralAnoLayer2004());
 
 			appFrame.getWwd().getModel().getLayers()
-					.add(appFrame.getAma2005());
+					.add(appFrame.getAmaPopAcumLayer2005());
 			appFrame.getWwd().getModel().getLayers()
 					.add(appFrame.getAnoLayer2005());
-			appFrame.getWwd().getModel().getLayers()
-			.add(appFrame.getGeneralAnoLayer2005());
 			appFrame.setLayerChanger(appFrame.getLayerChanger() + 1);
 
 		} else if (appFrame.getLayerChanger() == 3) {
 			appFrame.getWwd().getModel().getLayers()
-					.remove(appFrame.getAma2005());
+					.remove(appFrame.getAmaPopAcumLayer2005());
 			appFrame.getWwd().getModel().getLayers()
 					.remove(appFrame.getAnoLayer2005());
-			appFrame.getWwd().getModel().getLayers()
-			.remove(appFrame.getGeneralAnoLayer2005());
 
 			appFrame.getWwd().getModel().getLayers()
-					.add(appFrame.getAma2006());
+					.add(appFrame.getAmaPopAcumLayer2006());
 			appFrame.getWwd().getModel().getLayers()
 					.add(appFrame.getAnoLayer2006());
-			appFrame.getWwd().getModel().getLayers()
-			.add(appFrame.getGeneralAnoLayer2006());
-			
 			appFrame.setLayerChanger(appFrame.getLayerChanger() + 1);
 
 		} else if (appFrame.getLayerChanger() == 4) {
 			appFrame.getWwd().getModel().getLayers()
-					.remove(appFrame.getAma2006());
+					.remove(appFrame.getAmaPopAcumLayer2006());
 			appFrame.getWwd().getModel().getLayers()
 					.remove(appFrame.getAnoLayer2006());
-			appFrame.getWwd().getModel().getLayers()
-			.remove(appFrame.getGeneralAnoLayer2006());
 
 			appFrame.getWwd().getModel().getLayers()
-					.add(appFrame.getAma2007());
+					.add(appFrame.getAmaPopAcumLayer2007());
 			appFrame.getWwd().getModel().getLayers()
 					.add(appFrame.getAnoLayer2007());
-			appFrame.getWwd().getModel().getLayers()
-			.add(appFrame.getGeneralAnoLayer2007());
 			appFrame.setLayerChanger(appFrame.getLayerChanger() + 1);
 
 		} else if (appFrame.getLayerChanger() == 5) {
 			appFrame.getWwd().getModel().getLayers()
-					.remove(appFrame.getAma2007());
+					.remove(appFrame.getAmaPopAcumLayer2007());
 			appFrame.getWwd().getModel().getLayers()
 					.remove(appFrame.getAnoLayer2007());
-			appFrame.getWwd().getModel().getLayers()
-			.remove(appFrame.getGeneralAnoLayer2007());
 
 			appFrame.getWwd().getModel().getLayers()
-					.add(appFrame.getAma2008());
+					.add(appFrame.getAmaPopAcumLayer2008());
 			appFrame.getWwd().getModel().getLayers()
 					.add(appFrame.getAnoLayer2008());
-			appFrame.getWwd().getModel().getLayers()
-			.add(appFrame.getGeneralAnoLayer2008());
 			appFrame.setLayerChanger(appFrame.getLayerChanger() + 1);
 
 		} else if (appFrame.getLayerChanger() == 6) {
 			appFrame.getWwd().getModel().getLayers()
-					.remove(appFrame.getAma2008());
+					.remove(appFrame.getAmaPopAcumLayer2008());
 			appFrame.getWwd().getModel().getLayers()
 					.remove(appFrame.getAnoLayer2008());
-			appFrame.getWwd().getModel().getLayers()
-			.remove(appFrame.getGeneralAnoLayer2008());
 
 			appFrame.getWwd().getModel().getLayers()
-					.add(appFrame.getAma2002());
+					.add(appFrame.getAmaPopAcumLayer2002());
 			appFrame.getWwd().getModel().getLayers()
 					.add(appFrame.getAnoLayer2002());
-			appFrame.getWwd().getModel().getLayers()
-			.add(appFrame.getGeneralAnoLayer2002());
 			appFrame.setLayerChanger(0);
-		}
-		}
-		else{
-			
-
-			if (appFrame.getLayerChanger() == 0) {
-				appFrame.getWwd().getModel().getLayers()
-						.remove(appFrame.getAma2004());
-				appFrame.getWwd().getModel().getLayers()
-						.remove(appFrame.getAnoLayer2004());
-				appFrame.getWwd().getModel().getLayers()
-				.remove(appFrame.getGeneralAnoLayer2004());
-
-				appFrame.getWwd().getModel().getLayers()
-						.add(appFrame.getAma2005());
-				appFrame.getWwd().getModel().getLayers()
-						.add(appFrame.getAnoLayer2005());
-				appFrame.getWwd().getModel().getLayers()
-				.add(appFrame.getGeneralAnoLayer2005());
-				appFrame.setLayerChanger(appFrame.getLayerChanger() + 1);
-
-			} else if (appFrame.getLayerChanger() == 1) {
-				appFrame.getWwd().getModel().getLayers()
-						.remove(appFrame.getAma2005());
-				appFrame.getWwd().getModel().getLayers()
-						.remove(appFrame.getAnoLayer2005());
-				appFrame.getWwd().getModel().getLayers()
-				.remove(appFrame.getGeneralAnoLayer2005());
-
-				appFrame.getWwd().getModel().getLayers()
-						.add(appFrame.getAma2006());
-				appFrame.getWwd().getModel().getLayers()
-						.add(appFrame.getAnoLayer2006());
-				appFrame.getWwd().getModel().getLayers()
-				.add(appFrame.getGeneralAnoLayer2006());
-				appFrame.setLayerChanger(appFrame.getLayerChanger() + 1);
-
-			} else if (appFrame.getLayerChanger() == 2) {
-				appFrame.getWwd().getModel().getLayers()
-						.remove(appFrame.getAma2006());
-				appFrame.getWwd().getModel().getLayers()
-						.remove(appFrame.getAnoLayer2006());
-				appFrame.getWwd().getModel().getLayers()
-				.remove(appFrame.getGeneralAnoLayer2006());
-
-				appFrame.getWwd().getModel().getLayers()
-						.add(appFrame.getAma2007());
-				appFrame.getWwd().getModel().getLayers()
-						.add(appFrame.getAnoLayer2007());
-				appFrame.getWwd().getModel().getLayers()
-				.add(appFrame.getGeneralAnoLayer2007());
-				appFrame.setLayerChanger(appFrame.getLayerChanger() + 1);
-
-			} else if (appFrame.getLayerChanger() == 3) {
-				appFrame.getWwd().getModel().getLayers()
-						.remove(appFrame.getAma2007());
-				appFrame.getWwd().getModel().getLayers()
-						.remove(appFrame.getAnoLayer2007());
-				appFrame.getWwd().getModel().getLayers()
-				.remove(appFrame.getGeneralAnoLayer2007());
-
-				appFrame.getWwd().getModel().getLayers()
-						.add(appFrame.getAma2008());
-				appFrame.getWwd().getModel().getLayers()
-						.add(appFrame.getAnoLayer2008());
-				appFrame.getWwd().getModel().getLayers()
-				.add(appFrame.getGeneralAnoLayer2008());
-				appFrame.setLayerChanger(appFrame.getLayerChanger() + 1);
-
-			} else if (appFrame.getLayerChanger() == 4) {
-				appFrame.getWwd().getModel().getLayers()
-						.remove(appFrame.getAma2008());
-				appFrame.getWwd().getModel().getLayers()
-						.remove(appFrame.getAnoLayer2008());
-				appFrame.getWwd().getModel().getLayers()
-				.remove(appFrame.getGeneralAnoLayer2008());
-
-				appFrame.getWwd().getModel().getLayers()
-						.add(appFrame.getAma2004());
-				appFrame.getWwd().getModel().getLayers()
-						.add(appFrame.getAnoLayer2004());
-				appFrame.getWwd().getModel().getLayers()
-				.add(appFrame.getGeneralAnoLayer2004());
-				appFrame.setLayerChanger(0);
-			}
 		}
 
 	}
 	
 	public void yearBackward(){
 		
-	if(appFrame.isYear2002()){
-		
 	      if( appFrame.getLayerChanger()==0){
-	      appFrame.getWwd().getModel().getLayers().remove(appFrame.getAma2002());
+	      appFrame.getWwd().getModel().getLayers().remove(appFrame.getAmaPopAcumLayer2002());
 	      appFrame.getWwd().getModel().getLayers().remove(appFrame.getAnoLayer2002());
-	      appFrame.getWwd().getModel().getLayers().remove(appFrame.getGeneralAnoLayer2002());
-	      
-	      appFrame.getWwd().getModel().getLayers().add(appFrame.getAma2008());
+	     
+	      appFrame.getWwd().getModel().getLayers().add(appFrame.getAmaPopAcumLayer2008());
 	      appFrame.getWwd().getModel().getLayers().add(appFrame.getAnoLayer2008());
-	      appFrame.getWwd().getModel().getLayers().add(appFrame.getGeneralAnoLayer2008());
-
 	      appFrame.setLayerChanger(6);
 	  }
 	  else if( appFrame.getLayerChanger()==1){
-		  appFrame.getWwd().getModel().getLayers().remove(appFrame.getAma2003());
+		  appFrame.getWwd().getModel().getLayers().remove(appFrame.getAmaPopAcumLayer2003());
 		  appFrame.getWwd().getModel().getLayers().remove(appFrame.getAnoLayer2003());
-	      appFrame.getWwd().getModel().getLayers().remove(appFrame.getGeneralAnoLayer2003());
-
-		  appFrame.getWwd().getModel().getLayers().add(appFrame.getAma2002());
+	     
+		  appFrame.getWwd().getModel().getLayers().add(appFrame.getAmaPopAcumLayer2002());
 		  appFrame.getWwd().getModel().getLayers().add(appFrame.getAnoLayer2002());
-	      appFrame.getWwd().getModel().getLayers().add(appFrame.getGeneralAnoLayer2002());
-
 	      appFrame.setLayerChanger( appFrame.getLayerChanger()-1);
 
 	  }
 	  else if( appFrame.getLayerChanger()==2){
-		  appFrame.getWwd().getModel().getLayers().remove(appFrame.getAma2004());
+		  appFrame.getWwd().getModel().getLayers().remove(appFrame.getAmaPopAcumLayer2004());
 		  appFrame.getWwd().getModel().getLayers().remove(appFrame.getAnoLayer2004());
-	      appFrame.getWwd().getModel().getLayers().remove(appFrame.getGeneralAnoLayer2004());
-
-		  appFrame.getWwd().getModel().getLayers().add(appFrame.getAma2003());
+	     
+		  appFrame.getWwd().getModel().getLayers().add(appFrame.getAmaPopAcumLayer2003());
 		  appFrame.getWwd().getModel().getLayers().add(appFrame.getAnoLayer2003());
-	      appFrame.getWwd().getModel().getLayers().add(appFrame.getGeneralAnoLayer2003());
-
-		  appFrame.setLayerChanger( appFrame.getLayerChanger()-1);
+	      appFrame.setLayerChanger( appFrame.getLayerChanger()-1);
 
 	  }
 	  else if( appFrame.getLayerChanger()==3){
-		  appFrame.getWwd().getModel().getLayers().remove(appFrame.getAma2005());
+		  appFrame.getWwd().getModel().getLayers().remove(appFrame.getAmaPopAcumLayer2005());
 		  appFrame.getWwd().getModel().getLayers().remove(appFrame.getAnoLayer2005());
-	      appFrame.getWwd().getModel().getLayers().remove(appFrame.getGeneralAnoLayer2005());
-
-		  appFrame.getWwd().getModel().getLayers().add(appFrame.getAma2004());
+	     
+		  appFrame.getWwd().getModel().getLayers().add(appFrame.getAmaPopAcumLayer2004());
 	      appFrame.getWwd().getModel().getLayers().add(appFrame.getAnoLayer2004());
-	      appFrame.getWwd().getModel().getLayers().add(appFrame.getGeneralAnoLayer2004());
-
 	      appFrame.setLayerChanger( appFrame.getLayerChanger()-1);
 
 	  }
 	  else if( appFrame.getLayerChanger()==4){
-		  appFrame.getWwd().getModel().getLayers().remove(appFrame.getAma2006());
+		  appFrame.getWwd().getModel().getLayers().remove(appFrame.getAmaPopAcumLayer2006());
 		  appFrame.getWwd().getModel().getLayers().remove(appFrame.getAnoLayer2006());
-	      appFrame.getWwd().getModel().getLayers().remove(appFrame.getGeneralAnoLayer2006());
-
-		  appFrame.getWwd().getModel().getLayers().add(appFrame.getAma2005());
+	     
+		  appFrame.getWwd().getModel().getLayers().add(appFrame.getAmaPopAcumLayer2005());
 		  appFrame.getWwd().getModel().getLayers().add(appFrame.getAnoLayer2005());
-	      appFrame.getWwd().getModel().getLayers().add(appFrame.getGeneralAnoLayer2005());
-
 	      appFrame.setLayerChanger( appFrame.getLayerChanger()-1);
 
 	  }
 	  else if( appFrame.getLayerChanger()==5){
-		  appFrame.getWwd().getModel().getLayers().remove(appFrame.getAma2007());
+		  appFrame.getWwd().getModel().getLayers().remove(appFrame.getAmaPopAcumLayer2007());
 		  appFrame.getWwd().getModel().getLayers().remove(appFrame.getAnoLayer2007());
-	      appFrame.getWwd().getModel().getLayers().remove(appFrame.getGeneralAnoLayer2007());
-
 	     
-		  appFrame.getWwd().getModel().getLayers().add(appFrame.getAma2006());
+		  appFrame.getWwd().getModel().getLayers().add(appFrame.getAmaPopAcumLayer2006());
 		  appFrame.getWwd().getModel().getLayers().add(appFrame.getAnoLayer2006());
-	      appFrame.getWwd().getModel().getLayers().add(appFrame.getGeneralAnoLayer2006());
-
 	      appFrame.setLayerChanger( appFrame.getLayerChanger()-1);
 
 	  }
 	  else if(appFrame.getLayerChanger() ==6){
-		  appFrame.getWwd().getModel().getLayers().remove(appFrame.getAma2008());
+		  appFrame.getWwd().getModel().getLayers().remove(appFrame.getAmaPopAcumLayer2008());
 		  appFrame.getWwd().getModel().getLayers().remove(appFrame.getAnoLayer2008());
-	      appFrame.getWwd().getModel().getLayers().remove(appFrame.getGeneralAnoLayer2008());
-
 	     
-		  appFrame.getWwd().getModel().getLayers().add(appFrame.getAma2007());
+		  appFrame.getWwd().getModel().getLayers().add(appFrame.getAmaPopAcumLayer2007());
 		  appFrame.getWwd().getModel().getLayers().add(appFrame.getAnoLayer2007());
-	      appFrame.getWwd().getModel().getLayers().add(appFrame.getGeneralAnoLayer2007());
-
 	      appFrame.setLayerChanger(appFrame.getLayerChanger()-1);
 	  }
 
-	}
-	else{
-		   if( appFrame.getLayerChanger()==0){
-			  appFrame.getWwd().getModel().getLayers().remove(appFrame.getAma2004());
-			  appFrame.getWwd().getModel().getLayers().remove(appFrame.getAnoLayer2004());
-		      appFrame.getWwd().getModel().getLayers().remove(appFrame.getGeneralAnoLayer2004());
-
-			  appFrame.getWwd().getModel().getLayers().add(appFrame.getAma2008());
-			  appFrame.getWwd().getModel().getLayers().add(appFrame.getAnoLayer2008());
-		      appFrame.getWwd().getModel().getLayers().add(appFrame.getGeneralAnoLayer2008());
-
-		      appFrame.setLayerChanger( 4);
-
-		  }
-		  else if( appFrame.getLayerChanger()==1){
-			  appFrame.getWwd().getModel().getLayers().remove(appFrame.getAma2005());
-			  appFrame.getWwd().getModel().getLayers().remove(appFrame.getAnoLayer2005());
-		      appFrame.getWwd().getModel().getLayers().remove(appFrame.getGeneralAnoLayer2005());
-
-			  appFrame.getWwd().getModel().getLayers().add(appFrame.getAma2004());
-		      appFrame.getWwd().getModel().getLayers().add(appFrame.getAnoLayer2004());
-		      appFrame.getWwd().getModel().getLayers().add(appFrame.getGeneralAnoLayer2004());
-
-		      appFrame.setLayerChanger( appFrame.getLayerChanger()-1);
-
-		  }
-		  else if( appFrame.getLayerChanger()==2){
-			  appFrame.getWwd().getModel().getLayers().remove(appFrame.getAma2006());
-			  appFrame.getWwd().getModel().getLayers().remove(appFrame.getAnoLayer2006());
-		      appFrame.getWwd().getModel().getLayers().remove(appFrame.getGeneralAnoLayer2006());
-
-			  appFrame.getWwd().getModel().getLayers().add(appFrame.getAma2005());
-			  appFrame.getWwd().getModel().getLayers().add(appFrame.getAnoLayer2005());
-		      appFrame.getWwd().getModel().getLayers().add(appFrame.getGeneralAnoLayer2005());
-
-			  appFrame.setLayerChanger( appFrame.getLayerChanger()-1);
-
-		  }
-		  else if( appFrame.getLayerChanger()==3){
-			  appFrame.getWwd().getModel().getLayers().remove(appFrame.getAma2007());
-			  appFrame.getWwd().getModel().getLayers().remove(appFrame.getAnoLayer2007());
-		      appFrame.getWwd().getModel().getLayers().remove(appFrame.getGeneralAnoLayer2007());
-
-			  appFrame.getWwd().getModel().getLayers().add(appFrame.getAma2006());
-			  appFrame.getWwd().getModel().getLayers().add(appFrame.getAnoLayer2006());
-		      appFrame.getWwd().getModel().getLayers().add(appFrame.getGeneralAnoLayer2006());
-
-			  appFrame.setLayerChanger( appFrame.getLayerChanger()-1);
-
-		  }
-		  else if(appFrame.getLayerChanger() ==4){
-			  appFrame.getWwd().getModel().getLayers().remove(appFrame.getAma2008());
-			  appFrame.getWwd().getModel().getLayers().remove(appFrame.getAnoLayer2008());
-		      appFrame.getWwd().getModel().getLayers().remove(appFrame.getGeneralAnoLayer2008());
-
-			  appFrame.getWwd().getModel().getLayers().add(appFrame.getAma2007());
-			  appFrame.getWwd().getModel().getLayers().add(appFrame.getAnoLayer2007());
-		      appFrame.getWwd().getModel().getLayers().add(appFrame.getGeneralAnoLayer2007());
-
-			  appFrame.setLayerChanger(appFrame.getLayerChanger()-1);
-		  }
-	}
 			
 		}
 	
