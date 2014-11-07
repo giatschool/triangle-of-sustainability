@@ -147,8 +147,8 @@ public class SkeletonKinectHandler extends JPanel implements Runnable,
 
 			DepthGenerator depthGen = DepthGenerator.create(context);
 			MapOutputMode mapMode = new MapOutputMode(640, 480, 30); // xRes,
-																		// yRes,
-																		// FPS
+			// yRes,
+			// FPS
 			imageGen.setMapOutputMode(mapMode);
 			depthGen.setMapOutputMode(mapMode);
 
@@ -234,27 +234,28 @@ public class SkeletonKinectHandler extends JPanel implements Runnable,
 	public void paintComponent(Graphics g)
 	// Draw the depth image with coloured users, skeletons, and statistics info
 	{
-//		super.paintComponent(g);
+		// super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
 		if (image != null)
-//			g2d.drawImage(image, 0, 0, this); // draw camera's image
-		g2d.drawImage(image, 0, 0, 224, 168, 0, 0, 640, 480,null);
-
-		if(skels.firstSkeletonIsReady()){
+			// g2d.drawImage(image, 0, 0, this); // draw camera's image
+			g2d.drawImage(image, 0, 0, 224, 168, 0, 0, 640, 480, null);
+		// g2d.drawImage(image, 0, 0, 0, 0, 0, 0, 640, 480, null);
+		if (skels.firstSkeletonIsReady()) {
 			skelimg = new BufferedImage(640, 480, image.getType());
 			skels.draw(skelimg.createGraphics());
-			g2d.drawImage(skelimg, 0, 0, 224, 168, 0, 0, 640, 480,null);
-		}else{
+			g2d.drawImage(skelimg, 0, 0, 224, 168, 0, 0, 640, 480, null);
+			// g2d.drawImage(skelimg, 0, 0, 0, 0, 0, 0, 640, 480, null);
+		} else {
 			g2d.setColor(Color.RED);
 			g2d.setStroke(new BasicStroke(10));
-			g2d.drawRect(5,5, 214, 158);
+			g2d.drawRect(5, 5, 214, 158);
 		}
-		
+
 		// drawUserDepths(g2d);
-		
+
 	} // end of paintComponent()
 
 	private void drawUserDepths(Graphics2D g2d)
@@ -571,12 +572,11 @@ public class SkeletonKinectHandler extends JPanel implements Runnable,
 				}
 			}
 			canvas.redraw();
-		}else{
-//			controller.flyToPosition(AppFrame.MS_POS, AppFrame.GLOBE_ZOOM);
+		} else {
+			// controller.flyToPosition(AppFrame.MS_POS, AppFrame.GLOBE_ZOOM);
 		}
-		
-	}
 
+	}
 
 	private void calcHistogram(ShortBuffer depthBuf) {
 		// reset histogram

@@ -164,7 +164,7 @@ public class Skeletons {
 			skelCap.setSmoothing(0.2f);
 
 			// set up four observers
-			if (user1 == false) { 
+			if (user1 == false) {
 				userGen.getNewUserEvent().addObserver(new NewUserObserver()); // new
 																				// user
 																				// found
@@ -180,7 +180,7 @@ public class Skeletons {
 
 				skelCap.getCalibrationCompleteEvent().addObserver(
 						new CalibrationCompleteObserver());
-			} 
+			}
 		} catch (Exception e) {
 			System.out.println(e);
 			System.exit(1);
@@ -192,12 +192,14 @@ public class Skeletons {
 	public void update()
 	// update skeleton of each user
 	{
-		if (userE == false && userL == false)
-			user1 = false;
-//		if(userE == false && userL == true)Toolkit.getDefaultToolkit().beep();
+		 if (userE == false && userL == false)
+		 user1 = false;
+		 
 		System.out.println("User1: " + user1);
 		System.out.println("UserE: " + userE);
 		System.out.println("UserL: " + userL);
+//		if(userE == false && userL ==
+//				 true)Toolkit.getDefaultToolkit().beep();
 		try {
 			int[] userIDs = userGen.getUsers(); // there may be many users in
 												// the scene
@@ -621,8 +623,8 @@ public class Skeletons {
 		Point3D leftHand = getJointPos(userSkels.get(userID),
 				SkeletonJoint.LEFT_HAND);
 		Point3D leftElbow = getJointPos(userSkels.get(userID),
-				
-				SkeletonJoint.LEFT_ELBOW);
+
+		SkeletonJoint.LEFT_ELBOW);
 		Point3D leftShoulder = getJointPos(userSkels.get(userID),
 				SkeletonJoint.LEFT_SHOULDER);
 

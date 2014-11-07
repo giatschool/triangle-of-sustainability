@@ -16,43 +16,48 @@ import java.net.URL;
 
 /*
  * http://www.geoserver.nrw.de/GeoOgcWms1.3/servlet/TK25?REQUEST=getMap&VERSION=1.1.0&
-SERVICE=WMS&FORMAT=image%2Fpng&SRS=EPSG%3A31466&
-LAYERS=Raster%3ATK25%5FKMF%3AFarbkombination&STYLES=&
-BBOX=2581200,5683300,2581800,5683900&WIDTH=200&HEIGHT=200&TRANSPARENT=TRUE&
-BGCOLOR=0xFFFFFF
+ SERVICE=WMS&FORMAT=image%2Fpng&SRS=EPSG%3A31466&
+ LAYERS=Raster%3ATK25%5FKMF%3AFarbkombination&STYLES=&
+ BBOX=2581200,5683300,2581800,5683900&WIDTH=200&HEIGHT=200&TRANSPARENT=TRUE&
+ BGCOLOR=0xFFFFFF
  */
 
 public class Tk25Layer extends BasicTiledImageLayer {
-	
-	public Tk25Layer(){
+
+	public Tk25Layer() {
 		super(makeLevels(new URLBuilder()));
 		this.setUseTransparentTextures(true);
 		this.setMaxActiveAltitude(5e3);
 	}
- 
+
 	private static LevelSet makeLevels(URLBuilder urlBuilder) {
 		// http://www.gis3.nrw.de/DienstelisteInternet/
 		AVList params = new AVListImpl();
 		params.setValue(AVKey.TILE_WIDTH, 512);
 		params.setValue(AVKey.TILE_HEIGHT, 512);
 		params.setValue(AVKey.DATA_CACHE_NAME, "Earth/NRWTK25");
-		params.setValue(AVKey.SERVICE, "http://www.geoserver.nrw.de/GeoOgcWms1.3/servlet/TK25");
+		params.setValue(AVKey.SERVICE,
+				"http://www.geoserver.nrw.de/GeoOgcWms1.3/servlet/TK25");
 		params.setValue(AVKey.DATASET_NAME, "Raster:TK25_KMF:Farbkombination");
 		params.setValue(AVKey.FORMAT_SUFFIX, ".dds");
 		params.setValue(AVKey.NUM_LEVELS, 20);
 		params.setValue(AVKey.NUM_EMPTY_LEVELS, 0);
-		Angle levelZeroDelta = Angle.fromDegrees(.36d); 
-		params.setValue(AVKey.LEVEL_ZERO_TILE_DELTA, new LatLon(levelZeroDelta, levelZeroDelta));
-//		params.setValue(AVKey.SECTOR, Sector.FULL_SPHERE);
-		params.setValue(AVKey.SECTOR, Sector.fromDegrees(49.998341, 52.7729742, 5.672412, 10.1417782));
+		Angle levelZeroDelta = Angle.fromDegrees(.36d);
+		params.setValue(AVKey.LEVEL_ZERO_TILE_DELTA, new LatLon(levelZeroDelta,
+				levelZeroDelta));
+		// params.setValue(AVKey.SECTOR, Sector.FULL_SPHERE);
+		params.setValue(AVKey.SECTOR,
+				Sector.fromDegrees(49.998341, 52.7729742, 5.672412, 10.1417782));
 		params.setValue(AVKey.TILE_URL_BUILDER, urlBuilder);
-//		params.setValue(AVKey.EXPIRY_TIME, new GregorianCalendar(2007, 7, 6).getTimeInMillis());
+		// params.setValue(AVKey.EXPIRY_TIME, new GregorianCalendar(2007, 7,
+		// 6).getTimeInMillis());
 
 		return new LevelSet(params);
 	}
-	
+
 	private static class URLBuilder implements TileUrlBuilder {
-		public URL getURL(Tile  tile, String string) throws MalformedURLException {
+		public URL getURL(Tile tile, String string)
+				throws MalformedURLException {
 			StringBuffer sb = new StringBuffer(tile.getLevel().getService());
 			if (sb.lastIndexOf("?") != sb.length() - 1)
 				sb.append("?");
@@ -82,14 +87,14 @@ public class Tk25Layer extends BasicTiledImageLayer {
 			sb.append("&TRANSPARENT=TRUE");
 			sb.append("&BGCOLOR=0xFFFFFF");
 
-//			System.out.println(sb.toString());
+			// System.out.println(sb.toString());
 
 			return new java.net.URL(sb.toString());
 		}
 	}
 
 	@Override
-	public String toString(){
+	public String toString() {
 		return "NRW TK 25";
 	}
 }

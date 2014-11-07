@@ -15,8 +15,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class Tk50Layer extends BasicTiledImageLayer {
-	
-	public Tk50Layer(){
+
+	public Tk50Layer() {
 		super(makeLevels(new URLBuilder()));
 		this.setUseTransparentTextures(true);
 		this.setMaxActiveAltitude(15e3);
@@ -29,23 +29,28 @@ public class Tk50Layer extends BasicTiledImageLayer {
 		params.setValue(AVKey.TILE_WIDTH, 512);
 		params.setValue(AVKey.TILE_HEIGHT, 512);
 		params.setValue(AVKey.DATA_CACHE_NAME, "Earth/NRWTK5");
-		params.setValue(AVKey.SERVICE, "http://www.geoserver.nrw.de/GeoOgcWms1.3/servlet/TK50");
+		params.setValue(AVKey.SERVICE,
+				"http://www.geoserver.nrw.de/GeoOgcWms1.3/servlet/TK50");
 		params.setValue(AVKey.DATASET_NAME, "Raster:TK50_KMF:Farbkombination");
 		params.setValue(AVKey.FORMAT_SUFFIX, ".dds");
 		params.setValue(AVKey.NUM_LEVELS, 20);
 		params.setValue(AVKey.NUM_EMPTY_LEVELS, 0);
-		Angle levelZeroDelta = Angle.fromDegrees(.36d); 
-		params.setValue(AVKey.LEVEL_ZERO_TILE_DELTA, new LatLon(levelZeroDelta, levelZeroDelta));
-//		params.setValue(AVKey.SECTOR, Sector.FULL_SPHERE);
-		params.setValue(AVKey.SECTOR, Sector.fromDegrees(49.998341, 52.7729742, 5.672412, 10.1417782));
+		Angle levelZeroDelta = Angle.fromDegrees(.36d);
+		params.setValue(AVKey.LEVEL_ZERO_TILE_DELTA, new LatLon(levelZeroDelta,
+				levelZeroDelta));
+		// params.setValue(AVKey.SECTOR, Sector.FULL_SPHERE);
+		params.setValue(AVKey.SECTOR,
+				Sector.fromDegrees(49.998341, 52.7729742, 5.672412, 10.1417782));
 		params.setValue(AVKey.TILE_URL_BUILDER, urlBuilder);
-//		params.setValue(AVKey.EXPIRY_TIME, new GregorianCalendar(2007, 7, 6).getTimeInMillis());
+		// params.setValue(AVKey.EXPIRY_TIME, new GregorianCalendar(2007, 7,
+		// 6).getTimeInMillis());
 
 		return new LevelSet(params);
 	}
-	
+
 	private static class URLBuilder implements TileUrlBuilder {
-		public URL getURL(Tile  tile, String string) throws MalformedURLException {
+		public URL getURL(Tile tile, String string)
+				throws MalformedURLException {
 			StringBuffer sb = new StringBuffer(tile.getLevel().getService());
 			if (sb.lastIndexOf("?") != sb.length() - 1)
 				sb.append("?");
@@ -73,16 +78,16 @@ public class Tk50Layer extends BasicTiledImageLayer {
 			sb.append("&version=1.1.0");
 			sb.append("&styles=");
 			sb.append("&TRANSPARENT=TRUE");
-			//sb.append("&BGCOLOR=0xFFFFFF");
+			// sb.append("&BGCOLOR=0xFFFFFF");
 
-//			System.out.println(sb.toString());
+			// System.out.println(sb.toString());
 
 			return new java.net.URL(sb.toString());
 		}
 	}
 
 	@Override
-	public String toString(){
+	public String toString() {
 		return "NRW TK 50";
 	}
 }

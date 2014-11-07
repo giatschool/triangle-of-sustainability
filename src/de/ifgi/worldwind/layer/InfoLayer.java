@@ -7,15 +7,17 @@ import java.util.List;
 
 public class InfoLayer extends IconLayer {
 	List<WWIcon> icons;
-	public InfoLayer(List<WWIcon> icons, double altitude){
+
+	public InfoLayer(List<WWIcon> icons, double altitude) {
 		super();
 		setMaxActiveAltitude(altitude);
-		this.icons=icons;
-		for(WWIcon icon:icons)addIcon(icon);
+		this.icons = icons;
+		for (WWIcon icon : icons)
+			addIcon(icon);
 	}
-	
+
 	@Override
-	public String toString(){
+	public String toString() {
 		return "Info Layer";
 	}
 }

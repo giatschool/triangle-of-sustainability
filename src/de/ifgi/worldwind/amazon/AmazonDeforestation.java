@@ -17,6 +17,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
@@ -77,8 +78,23 @@ public class AmazonDeforestation {
 
 		private SkeletonKinectHandler kinectHandler;
 
-		private int height = 768;
-		private int width = 1024;
+		// windowed mode(normal)
+		 private int height = 768;
+		 private int width = 1024;
+
+		// fullscreen 1 monitor
+//		java.awt.Dimension screenSize = Toolkit.getDefaultToolkit()
+//				.getScreenSize();
+//		double widthD = screenSize.getWidth();
+//		double heightD = screenSize.getHeight();
+//		private int width = (int) widthD;
+//		private int height = (int) heightD;
+
+		// fullscreen multi monitor
+//		java.awt.GraphicsDevice gd = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+//		int width = gd.getDisplayMode().getWidth();
+//		int height = gd.getDisplayMode().getHeight();
+
 
 		public static final double GLOBE_ZOOM = 2.3e7;
 		public static final Position MS_POS = Position.fromDegrees(-4.72826,
@@ -116,18 +132,18 @@ public class AmazonDeforestation {
 			this.pack();
 			this.setBounds(0, 0, width, height);
 
-			// wwd = new WorldWindowGLCanvas();
-			//
-			// //wwd.setPreferredSize(new java.awt.Dimension(d.width,d.height));
-			// wwd.setPreferredSize(new java.awt.Dimension(width,height));
-			//
-			// addWindowListener(new WindowClosingAdapter(true));
-			// this.setUndecorated(true);
-			//
-			// this.getContentPane().add(wwd, java.awt.BorderLayout.CENTER);
-			// this.pack();
-			// this.setBounds(0, 0, width, height);
-			// wwd.setModel(new BasicModel());
+//			 wwd = new WorldWindowGLCanvas();
+//			
+//			 //wwd.setPreferredSize(new java.awt.Dimension(d.width,d.height));
+//			 wwd.setPreferredSize(new java.awt.Dimension(width,height));
+//			
+//			 addWindowListener(new WindowClosingAdapter(true));
+//			 this.setUndecorated(true);
+//			
+//			 this.getContentPane().add(wwd, java.awt.BorderLayout.CENTER);
+//			 this.pack();
+//			 this.setBounds(0, 0, width, height);
+//			 wwd.setModel(new BasicModel());
 
 			this.controller = new AppFrameController(this);
 
@@ -141,10 +157,10 @@ public class AmazonDeforestation {
 
 //			 addGDPlayer(dataR); //economical
 
-			 addLanduseLayer(dataR); // ecological
+			addLanduseLayer(dataR); // ecological
 
-//			  year2002 = true;		   //social
-//			  addAcumPoplayer(dataR); //social
+			// year2002 = true; //social
+			// addAcumPoplayer(dataR); //social
 
 			updater.start();
 			removeCompass(this.getWwd());
@@ -161,13 +177,13 @@ public class AmazonDeforestation {
 		}
 
 		public void addLanduseLayer(DataRetriever dataR) {
-			// amaLanduse2002 = new AmazonLanduseLayer2(dataR.getMuniData(),
-			// dataR.getMesoRegions(),"2002");
-			// anoLayer2002 =amaLanduse2002.addAnnotations();
-			//
-			// amaLanduse2003 = new AmazonLanduseLayer2(dataR.getMuniData(),
-			// dataR.getMesoRegions(),"2003");
-			// anoLayer2003 =amaLanduse2003.addAnnotations();
+//			 amaLanduse2002 = new AmazonLanduseLayer2(dataR.getMuniData(),
+//			 dataR.getMesoRegions(),"2002");
+//			 anoLayer2002 =amaLanduse2002.addAnnotations();
+//			
+//			 amaLanduse2003 = new AmazonLanduseLayer2(dataR.getMuniData(),
+//			 dataR.getMesoRegions(),"2003");
+//			 anoLayer2003 =amaLanduse2003.addAnnotations();
 
 			ama2004 = new AmazonLanduseLayer2(dataR.getMuniData(),
 					dataR.getMesoRegions(), "2004");
@@ -319,7 +335,7 @@ public class AmazonDeforestation {
 			generalAnoLayer2008 = ((AmazonGDPLayer) ama2008)
 					.generalInformationLayer();
 
-//			 insertBeforeBeforeCompass(this.getWwd(),
+			// insertBeforeBeforeCompass(this.getWwd(),
 			// ama2004.generalInformationLayer());
 
 			insertBeforeBeforeCompass(this.getWwd(), ama2004);
@@ -328,7 +344,7 @@ public class AmazonDeforestation {
 
 			insertBeforeBeforeCompass(this.getWwd(),
 					new CountryBoundariesLayer());
-			
+
 			controller.flyToPosition(MS_POS, GLOBE_ZOOM);
 
 			updater = new Timer(5000, new ActionListener() {
@@ -724,8 +740,8 @@ public class AmazonDeforestation {
 
 		@Override
 		public void keyPressed(KeyEvent arg0) {
-			if(arg0.getKeyCode() == 32){
-		           controller.flyToPosition(MS_POS, GLOBE_ZOOM);
+			if (arg0.getKeyCode() == 32) {
+				controller.flyToPosition(MS_POS, GLOBE_ZOOM);
 
 			}
 		}
@@ -736,7 +752,7 @@ public class AmazonDeforestation {
 
 		@Override
 		public void keyTyped(KeyEvent arg0) {
-			
+
 		}
 	}
 

@@ -295,4 +295,4 @@
 //    public String toString() {
 //        return Logging.getMessage("layers.Earth.PlaceName.Name");
 //    }
-//}
+// }

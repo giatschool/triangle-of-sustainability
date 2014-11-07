@@ -49,14 +49,14 @@ public class GestureSequences {
 	// create a new empty gestures sequence for a user
 	{
 		userGestSeqs.put(new Integer(userID), new ArrayList<GestureName>());
-		
+
 	}
 
 	public void removeUser(int userID)
 	// remove the gesture sequence for this user
 	{
 		userGestSeqs.remove(userID);
-		
+
 	}
 
 	public void addUserGest(int userID, GestureName gest)
