@@ -1,0 +1,2 @@
+OpenSound Control: http://www.cnmat.berkeley.edu/OpenSoundControl/
+JavaOSC: http://www.illposed.com/software/javaosc.html

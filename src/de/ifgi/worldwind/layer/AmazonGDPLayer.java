@@ -1,5 +1,17 @@
 package de.ifgi.worldwind.layer;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Insets;
+import java.awt.Point;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+
+import com.hp.hpl.jena.rdf.model.Literal;
+
+import de.ifgi.data.MunicipalityDataItem;
+
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.geom.LatLon;
@@ -14,23 +26,23 @@ import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Polyline;
 import gov.nasa.worldwind.render.ScreenAnnotation;
 import gov.nasa.worldwind.render.ShapeAttributes;
+import gov.nasa.worldwind.util.Logging;
 import gov.nasa.worldwindx.examples.util.PowerOfTwoPaddedImage;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Insets;
-import java.awt.Point;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-
-import de.ifgi.data.MunicipalityDataItem;
-/**
- * 
- * @author Umut Tas
- *
- */
 public class AmazonGDPLayer extends RenderableLayer {
+
+	// static ArrayList<Literal> border;
+	// static ArrayList<Literal> label;
+	// static ArrayList<Literal> pop0;
+	// static ArrayList<Literal> pop1;
+	// static ArrayList<Literal> pop2;
+	// static ArrayList<Literal> pop3;
+	// static ArrayList<Literal> pop4;
+	// static ArrayList<Literal> pop5;
+	// static ArrayList<Literal> pop6;
+	// static ArrayList<Literal> pop7;
+	// static ArrayList<Literal> pop8;
+	// static ArrayList<Literal> pop9;
 
 	ShapeAttributes sideAttributes;
 	ShapeAttributes sideHighlightAttributes;
@@ -70,6 +82,24 @@ public class AmazonGDPLayer extends RenderableLayer {
 	LatLon pos;
 	String year = "";
 
+	private final static PowerOfTwoPaddedImage darkRedPic = PowerOfTwoPaddedImage
+			.fromPath("images/darkRedFinal.png");
+	private final static PowerOfTwoPaddedImage redPic = PowerOfTwoPaddedImage
+			.fromPath("images/redFinal.png");
+	private final static PowerOfTwoPaddedImage greenPic = PowerOfTwoPaddedImage
+			.fromPath("images/greenFinal.png");
+	private final static PowerOfTwoPaddedImage orangePic = PowerOfTwoPaddedImage
+			.fromPath("images/orangeFinal.png");
+	private final static PowerOfTwoPaddedImage yellowPic = PowerOfTwoPaddedImage
+			.fromPath("images/yellowFinal.png");
+	private final static PowerOfTwoPaddedImage darkYellowPic = PowerOfTwoPaddedImage
+			.fromPath("images/darkYellowFinal.png");
+
+	private final static PowerOfTwoPaddedImage ifgiPic = PowerOfTwoPaddedImage
+			.fromPath("images/logo-rgb-ifgi-text-de.jpg");
+	private final static PowerOfTwoPaddedImage wwuPic = PowerOfTwoPaddedImage
+			.fromPath("images/wwu_logo.jpg");
+
 	private final static PowerOfTwoPaddedImage heightPic = PowerOfTwoPaddedImage
 			.fromPath("images/height2.png");
 	private final static PowerOfTwoPaddedImage colorSchemePic = PowerOfTwoPaddedImage
@@ -78,12 +108,24 @@ public class AmazonGDPLayer extends RenderableLayer {
 	private final static PowerOfTwoPaddedImage badPic = PowerOfTwoPaddedImage
 			.fromPath("images/Amazonie_deforestation.jpg");
 	private final static PowerOfTwoPaddedImage trees = PowerOfTwoPaddedImage
-			.fromPath("images/b√§ume2.jpg");
+			.fromPath("images/b‰ume2.jpg");
 
 	public AmazonGDPLayer(ArrayList<MunicipalityDataItem> muniData, String year) {
 		super();
 		this.year = year;
 		this.muniData = muniData;
+		// this.border = border;
+		// this.label = label;
+		// this.pop0 = pop0;
+		// this.pop1 = pop1;
+		// this.pop2 = pop2;
+		// this.pop3 = pop3;
+		// this.pop4 = pop4;
+		// this.pop5 = pop5;
+		// this.pop6 = pop6;
+		// this.pop7 = pop7;
+		// this.pop8 = pop8;
+		// this.pop9 = pop9;
 		setAttributes();
 		drawPolygons();
 
@@ -285,6 +327,7 @@ public class AmazonGDPLayer extends RenderableLayer {
 
 		GlobeAnnotation ga = new GlobeAnnotation("Amazonas Region",
 				polyLine.getReferencePosition(), Font.decode("Arial-BOLD-12"));
+		// ga.getAttributes().setDefaults(defaultAttributes);
 		ga.getAttributes().setBackgroundColor(new Color(0.2f, 0.2f, 0.2f, .5f));
 		ga.getAttributes().setTextColor(Color.WHITE);
 		ga.getAttributes().setBorderColor(Color.BLACK);
@@ -293,6 +336,9 @@ public class AmazonGDPLayer extends RenderableLayer {
 
 		// Create a path, set some of its properties and set its attributes.
 		for (int i = 0; i < muniData.size(); i++) {
+
+			// System.out.println("ACUM: "+muniData.get(i).getTotalAcum2002());
+
 			double totalAcumDefor = 0;
 			if (year == "2002") {
 				// totalAcumDefor = muniData.get(i).getTotalAcum2002();
@@ -329,8 +375,17 @@ public class AmazonGDPLayer extends RenderableLayer {
 				totalAcumDefor = muniData.get(i).getTotalDefor2008();
 
 			}
-			String[] borderStringArray = muniData.get(i).getBorder().split(";");
+			// if(defor > maxDefor){
+			// maxDefor = defor;
+			// }
+			// if(defor < minDefor){
+			// minDefor = defor;
+			// }
 
+			String[] borderStringArray = muniData.get(i).getBorder().split(";");
+			// String defor2008String =
+			// muniData.get(i).get(i).toString().replace("^^http://www.w3.org/2001/XMLSchema#integer",
+			// "");
 			double gdp = 0;
 			double pop = 0;
 
@@ -354,6 +409,8 @@ public class AmazonGDPLayer extends RenderableLayer {
 				gdp = muniData.get(i).getGdp08();
 				pop = muniData.get(i).getPop2008();
 			}
+
+			// System.out.println(gdp +" "+ pop +" " + gdp/pop);
 			ArrayList<Position> borderPositions = new ArrayList<Position>();
 
 			for (String str : borderStringArray) {
@@ -370,7 +427,12 @@ public class AmazonGDPLayer extends RenderableLayer {
 			pgon.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
 			pgon.setHighlighted(false);
 
+			// Material mat = new Material(new
+			// Color((int)(255*totalAcumDefor),(255-(int)(255*totalAcumDefor))/2,0));
 			Material mat;
+			// COLOR SCHEME RED TO YELLOW (works fine)
+			// mat = new Material(new Color(255,
+			// (int)((1-Math.sqrt(Math.sqrt(totalAcumDefor)))*200),0));
 
 			if (totalAcumDefor != 0 && Math.abs(Math.log(totalAcumDefor)) < 10) {
 
@@ -378,8 +440,10 @@ public class AmazonGDPLayer extends RenderableLayer {
 						.log(totalAcumDefor)) * 255 / (10))), 0));
 			} else {
 				mat = new Material(new Color(0, 255, 0));
+				// System.out.println(totalAcumDefor);
 			}
-
+			// Material mat = new Material(new Color(255,
+			// (int)(Math.log(totalAcumDefor)*255),0));
 			ShapeAttributes side = new BasicShapeAttributes();
 			side.setInteriorMaterial(mat);
 			side.setOutlineOpacity(0.5);
@@ -394,21 +458,72 @@ public class AmazonGDPLayer extends RenderableLayer {
 			cap.setInteriorMaterial(mat);
 			cap.setOutlineMaterial(Material.BLACK);
 			cap.setInteriorOpacity(0.8);
+			// capAttributes.setDrawInterior(true);
 			cap.setEnableLighting(false);
+
+			// System.out.println((int)(255*totalAcumDefor));
 
 			pgon.setCapAttributes(cap);
 			pgon.setSideAttributes(side);
+			// SETTING COLOR ACCORDING TO DEFORESTATION
+			// if(totalAcumDefor <= 0.05){
+			// pgon.setSideAttributes(sideAttributes);
+			// pgon.setSideHighlightAttributes(sideHighlightAttributes);
+			// pgon.setCapAttributes(capAttributes);
+			// }
+			// else if(totalAcumDefor>= 0.05 && totalAcumDefor <= 0.15){
+			// pgon.setSideAttributes(sideAttributes2);
+			// pgon.setSideHighlightAttributes(sideHighlightAttributes2);
+			// pgon.setCapAttributes(capAttributes2);
+			//
+			// }
+			// else if(totalAcumDefor >=0.15 && totalAcumDefor <=0.25){
+			// pgon.setSideAttributes(sideAttributes3);
+			// pgon.setSideHighlightAttributes(sideHighlightAttributes3);
+			// pgon.setCapAttributes(capAttributes3);
+			// }
+			// else if(totalAcumDefor >=0.25 && totalAcumDefor <=0.40){
+			// pgon.setSideAttributes(sideAttributes4);
+			// pgon.setSideHighlightAttributes(sideHighlightAttributes4);
+			// pgon.setCapAttributes(capAttributes4);
+			// }
+			// else if(totalAcumDefor >=0.40 && totalAcumDefor <=0.55){
+			// pgon.setSideAttributes(sideAttributes5);
+			// pgon.setSideHighlightAttributes(sideHighlightAttributes5);
+			// pgon.setCapAttributes(capAttributes5);
+			// }
+			// else if(totalAcumDefor >=0.55){
+			// pgon.setSideAttributes(sideAttributes6);
+			// pgon.setSideHighlightAttributes(sideHighlightAttributes6);
+			// pgon.setCapAttributes(capAttributes6);
+			// }
+			// else if(totalAcumDefor >=0.70){
+			// pgon.setSideAttributes(sideAttributes7);
+			// pgon.getSideAttributes().setInteriorMaterial(Material.BLACK);
+			// pgon.getSideAttributes().setOutlineMaterial(Material.BLACK);
+			//
+			// pgon.setSideHighlightAttributes(sideHighlightAttributes7);
+			//
+			// pgon.setCapAttributes(capAttributes7);
+			// pgon.getCapAttributes().setOutlineMaterial(Material.BLACK);
+			// pgon.getCapAttributes().setInteriorMaterial(Material.BLACK);
+			//
+			// }
+			//
+			// else{
+			// System.out.println("HER: "+totalAcumDefor);
+			// }
 
 			String[] splitStr = muniData.get(i).getCentroid().split(",");
 
-			if (muniData.get(i).getName().equals("Santar√©m")
-					|| muniData.get(i).getName().contains("Bel√©m")
+			if (muniData.get(i).getName().equals("SantarÈm")
+					|| muniData.get(i).getName().contains("BelÈm")
 					|| muniData.get(i).getName().contains("Altamira")
 					|| i == maxPos) {
 				GlobeAnnotation ga2 = new GlobeAnnotation(muniData.get(i)
 						.getName()
 						+ "\nBIP/Person: "
-						+ f2.format(gdp * 1000 / pop * 0.400125419) + "‚Ç¨",
+						+ f2.format(gdp * 1000 / pop * 0.400125419) + " R$ ",
 						Position.fromDegrees(Double.parseDouble(splitStr[1]),
 								Double.parseDouble(splitStr[0]), 8000 * gdp
 										/ pop), Font.decode("Arial-BOLD-12"));
@@ -436,6 +551,8 @@ public class AmazonGDPLayer extends RenderableLayer {
 
 			}
 		}
+
+		// System.out.println("min: "+minDefor +" max: "+maxDefor);
 	}
 
 	public void addPictureLayer(Position position, PowerOfTwoPaddedImage pic,
@@ -472,12 +589,18 @@ public class AmazonGDPLayer extends RenderableLayer {
 		defaultAttributes.setDrawOffset(new Point(20, 40));
 
 		ScreenAnnotation sa = new ScreenAnnotation(
-				"Bruttoinlandsprodukt und j√§hrliche Abholzungsrate Par√°, Brasilien",
+				"Bruttoinlandsprodukt und j‰hrliche Abholzungsrate Par·, Brasilien",
 				new Point(470, 700));
+		// ScreenAnnotation sa = new
+		// ScreenAnnotation("Deforestation and population in Par·, Brazilien",
+		// new Point(470, 700));
+
 		sa.getAttributes().setDefaults(defaultAttributes);
 		sa.getAttributes().setCornerRadius(0);
 		sa.getAttributes().setFont(Font.decode("Arial-BOLD-22"));
 		sa.getAttributes().setSize(new Dimension(1300, 0));
+		// sa.getAttributes().setAdjustWidthToText(AVKey.SIZE_FIXED); // use
+		// strict dimension width - 200
 
 		sa.getAttributes().setDrawOffset(new Point(100, 0)); // screen point is
 																// annotation
@@ -488,15 +611,20 @@ public class AmazonGDPLayer extends RenderableLayer {
 
 		ScreenAnnotation sa2 = new ScreenAnnotation("Jahr " + year, new Point(
 				125, 550));
+		// ScreenAnnotation sa2 = new ScreenAnnotation("Year "+year, new
+		// Point(880, 600));
 
 		sa2.getAttributes().setDefaults(defaultAttributes);
 		sa2.getAttributes().setCornerRadius(0);
 		sa2.getAttributes().setFont(Font.decode("Arial-BOLD-22"));
+		// sa2.getAttributes().setSize(new Dimension(90, 0));
 		sa2.getAttributes().setAdjustWidthToText(AVKey.SIZE_FIT_TEXT); // use
 																		// strict
 																		// dimension
 																		// width
 																		// - 200
+		// sa2.getAttributes().setDrawOffset(new Point(100, 0)); // screen point
+		// is annotation bottom left corner
 		sa2.getAttributes().setHighlightScale(1); // No highlighting either
 		annotationLayer.addAnnotation(sa2);
 
@@ -505,6 +633,7 @@ public class AmazonGDPLayer extends RenderableLayer {
 		defaultAttributes2.setTextColor(Color.WHITE);
 		defaultAttributes2.setLeaderGapWidth(14);
 		defaultAttributes2.setInsets(new Insets(8, 8, 8, 8));
+		// defaultAttributes2.setBackgroundColor(new Color(0f, 0f, 0f, .5f));
 
 		defaultAttributes2.setCornerRadius(0);
 		defaultAttributes2.setSize(new Dimension(300, 0));
@@ -519,7 +648,7 @@ public class AmazonGDPLayer extends RenderableLayer {
 		defaultAttributes2.setCornerRadius(0);
 
 		ScreenAnnotation legendHeader = new ScreenAnnotation(
-				"J√§hrliche Abholzungsrate \n \n -hohe Abholzung \n\n\n \n \n \n\n   -geringe Abholzung",
+				"j‰hrliche Abholzungsrate \n \n -hohe Abholzung \n\n\n \n \n \n\n   -geringe Abholzung",
 				new Point(920, 270));
 		legendHeader.getAttributes().setDefaults(defaultAttributes2);
 		legendHeader.getAttributes().setBackgroundColor(
@@ -533,18 +662,148 @@ public class AmazonGDPLayer extends RenderableLayer {
 
 		legendHeader.getAttributes().setBorderColor(Color.BLACK);
 		legendHeader.getAttributes().setBorderWidth(1);
+		// legendHeader.getAttributes().
 		legendHeader.getAttributes().setCornerRadius(0);
 		legendHeader.getAttributes().setFont(Font.decode("Arial-BOLD-15"));
 		legendHeader.getAttributes().setSize(new Dimension(200, 240));
 		legendHeader.setAlwaysOnTop(false);
 		this.addRenderable(legendHeader);
 
+		// legendHeader.getAttributes().setAdjustWidthToText(AVKey.SIZE_FIXED);
+		// // use strict dimension width - 200
+		// legendHeader.getAttributes().setDrawOffset(new Point(100, 0)); //
+		// screen point is annotation bottom left corner
 		legendHeader.getAttributes().setHighlightScale(1); // No highlighting
 															// either
+		// legend.getAttributes().setImageOffset(new Point(1, 1));
+
+		// ScreenAnnotation legend = new ScreenAnnotation(">55%", new Point(920,
+		// 425));
+		// legend.getAttributes().setDefaults(defaultAttributes2);
+		// legend.getAttributes().setImageSource(darkRedPic.getPowerOfTwoImage());
+		// legend.getAttributes().setImageRepeat(AVKey.REPEAT_NONE);
+		// legend.getAttributes().setCornerRadius(0);
+		// // legend.getAttributes().setSize(new Dimension(50, 0));
+		// legend.getAttributes().setAdjustWidthToText(AVKey.SIZE_FIXED); // use
+		// strict dimension width - 200
+		// legend.getAttributes().setDrawOffset(new Point(100, 0)); // screen
+		// point is annotation bottom left corner
+		// // legend.getAttributes().setHighlightScale(1); // No highlighting
+		// either
+		// // legend.getAttributes().setImageOffset(new Point(1, 1));
+		// legend.getAttributes().setInsets(new Insets(0, 40, 0, 0));
+		// legend.setAlwaysOnTop(true);
+		//
+		// annotationLayer.addAnnotation(legend);
+		//
+		//
+		// ScreenAnnotation legend2 = new ScreenAnnotation("40-55%", new
+		// Point(920, 395));
+		// legend2.getAttributes().setDefaults(defaultAttributes2);
+		// legend2.getAttributes().setImageSource(redPic.getPowerOfTwoImage());
+		// legend2.getAttributes().setImageRepeat(AVKey.REPEAT_NONE);
+		// legend2.getAttributes().setCornerRadius(0);
+		// // legend2.getAttributes().setSize(new Dimension(50, 0));
+		// legend2.getAttributes().setAdjustWidthToText(AVKey.SIZE_FIXED); //
+		// use strict dimension width - 200
+		// legend2.getAttributes().setDrawOffset(new Point(100, 0)); // screen
+		// point is annotation bottom left corner
+		// legend2.getAttributes().setHighlightScale(1); // No highlighting
+		// either
+		// legend2.getAttributes().setInsets(new Insets(0, 40, 0, 0));
+		// annotationLayer.addAnnotation(legend2);
+		//
+		// ScreenAnnotation legend3 = new ScreenAnnotation("25-40%", new
+		// Point(920, 365));
+		// legend3.getAttributes().setDefaults(defaultAttributes2);
+		// legend3.getAttributes().setImageSource(orangePic.getPowerOfTwoImage());
+		// legend3.getAttributes().setImageRepeat(AVKey.REPEAT_NONE);
+		// legend3.getAttributes().setCornerRadius(0);
+		// // legend3.getAttributes().setSize(new Dimension(50, 0));
+		// legend3.getAttributes().setAdjustWidthToText(AVKey.SIZE_FIXED); //
+		// use strict dimension width - 200
+		// legend3.getAttributes().setDrawOffset(new Point(100, 0)); // screen
+		// point is annotation bottom left corner
+		// legend3.getAttributes().setHighlightScale(1); // No highlighting
+		// either
+		// legend3.getAttributes().setInsets(new Insets(0, 40, 0, 0));
+		//
+		// annotationLayer.addAnnotation(legend3);
+		//
+		// ScreenAnnotation legend4 = new ScreenAnnotation("15-25%", new
+		// Point(920, 335));
+		// legend4.getAttributes().setDefaults(defaultAttributes2);
+		// legend4.getAttributes().setImageSource(darkYellowPic.getPowerOfTwoImage());
+		// legend4.getAttributes().setImageRepeat(AVKey.REPEAT_NONE);
+		// legend4.getAttributes().setCornerRadius(0);
+		// // legend4.getAttributes().setSize(new Dimension(50, 0));
+		// legend4.getAttributes().setAdjustWidthToText(AVKey.SIZE_FIXED); //
+		// use strict dimension width - 200
+		// legend4.getAttributes().setDrawOffset(new Point(100, 0)); // screen
+		// point is annotation bottom left corner
+		// legend4.getAttributes().setHighlightScale(1); // No highlighting
+		// either
+		// legend4.getAttributes().setInsets(new Insets(0, 40, 0, 0));
+		//
+		// annotationLayer.addAnnotation(legend4);
+		//
+		// ScreenAnnotation legend5 = new ScreenAnnotation("5-15%", new
+		// Point(920, 305));
+		// legend5.getAttributes().setDefaults(defaultAttributes2);
+		// legend5.getAttributes().setImageSource(yellowPic.getPowerOfTwoImage());
+		// legend5.getAttributes().setImageRepeat(AVKey.REPEAT_NONE);
+		// legend5.getAttributes().setCornerRadius(0);
+		// // legend4.getAttributes().setSize(new Dimension(50, 0));
+		// legend5.getAttributes().setAdjustWidthToText(AVKey.SIZE_FIXED); //
+		// use strict dimension width - 200
+		// legend5.getAttributes().setDrawOffset(new Point(100, 0)); // screen
+		// point is annotation bottom left corner
+		// legend5.getAttributes().setHighlightScale(1); // No highlighting
+		// either
+		// legend5.getAttributes().setInsets(new Insets(0, 40, 0, 0));
+		//
+		// annotationLayer.addAnnotation(legend5);
+		//
+		// ScreenAnnotation legend6 = new ScreenAnnotation("<5%", new Point(920,
+		// 275));
+		// legend6.getAttributes().setDefaults(defaultAttributes2);
+		// legend6.getAttributes().setImageSource(greenPic.getPowerOfTwoImage());
+		// legend6.getAttributes().setImageRepeat(AVKey.REPEAT_NONE);
+		// legend6.getAttributes().setCornerRadius(0);
+		// // legend4.getAttributes().setSize(new Dimension(50, 0));
+		// legend6.getAttributes().setAdjustWidthToText(AVKey.SIZE_FIXED); //
+		// use strict dimension width - 200
+		// legend6.getAttributes().setDrawOffset(new Point(100, 0)); // screen
+		// point is annotation bottom left corner
+		// legend6.getAttributes().setHighlightScale(1); // No highlighting
+		// either
+		// legend6.getAttributes().setInsets(new Insets(0, 40, 0, 0));
+		//
+		// annotationLayer.addAnnotation(legend6);
+
+		// ScreenAnnotation ifgiLogo = new ScreenAnnotation("", new Point(966,
+		// 700));
+		// ifgiLogo.getAttributes().setDefaults(defaultAttributes2);
+		// ifgiLogo.getAttributes().setImageSource(ifgiPic.getPowerOfTwoImage());
+		// ifgiLogo.getAttributes().setImageRepeat(AVKey.REPEAT_NONE);
+		// ifgiLogo.getAttributes().setImageScale(0.25);
+		// ifgiLogo.getAttributes().setCornerRadius(0);
+		// ifgiLogo.getAttributes().setSize(new Dimension(100, 40));
+		// //ifgiLogo.getAttributes().setAdjustWidthToText(AVKey.SIZE_FIXED); //
+		// use strict dimension width - 200
+		// // ifgiLogo.getAttributes().setDrawOffset(new Point(100, 0)); //
+		// screen point is annotation bottom left corner
+		// ifgiLogo.getAttributes().setHighlightScale(1); // No highlighting
+		// either
+		// // ifgiLogo.getAttributes().setInsets(new Insets(0, 40, 0, 0));
+		//
+		// annotationLayer.addAnnotation(ifgiLogo);
 
 		ScreenAnnotation heightLegend = new ScreenAnnotation(
-				"H√∂he entspricht dem Bruttoinlands- produkt pro Person",
+				"Hˆhe entspricht dem Bruttoinlands- produkt pro Person",
 				new Point(920, 65));
+		// ScreenAnnotation wwuLogo = new ScreenAnnotation("", new Point(950,
+		// 730));
 		heightLegend.getAttributes().setDefaults(defaultAttributes2);
 		heightLegend.getAttributes().setFont(Font.decode("Arial-BOLD-15"));
 		heightLegend.getAttributes().setImageSource(
@@ -564,9 +823,19 @@ public class AmazonGDPLayer extends RenderableLayer {
 		heightLegend.getAttributes().setBorderColor(Color.BLACK);
 		heightLegend.getAttributes().setBorderWidth(1);
 
+		// // ifgiLogo.getAttributes().setDrawOffset(new Point(100, 0)); //
+		// screen point is annotation bottom left corner
+		// wwuLogo.getAttributes().setHighlightScale(1); // No highlighting
+		// either
 		heightLegend.getAttributes().setInsets(new Insets(0, 70, 0, 0));
+		//
 
 		annotationLayer.addAnnotation(heightLegend);
+		// GlobeAnnotation ga = new GlobeAnnotation(name, (Position) pos,
+		// Font.decode("Arial-BOLD-12"));
+		// ga.getAttributes().setDefaults(defaultAttributes);
+
+		// annotationLayer.addAnnotation(ga);
 
 		return annotationLayer;
 	}
@@ -720,7 +989,7 @@ public class AmazonGDPLayer extends RenderableLayer {
 		generalAnnotationLayer.addAnnotation(statAnnotation);
 
 		// ScreenAnnotation populationAnnotation = new
-		// ScreenAnnotation("Bev√∂lkerung: "+ population, new Point(30,190));
+		// ScreenAnnotation("Bevˆlkerung: "+ population, new Point(30,190));
 		// populationAnnotation.getAttributes().setDefaults(defaultAttributes2);
 		// populationAnnotation.getAttributes().setCornerRadius(0);
 		// // legend.getAttributes().setSize(new Dimension(50, 0));
@@ -755,7 +1024,7 @@ public class AmazonGDPLayer extends RenderableLayer {
 		// generalAnnotationLayer.addAnnotation(totalDeforestationAnnotation);
 		//
 		// ScreenAnnotation yearlyDeforestationAnnotation = new
-		// ScreenAnnotation("J√§hrliche Abholzungsrate: "+
+		// ScreenAnnotation("j‰hrliche Abholzungsrate: "+
 		// f.format(averageDefor*100) +"%", new Point(30, 120));
 		// yearlyDeforestationAnnotation.getAttributes().setDefaults(defaultAttributes2);
 		// yearlyDeforestationAnnotation.getAttributes().setCornerRadius(0);
@@ -791,93 +1060,93 @@ public class AmazonGDPLayer extends RenderableLayer {
 
 		if (year == "2002") {
 			factAnnotation.setText("2002");
-			statAnnotation.setText("Par√° \n Bev√∂lkerung: "
-					+ f2.format((int) population) + "\n J√§hrliche Abholzung: "
+			statAnnotation.setText("Par· \n Bevˆlkerung: "
+					+ f2.format((int) population) + "\n J‰hrliche Abholzung: "
 					+ f.format(averageDefor * 100)
-					+ "%\nJ√§hrlich abgeholzte Fl√§che: "
+					+ "%\nJ‰hrlich abgeholzte Fl‰che: "
 					+ f.format(averageDefor * totalArea)
-					+ "km¬≤\n Bruttoinlandsprodukt: "
-					+ f.format(averageGDP * 0.400125419) + "‚Ç¨");
+					+ "km≤\n Bruttoinlandsprodukt: "
+					+ f.format(averageGDP * 0.400125419) + " R$ ");
 		}
 		if (year == "2003") {
 			factAnnotation.setText("2003");
-			statAnnotation.setText("Par√° \n Bev√∂lkerung: "
-					+ f2.format((int) population) + "\n J√§hrliche Abholzung: "
+			statAnnotation.setText("Par· \n Bevˆlkerung: "
+					+ f2.format((int) population) + "\n J‰hrliche Abholzung: "
 					+ f.format(averageDefor * 100)
-					+ "%\nJ√§hrlich abgeholzte Fl√§che: "
+					+ "%\nJ‰hrlich abgeholzte Fl‰che: "
 					+ f.format(averageDefor * totalArea)
-					+ "km¬≤\n Bruttoinlandsprodukt: "
-					+ f.format(averageGDP * 0.400125419) + "‚Ç¨");
+					+ "km≤\n Bruttoinlandsprodukt: "
+					+ f.format(averageGDP * 0.400125419) + " R$ ");
 
 		}
 		if (year == "2004") {
-			factAnnotation.setText("Die j√§hrliche Abholzung von "
-					+ f.format(averageDefor * totalArea) + "km¬≤ entspricht "
+			factAnnotation.setText("Die j‰hrliche Abholzung von "
+					+ f.format(averageDefor * totalArea) + "km≤ entspricht "
 					+ f.format(averageDefor * totalArea / 2569.69)
-					+ " mal der Fl√§che des Saarlandes.");
-			statAnnotation.setText("Par√° \n Bev√∂lkerung: "
-					+ f2.format((int) population) + "\n J√§hrliche Abholzung: "
+					+ " mal der Fl‰che des Saarlandes.");
+			statAnnotation.setText("Par· \n Bevˆlkerung: "
+					+ f2.format((int) population) + "\n J‰hrliche Abholzung: "
 					+ f.format(averageDefor * 100)
-					+ "%\nJ√§hrlich abgeholzte Fl√§che: "
+					+ "%\nJ‰hrlich abgeholzte Fl‰che: "
 					+ f.format(averageDefor * totalArea)
-					+ "km¬≤\n Bruttoinlandsprodukt: "
-					+ f.format(averageGDP * 0.400125419) + "‚Ç¨");
+					+ "km≤\n Bruttoinlandsprodukt: "
+					+ f.format(averageGDP * 0.400125419) + " R$ ");
 
 		}
 		if (year == "2005") {
-			factAnnotation.setText("Die j√§hrliche Abholzung von "
-					+ f.format(averageDefor * totalArea) + "km¬≤ entspricht "
+			factAnnotation.setText("Die j‰hrliche Abholzung von "
+					+ f.format(averageDefor * totalArea) + "km≤ entspricht "
 					+ f.format(averageDefor * totalArea / 2569.69)
-					+ " mal der Fl√§che des Saarlandes.");
-			statAnnotation.setText("Par√° \n Bev√∂lkerung: "
-					+ f2.format((int) population) + "\n J√§hrliche Abholzung: "
+					+ " mal der Fl‰che des Saarlandes.");
+			statAnnotation.setText("Par· \n Bevˆlkerung: "
+					+ f2.format((int) population) + "\n J‰hrliche Abholzung: "
 					+ f.format(averageDefor * 100)
-					+ "%\nJ√§hrlich abgeholzte Fl√§che: "
+					+ "%\nJ‰hrlich abgeholzte Fl‰che: "
 					+ f.format(averageDefor * totalArea)
-					+ "km¬≤\n Bruttoinlandsprodukt: "
-					+ f.format(averageGDP * 0.400125419) + "‚Ç¨");
+					+ "km≤\n Bruttoinlandsprodukt: "
+					+ f.format(averageGDP * 0.400125419) + " R$ ");
 
 		}
 		if (year == "2006") {
-			factAnnotation.setText("Die j√§hrliche Abholzung von "
-					+ f.format(averageDefor * totalArea) + "km¬≤ entspricht "
+			factAnnotation.setText("Die j‰hrliche Abholzung von "
+					+ f.format(averageDefor * totalArea) + "km≤ entspricht "
 					+ f.format(averageDefor * totalArea / 2569.69)
-					+ " mal der Fl√§che des Saarlandes.");
-			statAnnotation.setText("Par√° \n Bev√∂lkerung: "
-					+ f2.format((int) population) + "\n J√§hrliche Abholzung: "
+					+ " mal der Fl‰che des Saarlandes.");
+			statAnnotation.setText("Par· \n Bevˆlkerung: "
+					+ f2.format((int) population) + "\n J‰hrliche Abholzung: "
 					+ f.format(averageDefor * 100)
-					+ "%\nJ√§hrlich abgeholzte Fl√§che: "
+					+ "%\nJ‰hrlich abgeholzte Fl‰che: "
 					+ f.format(averageDefor * totalArea)
-					+ "km¬≤\n Bruttoinlandsprodukt: "
-					+ f.format(averageGDP * 0.400125419) + "‚Ç¨");
+					+ "km≤\n Bruttoinlandsprodukt: "
+					+ f.format(averageGDP * 0.400125419) + " R$ ");
 
 		}
 		if (year == "2007") {
-			factAnnotation.setText("Die j√§hrliche Abholzung von "
-					+ f.format(averageDefor * totalArea) + "km¬≤ entspricht "
+			factAnnotation.setText("Die j‰hrliche Abholzung von "
+					+ f.format(averageDefor * totalArea) + "km≤ entspricht "
 					+ f.format(averageDefor * totalArea / 2569.69)
-					+ " mal der Fl√§che des Saarlandes.");
-			statAnnotation.setText("Par√° \n Bev√∂lkerung: "
-					+ f2.format((int) population) + "\n J√§hrliche Abholzung: "
+					+ " mal der Fl‰che des Saarlandes.");
+			statAnnotation.setText("Par· \n Bevˆlkerung: "
+					+ f2.format((int) population) + "\n J‰hrliche Abholzung: "
 					+ f.format(averageDefor * 100)
-					+ "%\nJ√§hrlich abgeholzte Fl√§che: "
+					+ "%\nJ‰hrlich abgeholzte Fl‰che: "
 					+ f.format(averageDefor * totalArea)
-					+ "km¬≤\n Bruttoinlandsprodukt: "
-					+ f.format(averageGDP * 0.400125419) + "‚Ç¨");
+					+ "km≤\n Bruttoinlandsprodukt: "
+					+ f.format(averageGDP * 0.400125419) + " R$ ");
 
 		}
 		if (year == "2008") {
 			factAnnotation
-					.setText("Brasilien nutzt 16000 km¬≤ ("
+					.setText("Brasilien nutzt 16000 km≤ ("
 							+ (f.format(16000 / 2569.69))
-							+ "x Saarland) um Soja f√ºr Deutschlands Bed√ºrfnisse anzubauen.");
-			statAnnotation.setText("Par√° \n Bev√∂lkerung: "
-					+ f2.format((int) population) + "\n J√§hrliche Abholzung: "
+							+ "x Saarland) um Soja f¸r Deutschlands Bed¸rfnisse anzubauen.");
+			statAnnotation.setText("Par· \n Bevˆlkerung: "
+					+ f2.format((int) population) + "\n J‰hrliche Abholzung: "
 					+ f.format(averageDefor * 100)
-					+ "%\nJ√§hrlich abgeholzte Fl√§che: "
+					+ "%\nJ‰hrlich abgeholzte Fl‰che: "
 					+ f.format(averageDefor * totalArea)
-					+ "km¬≤\n Bruttoinlandsprodukt: "
-					+ f.format(averageGDP * 0.400125419) + "‚Ç¨");
+					+ "km≤\n Bruttoinlandsprodukt: "
+					+ f.format(averageGDP * 0.400125419) + " R$ ");
 
 		}
 
@@ -916,7 +1185,7 @@ public class AmazonGDPLayer extends RenderableLayer {
 		// // generalAnnotationLayer.addAnnotation(factAnnotation);
 		//
 		// // ScreenAnnotation populationAnnotation = new
-		// ScreenAnnotation("Bev√∂lkerung: "+ population, new Point(30,190));
+		// ScreenAnnotation("Bevˆlkerung: "+ population, new Point(30,190));
 		// //
 		// populationAnnotation.getAttributes().setDefaults(defaultAttributes2);
 		// // populationAnnotation.getAttributes().setCornerRadius(0);
@@ -956,7 +1225,7 @@ public class AmazonGDPLayer extends RenderableLayer {
 		// generalAnnotationLayer.addAnnotation(totalDeforestationAnnotation);
 		// //
 		// // ScreenAnnotation yearlyDeforestationAnnotation = new
-		// ScreenAnnotation("J√§hrliche Abholzungsrate: "+
+		// ScreenAnnotation("j‰hrliche Abholzungsrate: "+
 		// f.format(averageDefor*100) +"%", new Point(30, 120));
 		// //
 		// yearlyDeforestationAnnotation.getAttributes().setDefaults(defaultAttributes2);
@@ -998,7 +1267,7 @@ public class AmazonGDPLayer extends RenderableLayer {
 		// // //ADDING STATEMENTS FOR YEARS
 		// // if(year=="2006"){
 		// // ScreenAnnotation statement2008Annotation = new
-		// ScreenAnnotation("\"Brasiliens Fleisch Exporte steigen um 14% j√§hrlich\"",
+		// ScreenAnnotation("\"Brasiliens Fleisch Exporte steigen um 14% J‰hrlich\"",
 		// new Point(165, 380));
 		// //
 		// statement2008Annotation.getAttributes().setDefaults(defaultAttributes2);
@@ -1023,7 +1292,7 @@ public class AmazonGDPLayer extends RenderableLayer {
 		// // }
 		// // if(year=="2007"){
 		// // ScreenAnnotation statement2007Annotation = new
-		// ScreenAnnotation("\"Brasilien ist der gr√∂√üte Fleischexporteur der Welt, mit 34% Anteil am globalen Markt.\"",
+		// ScreenAnnotation("\"Brasilien ist der grˆﬂte Fleischexporteur der Welt, mit 34% Anteil am globalen Markt.\"",
 		// new Point(165, 380));
 		// //
 		// statement2007Annotation.getAttributes().setDefaults(defaultAttributes2);
@@ -1044,7 +1313,7 @@ public class AmazonGDPLayer extends RenderableLayer {
 		// // }
 		// // if(year=="2008"){
 		// // ScreenAnnotation statement2008Annotation = new
-		// ScreenAnnotation("\"37% der Besch√§ftigten Brasiliens arbeiten in der Landwirtschaft\"",
+		// ScreenAnnotation("\"37% der Besch‰ftigten Brasiliens arbeiten in der Landwirtschaft\"",
 		// new Point(165, 380));
 		// //
 		// statement2008Annotation.getAttributes().setDefaults(defaultAttributes2);
@@ -1083,7 +1352,7 @@ public class AmazonGDPLayer extends RenderableLayer {
 		//
 		//
 		// // ScreenAnnotation populationAnnotation = new
-		// ScreenAnnotation("Bev√∂lkerung: "+ population, new Point(30,190));
+		// ScreenAnnotation("Bevˆlkerung: "+ population, new Point(30,190));
 		// //
 		// populationAnnotation.getAttributes().setDefaults(defaultAttributes2);
 		// // populationAnnotation.getAttributes().setCornerRadius(0);
@@ -1123,7 +1392,7 @@ public class AmazonGDPLayer extends RenderableLayer {
 		// generalAnnotationLayer.addAnnotation(totalDeforestationAnnotation);
 		// //
 		// // ScreenAnnotation yearlyDeforestationAnnotation = new
-		// ScreenAnnotation("J√§hrliche Abholzungsrate: "+
+		// ScreenAnnotation("j‰hrliche Abholzungsrate: "+
 		// f.format(averageDefor*100) +"%", new Point(30, 120));
 		// //
 		// yearlyDeforestationAnnotation.getAttributes().setDefaults(defaultAttributes2);
@@ -1163,49 +1432,49 @@ public class AmazonGDPLayer extends RenderableLayer {
 		//
 		// if(year == "2002"){
 		// factAnnotation.setText("2002");
-		// statAnnotation.setText("Par√° \n Bev√∂lkerung: " +population +
+		// statAnnotation.setText("Par· \n Bevˆlkerung: " +population +
 		// "\n Gesamte Abholzung: "+f.format(averageAcumDefor*100)
-		// +"%\n Bev√∂lkerungsentwicklung: "+(population-populationLastYear));
+		// +"%\n Bevˆlkerungsentwicklung: "+(population-populationLastYear));
 		// }
 		// if(year == "2003"){
 		// factAnnotation.setText("2003");
-		// statAnnotation.setText("Par√° \n Bev√∂lkerung: " +population +
+		// statAnnotation.setText("Par· \n Bevˆlkerung: " +population +
 		// "\n Gesamte Abholzung: "+f.format(averageAcumDefor*100)
-		// +"%\n Bev√∂lkerungsentwicklung: "+(population-populationLastYear));
+		// +"%\n Bevˆlkerungsentwicklung: "+(population-populationLastYear));
 		//
 		// }
 		// if(year == "2004"){
 		// factAnnotation.setText("");
-		// statAnnotation.setText("Par√° \n Bev√∂lkerung: " +population +
+		// statAnnotation.setText("Par· \n Bevˆlkerung: " +population +
 		// "\n Gesamte Abholzung: "+f.format(averageAcumDefor*100)
-		// +"%\n Bev√∂lkerungsentwicklung: "+(population-populationLastYear));
+		// +"%\n Bevˆlkerungsentwicklung: "+(population-populationLastYear));
 		//
 		// }
 		// if(year == "2005"){
 		// factAnnotation.setText("");
-		// statAnnotation.setText("Par√° \n Bev√∂lkerung: " +population +
+		// statAnnotation.setText("Par· \n Bevˆlkerung: " +population +
 		// "\n Gesamte Abholzung: "+f.format(averageAcumDefor*100)
-		// +"%\n Bev√∂lkerungsentwicklung: "+(population-populationLastYear));
+		// +"%\n Bevˆlkerungsentwicklung: "+(population-populationLastYear));
 		//
 		// }
 		// if(year == "2006"){
 		// factAnnotation.setText("");
-		// statAnnotation.setText("Par√° \n Bev√∂lkerung: " +population +
+		// statAnnotation.setText("Par· \n Bevˆlkerung: " +population +
 		// "\n Gesamte Abholzung: "+f.format(averageAcumDefor*100)
-		// +"%\n Bev√∂lkerungsentwicklung: "+(population-populationLastYear));
+		// +"%\n Bevˆlkerungsentwicklung: "+(population-populationLastYear));
 		//
 		// }
 		// if(year == "2007"){
 		// factAnnotation.setText("");
-		// statAnnotation.setText("Par√° \n Bev√∂lkerung: " +population +
-		// "\n Gesamte Abholzung: "+f.format(averageAcumDefor*100)+"%\n Bev√∂lkerungsentwicklung: "+(population-populationLastYear));
+		// statAnnotation.setText("Par· \n Bevˆlkerung: " +population +
+		// "\n Gesamte Abholzung: "+f.format(averageAcumDefor*100)+"%\n Bevˆlkerungsentwicklung: "+(population-populationLastYear));
 		//
 		// }
 		// if(year == "2008"){
 		// factAnnotation.setText("");
-		// statAnnotation.setText("Par√° \n Bev√∂lkerung: " +population +
-		// "\n Gesamte Abholzung: "+f.format(averageAcumDefor*100)+"%\n Bev√∂lkerungsentwicklung: "+(population-populationLastYear)
-		// + "\nFl√§che: 1247689.5km¬≤");
+		// statAnnotation.setText("Par· \n Bevˆlkerung: " +population +
+		// "\n Gesamte Abholzung: "+f.format(averageAcumDefor*100)+"%\n Bevˆlkerungsentwicklung: "+(population-populationLastYear)
+		// + "\nFl‰che: 1247689.5km≤");
 		//
 		// }
 

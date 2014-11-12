@@ -1,12 +1,10 @@
 package de.ifgi.data;
 
 import java.util.ArrayList;
-/**
- * 
- * @author Umut Tas
- *
- */
-public class MunicipalityDataItem implements Comparable<MunicipalityDataItem> {
+
+import com.hp.hpl.jena.rdf.model.Literal;
+
+public class MunicipalityDataItem implements Comparable {
 
 	private String uri;
 	private String mesoRegion;
@@ -177,7 +175,7 @@ public class MunicipalityDataItem implements Comparable<MunicipalityDataItem> {
 	}
 
 	@Override
-	public int compareTo(MunicipalityDataItem obj) {
+	public int compareTo(Object obj) {
 		if (this.uri.equals(((MunicipalityDataItem) obj).getUri())) {
 			return 0;
 		} else {

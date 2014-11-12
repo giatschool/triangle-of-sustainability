@@ -6,8 +6,10 @@ import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.globes.Globe;
+import gov.nasa.worldwind.util.Logging;
 import gov.nasa.worldwind.view.orbit.OrbitView;
 
+import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 
 import de.ifgi.worldwind.amazon.AmazonDeforestation.AppFrame;
@@ -18,10 +20,18 @@ public class AppFrameController {
 	private AppFrame appFrame;
 	private WorldWindowGLCanvas canvas;
 
+	private boolean viewOutOfFocus;
+
 	public AppFrameController(AppFrame appFrame) {
 		this.appFrame = appFrame;
 		this.canvas = appFrame.getWwd();
 		this.view = (OrbitView) canvas.getView();
+	}
+
+	public void center(LatLon center) {
+		Angle lat = center.getLatitude();
+		Angle lon = center.getLongitude();
+		setCenterLatLon(lat, lon);
 	}
 
 	public void setCenterLatLon(Angle lat, Angle lon) {
@@ -38,7 +48,19 @@ public class AppFrameController {
 		view.setCenterPosition(clampedCenter);
 	}
 
-	public void pan(double moveY, double moveX) {
+	// TODO: check out package gov.nasa.worldwind.awt.OrbitViewInputBroker;
+	public void pan(Position prevPosition, Position curPosition) {
+		setCenterLatLon(
+				this.view.getCenterPosition().getLatitude()
+						.add(prevPosition.getLatitude())
+						.subtract(curPosition.getLatitude()),
+				this.view.getCenterPosition().getLongitude()
+						.add(prevPosition.getLongitude())
+						.subtract(curPosition.getLongitude()));
+		// System.out.println("pan position");
+	}
+
+	public synchronized void pan(double moveY, double moveX) {
 		double sinHeading = view.getHeading().sin();
 		double cosHeading = view.getHeading().cos();
 		double latFactor = (cosHeading * moveY + sinHeading * moveX) / 10.0;
@@ -53,19 +75,24 @@ public class AppFrameController {
 			System.err.println(e);
 		}
 
+		// System.out.println("pan DIR");
+		// System.out.println(moveY);
+
 	}
 
-	public void zoom(double ratio) {
+	public synchronized void zoom(double ratio) {
 		if (this.view == null)
 			return;
 
 		final double zoomFactor = this.view.getZoom();
-
+		// System.out.println(zoomFactor);
 		int newzoom = (int) (zoomFactor * ratio);
+		// this.view.stopStateIterators();
 		if (newzoom >= 1071941 && newzoom <= 18437542) {
 			this.view.setZoom(newzoom);
 			this.view.firePropertyChange(AVKey.VIEW, null, this.view);
 		}
+		// System.out.println("zoom");
 	}
 
 	public void rotate(Angle angle) {
@@ -75,6 +102,8 @@ public class AppFrameController {
 
 		Angle heading = view.getHeading();
 		Angle newHeading = heading.add(angle);
+
+		// this.view.stopStateIterators();
 		this.view.setHeading(newHeading);
 		this.view.firePropertyChange(AVKey.VIEW, null, this.view);
 	}
@@ -84,15 +113,22 @@ public class AppFrameController {
 			return;
 		}
 
+		// if (isViewOutOfFocus()){
+		// focusView();
+		// }
+
 		Angle pitch = view.getPitch();
 		Angle newPitch = pitch.add(tilt);
+		// Angle clampedPith = clampedPitch(newPitch);
 
 		if (newPitch.degrees < 0 || newPitch.degrees > 90) {
 			return;
 		}
 
+		// this.view.stopStateIterators();
 		this.view.setPitch(newPitch);
 		this.view.firePropertyChange(AVKey.VIEW, null, this.view);
+		// setViewOutOfFocus(true);
 	}
 
 	public void flyToLatLon(LatLon latlon, double zoom) {
@@ -104,17 +140,41 @@ public class AppFrameController {
 	}
 
 	public void flyToPosition(Position position, double zoom) {
+		Globe globe = canvas.getModel().getGlobe();
+		Angle heading = view.getHeading();
+		Angle pitch = view.getPitch();
+
 		this.view.setEyePosition(position);
 		view.setPitch(Angle.fromDegrees(35));
+		// this.view.applyStateIterator(FlyToOrbitViewStateIterator.createPanToIterator(this.view,
+		// globe, position, heading, pitch, zoom));
+	}
+
+	public double multiPositionDistance(ArrayList<Position> positions) {
+		double distance = 0.0;
+		for (int i = 0; i < positions.size() - 1; i++) {
+			Position p1 = positions.get(i);
+			Position p2 = positions.get(i + 1);
+			double ellipsoidaldistance = LatLon.ellipsoidalDistance(p1, p2,
+					canvas.getModel().getGlobe().getEquatorialRadius(), canvas
+							.getModel().getGlobe().getPolarRadius());
+			distance = distance + ellipsoidaldistance;
+		}
+		return distance;
 	}
 
 	public void rotateToNorth(WorldWindowGLCanvas canvas) {
-		this.view.setHeading(Angle.fromDegrees(0));
+		Angle heading = Angle.fromDegrees(0);
+
+		this.view.setHeading(heading);
+		// this.view.stopStateIterators();
 	}
 
 	public void unTilt(WorldWindowGLCanvas canvas) {
 		Angle pitch = Angle.fromDegrees(0);
+
 		this.view.setPitch(pitch);
+		// this.view.stopStateIterators();
 	}
 
 	private Angle computeLatOrLonChange(double amount, boolean slow) {
@@ -154,11 +214,44 @@ public class AppFrameController {
 				lon > 180 ? lon - 360 : (lon < -180 ? 360 + lon : lon), elev);
 	}
 
+	private static Angle clampedPitch(Angle unclampedPitch) {
+		if (unclampedPitch == null)
+			return null;
 
-	/**
-	 * @author Umut Tas
-	 */
+		// Clamp pitch to the range [0, 90].
+		double pitch = unclampedPitch.degrees;
+		return Angle.fromDegrees(pitch > 90 ? 90 : (pitch < 0 ? 0 : pitch));
+	}
+
+	public boolean isViewOutOfFocus() {
+		return viewOutOfFocus;
+	}
+
+	public void setViewOutOfFocus(boolean viewOutOfFocus) {
+		this.viewOutOfFocus = viewOutOfFocus;
+	}
+
+	private void focusView() {
+		if (this.view == null)
+			return;
+
+		try {
+			// Update the View's focus.
+			if (this.view.canFocusOnViewportCenter()) {
+				this.view.focusOnViewportCenter();
+				setViewOutOfFocus(false);
+			}
+		} catch (Exception e) {
+			String message = Logging
+					.getMessage("generic.ExceptionWhileChangingView");
+			Logging.logger().log(java.util.logging.Level.SEVERE, message, e);
+			// If updating the View's focus failed, raise the flag again.
+			setViewOutOfFocus(true);
+		}
+	}
+
 	public void yearForward() {
+
 		if (appFrame.isYear2002()) {
 
 			if (appFrame.getLayerChanger() == 0) {
@@ -360,9 +453,6 @@ public class AppFrameController {
 
 	}
 
-	/**
-	 * @author Umut Tas
-	 */
 	public void yearBackward() {
 
 		if (appFrame.isYear2002()) {

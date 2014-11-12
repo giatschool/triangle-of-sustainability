@@ -11,14 +11,22 @@ import gov.nasa.worldwind.layers.LayerList;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.layers.Earth.CountryBoundariesLayer;
 
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
+import javax.swing.Timer;
 
 import kinect.SkeletonKinectHandler;
+
 import de.ifgi.data.DataRetriever;
+import de.ifgi.worldwind.htc.WindowClosingAdapter;
 import de.ifgi.worldwind.layer.AmazonGDPLayer;
 import de.ifgi.worldwind.layer.AmazonLanduseLayer2;
 import de.ifgi.worldwind.layer.AmazonPopAcumLayer;
@@ -29,9 +37,13 @@ import de.ifgi.worldwind.layer.AmazonPopAcumLayer;
  * @version $Id: HelloWorldWind.java 4869 2008-03-31 15:56:36Z tgaskins $
  */
 public class AmazonDeforestation {
-
-	@SuppressWarnings("serial")
-	public static class AppFrame extends JFrame {
+	// An inner class is used rather than directly subclassing JFrame in the
+	// main class so
+	// that the main can configure system properties prior to invoking Swing.
+	// This is
+	// necessary for instance on OS X (Macs) so that the application name can be
+	// specified.
+	public static class AppFrame extends JFrame implements KeyListener {
 		RenderableLayer ama2002;
 		RenderableLayer ama2003;
 		RenderableLayer ama2004;
@@ -58,17 +70,34 @@ public class AmazonDeforestation {
 
 		boolean year2002 = false;
 
+		private Timer updater;
+
 		private AppFrameController controller;
 
 		private WorldWindowGLCanvas wwd;
 
 		private SkeletonKinectHandler kinectHandler;
 
-		private int height = 768;
-		private int width = 1024;
+		// windowed mode(normal)
+		 private int height = 768;
+		 private int width = 1024;
 
-		public static final double INITIAL_ZOOM = 2.3e7;
-		public static final Position PARA_POS = Position.fromDegrees(-4.72826,
+		// fullscreen 1 monitor
+//		java.awt.Dimension screenSize = Toolkit.getDefaultToolkit()
+//				.getScreenSize();
+//		double widthD = screenSize.getWidth();
+//		double heightD = screenSize.getHeight();
+//		private int width = (int) widthD;
+//		private int height = (int) heightD;
+
+		// fullscreen multi monitor
+//		java.awt.GraphicsDevice gd = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+//		int width = gd.getDisplayMode().getWidth();
+//		int height = gd.getDisplayMode().getHeight();
+
+
+		public static final double GLOBE_ZOOM = 2.3e7;
+		public static final Position MS_POS = Position.fromDegrees(-4.72826,
 				-52.302247, 7000000);
 
 		int layerChanger = 0;
@@ -78,6 +107,8 @@ public class AmazonDeforestation {
 		public AppFrame() {
 
 			wwd = new WorldWindowGLCanvas();
+			// wwd.setPreferredSize(new java.awt.Dimension(d.width,d.height));
+			wwd.addKeyListener(this);
 			wwd.setPreferredSize(new java.awt.Dimension(width, height));
 			wwd.setModel(new BasicModel());
 			wwd.setBounds(0, 0, width + 1, height + 1); // +1 because without it
@@ -93,20 +124,26 @@ public class AmazonDeforestation {
 
 			layeredPane.doLayout();
 
-			addWindowListener(new WindowAdapter() {
-				@Override
-				public void windowClosing(WindowEvent event) {
-					event.getWindow().setVisible(false);
-					event.getWindow().dispose();
-					System.exit(0);
-				}
-			});
+			addWindowListener(new WindowClosingAdapter(true));
 			this.setUndecorated(true);
 			this.getContentPane()
 					.add(layeredPane, java.awt.BorderLayout.CENTER);
+			// this.getContentPane().add(wwd, java.awt.BorderLayout.CENTER);
 			this.pack();
 			this.setBounds(0, 0, width, height);
 
+//			 wwd = new WorldWindowGLCanvas();
+//			
+//			 //wwd.setPreferredSize(new java.awt.Dimension(d.width,d.height));
+//			 wwd.setPreferredSize(new java.awt.Dimension(width,height));
+//			
+//			 addWindowListener(new WindowClosingAdapter(true));
+//			 this.setUndecorated(true);
+//			
+//			 this.getContentPane().add(wwd, java.awt.BorderLayout.CENTER);
+//			 this.pack();
+//			 this.setBounds(0, 0, width, height);
+//			 wwd.setModel(new BasicModel());
 
 			this.controller = new AppFrameController(this);
 
@@ -115,16 +152,17 @@ public class AmazonDeforestation {
 
 			/*
 			 * 
-			 * FÃ¼r die Seiten
+			 * für die Seiten
 			 */
 
-			// addGDPlayer(dataR); //economical
+//			 addGDPlayer(dataR); //economical
 
-			//addLanduseLayer(dataR); // ecological
+			addLanduseLayer(dataR); // ecological
 
-			year2002 = true; // social
-			addAcumPoplayer(dataR); // social
+			// year2002 = true; //social
+			// addAcumPoplayer(dataR); //social
 
+			updater.start();
 			removeCompass(this.getWwd());
 
 			initKinectHandler();
@@ -137,11 +175,16 @@ public class AmazonDeforestation {
 			layeredPane.add(kinectHandler, new Integer(
 					JLayeredPane.DEFAULT_LAYER.intValue() + 1));
 		}
-		
-		/**
-		 * @author Umut Tas
-		 */
+
 		public void addLanduseLayer(DataRetriever dataR) {
+//			 amaLanduse2002 = new AmazonLanduseLayer2(dataR.getMuniData(),
+//			 dataR.getMesoRegions(),"2002");
+//			 anoLayer2002 =amaLanduse2002.addAnnotations();
+//			
+//			 amaLanduse2003 = new AmazonLanduseLayer2(dataR.getMuniData(),
+//			 dataR.getMesoRegions(),"2003");
+//			 anoLayer2003 =amaLanduse2003.addAnnotations();
+
 			ama2004 = new AmazonLanduseLayer2(dataR.getMuniData(),
 					dataR.getMesoRegions(), "2004");
 			anoLayer2004 = ((AmazonLanduseLayer2) ama2004).addAnnotations();
@@ -179,13 +222,93 @@ public class AmazonDeforestation {
 			insertBeforeBeforeCompass(this.getWwd(),
 					new CountryBoundariesLayer());
 
-			controller.flyToPosition(PARA_POS, INITIAL_ZOOM);
+			// MS_POS
 
+			controller.flyToPosition(MS_POS, GLOBE_ZOOM);
+
+			updater = new Timer(5000, new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					// if( layerChanger==0){
+					// wwd.getModel().getLayers().remove(ama2002);
+					// wwd.getModel().getLayers().remove(anoLayer2002);
+					//
+					// wwd.getModel().getLayers().add(ama2003);
+					// wwd.getModel().getLayers().add(anoLayer2003);
+					// layerChanger++;
+					// }
+					// else if( layerChanger==1){
+					// wwd.getModel().getLayers().remove(ama2003);
+					// wwd.getModel().getLayers().remove(anoLayer2003);
+					//
+					// wwd.getModel().getLayers().add(ama2004);
+					// wwd.getModel().getLayers().add(anoLayer2004);
+					// layerChanger++;
+					//
+					// }
+					if (layerChanger == 0) {
+						wwd.getModel().getLayers().remove(ama2004);
+						wwd.getModel().getLayers().remove(anoLayer2004);
+						wwd.getModel().getLayers().remove(generalAnoLayer2004);
+
+						wwd.getModel().getLayers().add(ama2005);
+						wwd.getModel().getLayers().add(anoLayer2005);
+						wwd.getModel().getLayers().add(generalAnoLayer2005);
+
+						layerChanger++;
+
+					} else if (layerChanger == 1) {
+						wwd.getModel().getLayers().remove(ama2005);
+						wwd.getModel().getLayers().remove(anoLayer2005);
+						wwd.getModel().getLayers().remove(generalAnoLayer2005);
+
+						wwd.getModel().getLayers().add(ama2006);
+						wwd.getModel().getLayers().add(anoLayer2006);
+						wwd.getModel().getLayers().add(generalAnoLayer2006);
+
+						layerChanger++;
+
+					} else if (layerChanger == 2) {
+						wwd.getModel().getLayers().remove(ama2006);
+						wwd.getModel().getLayers().remove(anoLayer2006);
+						wwd.getModel().getLayers().remove(generalAnoLayer2006);
+
+						wwd.getModel().getLayers().add(ama2007);
+						wwd.getModel().getLayers().add(anoLayer2007);
+						wwd.getModel().getLayers().add(generalAnoLayer2007);
+
+						layerChanger++;
+
+					} else if (layerChanger == 3) {
+						wwd.getModel().getLayers().remove(ama2007);
+						wwd.getModel().getLayers().remove(anoLayer2007);
+						wwd.getModel().getLayers().remove(generalAnoLayer2007);
+
+						wwd.getModel().getLayers().add(ama2008);
+						wwd.getModel().getLayers().add(anoLayer2008);
+						wwd.getModel().getLayers().add(generalAnoLayer2008);
+
+						layerChanger++;
+
+					} else if (layerChanger == 4) {
+						wwd.getModel().getLayers().remove(ama2008);
+						wwd.getModel().getLayers().remove(anoLayer2008);
+						wwd.getModel().getLayers().remove(generalAnoLayer2008);
+
+						wwd.getModel().getLayers().add(ama2004);
+						wwd.getModel().getLayers().add(anoLayer2004);
+						wwd.getModel().getLayers().add(generalAnoLayer2004);
+
+						layerChanger = 0;
+					}
+
+				}
+
+			});
 		}
-		
-		/**
-		 * @author Umut Tas
-		 */
+
 		public void addGDPlayer(DataRetriever dataR) {
 			ama2004 = new AmazonGDPLayer(dataR.getMuniData(), "2004");
 			anoLayer2004 = ((AmazonGDPLayer) ama2004).addAnnotations();
@@ -212,6 +335,9 @@ public class AmazonDeforestation {
 			generalAnoLayer2008 = ((AmazonGDPLayer) ama2008)
 					.generalInformationLayer();
 
+			// insertBeforeBeforeCompass(this.getWwd(),
+			// ama2004.generalInformationLayer());
+
 			insertBeforeBeforeCompass(this.getWwd(), ama2004);
 			insertBeforeBeforeCompass(this.getWwd(), anoLayer2004);
 			insertBeforeBeforeCompass(this.getWwd(), generalAnoLayer2004);
@@ -219,14 +345,74 @@ public class AmazonDeforestation {
 			insertBeforeBeforeCompass(this.getWwd(),
 					new CountryBoundariesLayer());
 
-			controller.flyToPosition(PARA_POS, INITIAL_ZOOM);
+			controller.flyToPosition(MS_POS, GLOBE_ZOOM);
 
-			
+			updater = new Timer(5000, new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					if (layerChanger == 0) {
+						wwd.getModel().getLayers().remove(ama2004);
+						wwd.getModel().getLayers().remove(anoLayer2004);
+						wwd.getModel().getLayers().remove(generalAnoLayer2004);
+
+						wwd.getModel().getLayers().add(ama2005);
+						wwd.getModel().getLayers().add(anoLayer2005);
+						wwd.getModel().getLayers().add(generalAnoLayer2005);
+
+						layerChanger++;
+					} else if (layerChanger == 1) {
+						wwd.getModel().getLayers().remove(ama2005);
+						wwd.getModel().getLayers().remove(anoLayer2005);
+						wwd.getModel().getLayers().remove(generalAnoLayer2005);
+
+						wwd.getModel().getLayers().add(ama2006);
+						wwd.getModel().getLayers().add(anoLayer2006);
+						wwd.getModel().getLayers().add(generalAnoLayer2006);
+
+						layerChanger++;
+
+					} else if (layerChanger == 2) {
+						wwd.getModel().getLayers().remove(ama2006);
+						wwd.getModel().getLayers().remove(anoLayer2006);
+						wwd.getModel().getLayers().remove(generalAnoLayer2006);
+
+						wwd.getModel().getLayers().add(ama2007);
+						wwd.getModel().getLayers().add(anoLayer2007);
+						wwd.getModel().getLayers().add(generalAnoLayer2007);
+
+						layerChanger++;
+
+					} else if (layerChanger == 3) {
+						wwd.getModel().getLayers().remove(ama2007);
+						wwd.getModel().getLayers().remove(anoLayer2007);
+						wwd.getModel().getLayers().remove(generalAnoLayer2007);
+
+						wwd.getModel().getLayers().add(ama2008);
+						wwd.getModel().getLayers().add(anoLayer2008);
+						wwd.getModel().getLayers().add(generalAnoLayer2008);
+
+						layerChanger++;
+
+					} else if (layerChanger == 4) {
+						wwd.getModel().getLayers().remove(ama2008);
+						wwd.getModel().getLayers().remove(anoLayer2008);
+						wwd.getModel().getLayers().remove(generalAnoLayer2008);
+
+						wwd.getModel().getLayers().add(ama2004);
+						wwd.getModel().getLayers().add(anoLayer2004);
+						wwd.getModel().getLayers().add(generalAnoLayer2004);
+
+						layerChanger = 0;
+
+					}
+
+				}
+
+			});
 		}
 
-		/**
-		 * @author Umut Tas
-		 */
 		public void addAcumPoplayer(DataRetriever dataR) {
 
 			ama2002 = new AmazonPopAcumLayer(dataR.getMuniData(), "2002");
@@ -269,27 +455,104 @@ public class AmazonDeforestation {
 			insertBeforeBeforeCompass(this.getWwd(), ama2002);
 			insertBeforeBeforeCompass(this.getWwd(), anoLayer2002);
 			insertBeforeBeforeCompass(this.getWwd(), generalAnoLayer2002);
-			controller.flyToPosition(PARA_POS, INITIAL_ZOOM);
+			controller.flyToPosition(MS_POS, GLOBE_ZOOM);
+
+			updater = new Timer(8000, new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					if (layerChanger == 0) {
+						wwd.getModel().getLayers().remove(ama2002);
+						wwd.getModel().getLayers().remove(anoLayer2002);
+						wwd.getModel().getLayers().remove(generalAnoLayer2002);
+
+						wwd.getModel().getLayers().add(ama2003);
+						wwd.getModel().getLayers().add(anoLayer2003);
+						wwd.getModel().getLayers().add(generalAnoLayer2003);
+
+						layerChanger++;
+					} else if (layerChanger == 1) {
+						wwd.getModel().getLayers().remove(ama2003);
+						wwd.getModel().getLayers().remove(anoLayer2003);
+						wwd.getModel().getLayers().remove(generalAnoLayer2003);
+
+						wwd.getModel().getLayers().add(ama2004);
+						wwd.getModel().getLayers().add(anoLayer2004);
+						wwd.getModel().getLayers().add(generalAnoLayer2004);
+
+						layerChanger++;
+
+					} else if (layerChanger == 2) {
+						wwd.getModel().getLayers().remove(ama2004);
+						wwd.getModel().getLayers().remove(anoLayer2004);
+						wwd.getModel().getLayers().remove(generalAnoLayer2004);
+
+						wwd.getModel().getLayers().add(ama2005);
+						wwd.getModel().getLayers().add(anoLayer2005);
+						wwd.getModel().getLayers().add(generalAnoLayer2005);
+
+						layerChanger++;
+
+					} else if (layerChanger == 3) {
+						wwd.getModel().getLayers().remove(ama2005);
+						wwd.getModel().getLayers().remove(anoLayer2005);
+						wwd.getModel().getLayers().remove(generalAnoLayer2005);
+
+						wwd.getModel().getLayers().add(ama2006);
+						wwd.getModel().getLayers().add(anoLayer2006);
+						wwd.getModel().getLayers().add(generalAnoLayer2006);
+
+						layerChanger++;
+
+					} else if (layerChanger == 4) {
+						wwd.getModel().getLayers().remove(ama2006);
+						wwd.getModel().getLayers().remove(anoLayer2006);
+						wwd.getModel().getLayers().remove(generalAnoLayer2006);
+
+						wwd.getModel().getLayers().add(ama2007);
+						wwd.getModel().getLayers().add(anoLayer2007);
+						wwd.getModel().getLayers().add(generalAnoLayer2007);
+
+						layerChanger++;
+
+					} else if (layerChanger == 5) {
+						wwd.getModel().getLayers().remove(ama2007);
+						wwd.getModel().getLayers().remove(anoLayer2007);
+						wwd.getModel().getLayers().remove(generalAnoLayer2007);
+
+						wwd.getModel().getLayers().add(ama2008);
+						wwd.getModel().getLayers().add(anoLayer2008);
+						wwd.getModel().getLayers().add(generalAnoLayer2008);
+
+						layerChanger++;
+
+					} else if (layerChanger == 6) {
+						wwd.getModel().getLayers().remove(ama2008);
+						wwd.getModel().getLayers().remove(anoLayer2008);
+						wwd.getModel().getLayers().remove(generalAnoLayer2008);
+
+						wwd.getModel().getLayers().add(ama2002);
+						wwd.getModel().getLayers().add(anoLayer2002);
+						wwd.getModel().getLayers().add(generalAnoLayer2002);
+
+						layerChanger = 0;
+					}
+
+				}
+
+			});
 
 		}
 
-		/**
-		 * @author Umut Tas
-		 */
 		public RenderableLayer getAma2002() {
 			return ama2002;
 		}
 
-		/**
-		 * @author Umut Tas
-		 */
 		public void setAma2002(RenderableLayer ama2002) {
 			this.ama2002 = ama2002;
 		}
 
-		/**
-		 * @author Umut Tas
-		 */
 		public RenderableLayer getAma2003() {
 			return ama2003;
 		}
@@ -298,279 +561,162 @@ public class AmazonDeforestation {
 			this.ama2003 = ama2003;
 		}
 
-		/**
-		 * @author Umut Tas
-		 */
 		public RenderableLayer getAma2004() {
 			return ama2004;
 		}
 
-		/**
-		 * @author Umut Tas
-		 */
 		public void setAma2004(RenderableLayer ama2004) {
 			this.ama2004 = ama2004;
 		}
 
-		/**
-		 * @author Umut Tas
-		 */
 		public RenderableLayer getAma2005() {
 			return ama2005;
 		}
 
-		/**
-		 * @author Umut Tas
-		 */
 		public void setAma2005(RenderableLayer ama2005) {
 			this.ama2005 = ama2005;
 		}
 
-		/**
-		 * @author Umut Tas
-		 */
 		public RenderableLayer getAma2006() {
 			return ama2006;
 		}
 
-		/**
-		 * @author Umut Tas
-		 */
 		public void setAma2006(RenderableLayer ama2006) {
 			this.ama2006 = ama2006;
 		}
 
-		/**
-		 * @author Umut Tas
-		 */
 		public RenderableLayer getAma2007() {
 			return ama2007;
 		}
 
-		/**
-		 * @author Umut Tas
-		 */
 		public void setAma2007(RenderableLayer ama2007) {
 			this.ama2007 = ama2007;
 		}
 
-		/**
-		 * @author Umut Tas
-		 */
 		public RenderableLayer getAma2008() {
 			return ama2008;
 		}
 
-		/**
-		 * @author Umut Tas
-		 */
 		public void setAma2008(RenderableLayer ama2008) {
 			this.ama2008 = ama2008;
 		}
 
-		/**
-		 * @author Umut Tas
-		 */
 		public AnnotationLayer getGeneralAnoLayer2002() {
 			return generalAnoLayer2002;
 		}
 
-		/**
-		 * @author Umut Tas
-		 */
 		public void setGeneralAnoLayer2002(AnnotationLayer generalAnoLayer2002) {
 			this.generalAnoLayer2002 = generalAnoLayer2002;
 		}
 
-		/**
-		 * @author Umut Tas
-		 */
 		public AnnotationLayer getGeneralAnoLayer2003() {
 			return generalAnoLayer2003;
 		}
 
-		/**
-		 * @author Umut Tas
-		 */
 		public void setGeneralAnoLayer2003(AnnotationLayer generalAnoLayer2003) {
 			this.generalAnoLayer2003 = generalAnoLayer2003;
 		}
 
-		/**
-		 * @author Umut Tas
-		 */
 		public AnnotationLayer getGeneralAnoLayer2004() {
 			return generalAnoLayer2004;
 		}
 
-		/**
-		 * @author Umut Tas
-		 */
 		public void setGeneralAnoLayer2004(AnnotationLayer generalAnoLayer2004) {
 			this.generalAnoLayer2004 = generalAnoLayer2004;
 		}
 
-		/**
-		 * @author Umut Tas
-		 */
 		public AnnotationLayer getGeneralAnoLayer2005() {
 			return generalAnoLayer2005;
 		}
 
-		/**
-		 * @author Umut Tas
-		 */
 		public void setGeneralAnoLayer2005(AnnotationLayer generalAnoLayer2005) {
 			this.generalAnoLayer2005 = generalAnoLayer2005;
 		}
 
-		/**
-		 * @author Umut Tas
-		 */
 		public AnnotationLayer getGeneralAnoLayer2006() {
 			return generalAnoLayer2006;
 		}
 
-		/**
-		 * @author Umut Tas
-		 */
 		public void setGeneralAnoLayer2006(AnnotationLayer generalAnoLayer2006) {
 			this.generalAnoLayer2006 = generalAnoLayer2006;
 		}
 
-		/**
-		 * @author Umut Tas
-		 */
 		public AnnotationLayer getGeneralAnoLayer2007() {
 			return generalAnoLayer2007;
 		}
 
-		/**
-		 * @author Umut Tas
-		 */
 		public void setGeneralAnoLayer2007(AnnotationLayer generalAnoLayer2007) {
 			this.generalAnoLayer2007 = generalAnoLayer2007;
 		}
 
-		/**
-		 * @author Umut Tas
-		 */
 		public AnnotationLayer getGeneralAnoLayer2008() {
 			return generalAnoLayer2008;
 		}
 
-		/**
-		 * @author Umut Tas
-		 */
 		public void setGeneralAnoLayer2008(AnnotationLayer generalAnoLayer2008) {
 			this.generalAnoLayer2008 = generalAnoLayer2008;
 		}
 
-		/**
-		 * @author Umut Tas
-		 */
 		public AnnotationLayer getAnoLayer2002() {
 			return anoLayer2002;
 		}
 
-		/**
-		 * @author Umut Tas
-		 */
 		public void setAnoLayer2002(AnnotationLayer anoLayer2002) {
 			this.anoLayer2002 = anoLayer2002;
 		}
 
-		/**
-		 * @author Umut Tas
-		 */
 		public AnnotationLayer getAnoLayer2003() {
 			return anoLayer2003;
 		}
 
-		/**
-		 * @author Umut Tas
-		 */
 		public void setAnoLayer2003(AnnotationLayer anoLayer2003) {
 			this.anoLayer2003 = anoLayer2003;
 		}
 
-		/**
-		 * @author Umut Tas
-		 */
 		public AnnotationLayer getAnoLayer2004() {
 			return anoLayer2004;
 		}
 
-		/**
-		 * @author Umut Tas
-		 */
 		public void setAnoLayer2004(AnnotationLayer anoLayer2004) {
 			this.anoLayer2004 = anoLayer2004;
 		}
 
-		/**
-		 * @author Umut Tas
-		 */
 		public AnnotationLayer getAnoLayer2005() {
 			return anoLayer2005;
 		}
 
-		/**
-		 * @author Umut Tas
-		 */
 		public void setAnoLayer2005(AnnotationLayer anoLayer2005) {
 			this.anoLayer2005 = anoLayer2005;
 		}
 
-		/**
-		 * @author Umut Tas
-		 */
 		public AnnotationLayer getAnoLayer2006() {
 			return anoLayer2006;
 		}
 
-		/**
-		 * @author Umut Tas
-		 */
 		public void setAnoLayer2006(AnnotationLayer anoLayer2006) {
 			this.anoLayer2006 = anoLayer2006;
 		}
 
-		/**
-		 * @author Umut Tas
-		 */
 		public AnnotationLayer getAnoLayer2007() {
 			return anoLayer2007;
 		}
 
-		/**
-		 * @author Umut Tas
-		 */
 		public void setAnoLayer2007(AnnotationLayer anoLayer2007) {
 			this.anoLayer2007 = anoLayer2007;
 		}
 
-		/**
-		 * @author Umut Tas
-		 */
 		public AnnotationLayer getAnoLayer2008() {
 			return anoLayer2008;
 		}
 
-		/**
-		 * @author Umut Tas
-		 */
 		public void setAnoLayer2008(AnnotationLayer anoLayer2008) {
 			this.anoLayer2008 = anoLayer2008;
 		}
 
-		/**
-		 * @author Umut Tas
-		 */
 		public int getLayerChanger() {
 			return layerChanger;
 		}
-		
+
 		public void setLayerChanger(int layerChanger) {
 			this.layerChanger = layerChanger;
 		}
@@ -579,25 +725,35 @@ public class AmazonDeforestation {
 			return wwd;
 		}
 
-		/**
-		 * @author Umut Tas
-		 */
 		public boolean isYear2002() {
 			return year2002;
 		}
 
-		/**
-		 * @author Umut Tas
-		 */
 		public void setYear2002(boolean year2002) {
 			this.year2002 = year2002;
 		}
 
 		public AppFrameController getController() {
+			// return null;
 			return controller;
 		}
 
+		@Override
+		public void keyPressed(KeyEvent arg0) {
+			if (arg0.getKeyCode() == 32) {
+				controller.flyToPosition(MS_POS, GLOBE_ZOOM);
 
+			}
+		}
+
+		@Override
+		public void keyReleased(KeyEvent arg0) {
+		}
+
+		@Override
+		public void keyTyped(KeyEvent arg0) {
+
+		}
 	}
 
 	public static void removeCompass(WorldWindow wwd) {

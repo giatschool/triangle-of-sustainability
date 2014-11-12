@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.hp.hpl.jena.query.ARQ;
 import com.hp.hpl.jena.query.Query;
@@ -13,15 +14,18 @@ import com.hp.hpl.jena.query.QueryExecutionFactory;
 import com.hp.hpl.jena.query.QueryFactory;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
+import com.hp.hpl.jena.query.ResultSetFormatter;
 import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
-/**
- * 
- * @author Umut Tas
- *
- */
+import com.hp.hpl.jena.rdf.model.ResIterator;
+import com.hp.hpl.jena.rdf.model.Resource;
+
 public class DataRetriever {
+	// protected ConfigProvider config;
+	// private RepositoryManager reposManager;
+	// private ContextAwareConnection reposConnection;
+	// private SesameDataset dataset;
 	private ArrayList<Literal> defora2008 = new ArrayList<Literal>();
 	private ArrayList<Literal> border = new ArrayList<Literal>();
 	private ArrayList<Literal> label = new ArrayList<Literal>();
@@ -35,11 +39,32 @@ public class DataRetriever {
 	private ArrayList<Literal> pop7 = new ArrayList<Literal>();
 	private ArrayList<Literal> pop8 = new ArrayList<Literal>();
 	private ArrayList<Literal> pop9 = new ArrayList<Literal>();
+	// private ArrayList<Resource> cells = new ArrayList<Resource>();
+	// private ArrayList<Resource> munis = new ArrayList<Resource>();
 	private ArrayList<MunicipalityDataItem> muniData = new ArrayList<MunicipalityDataItem>();
 	private ArrayList<MesoRegion> mesoRegions = new ArrayList<MesoRegion>();
 	private ArrayList<MicroRegion> microRegions = new ArrayList<MicroRegion>();
 
+	public DataRetriever() {
+		// this.config=new ConfigProvider();
+		// reposManager = new
+		// RemoteRepositoryManager(this.config.getProperty("repositoryURL"));
+		// reposManager.initialize();
+		//
+		// try {
+		// this.reposConnection=new
+		// ContextAwareConnection(reposManager.getRepository(config.getProperty("repositoryID")));
+		// } catch (RepositoryException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
+		// dataset = new SesameDataset(this.reposConnection);
+		// reposConnection.close();
+	}
+
 	public ResultSet queryForStates() {
+
+		Model resultModel = ModelFactory.createDefaultModel();
 
 		Model model = ModelFactory.createDefaultModel();
 		File dir = new File("amazonData/");
@@ -57,11 +82,44 @@ public class DataRetriever {
 
 				}
 			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			if (in != null)
 				model.read(in, null, "TURTLE");
 		}
+
+		// String sparqlQuery =
+		// " SELECT ?a ?b ?c ?d WHERE { <http://spatial.linkedscience.org/context/brazilian-town/BRAZIL_MUNICIPALITY_150160> ?a ?b  } ";
+		// // model.write(System.out);
+		// String sparqlQueryString1 =
+		// "prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> "
+		// + "prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> "
+		// + "prefix lsv: <http://linkedscience.org/lsv/ns#> "
+		// +
+		// "prefix amazon: <http://spatial.linkedscience.org/context/amazon/> "
+		// + "prefix foaf: <http://xmlns.com/foaf/0.1/> "
+		// + "prefix owl: <http://www.w3.org/2002/07/owl#> "
+		// +
+		// "  SELECT ?muni ?muni2 ?name ?border ?pop09 ?pop08 ?pop07 ?pop06 ?pop05 ?pop04 ?pop03 ?pop02 ?pop01 ?pop00 WHERE {"
+		// +
+		// "       ?muni rdf:type <http://dbpedia.org/resource/Municipalities_of_Brazil> . "
+		// + "        ?muni lsv:border ?border  . "
+		// + "       ?muni foaf:name ?name . "
+		// + "       ?muni2 owl:sameAs ?muni . "
+		// + "       ?muni2 	amazon:population_2009 	?pop09 . "
+		// + "       ?muni2 	amazon:population_2008 	?pop08 . "
+		// + "       ?muni2 	amazon:population_2007 	?pop07 . "
+		// + "       ?muni2 	amazon:population_2006 	?pop06 . "
+		// + "       ?muni2 	amazon:population_2005 	?pop05 . "
+		// + "       ?muni2 	amazon:population_2004 	?pop04 . "
+		// + "       ?muni2 	amazon:population_2003 	?pop03 . "
+		// + "       ?muni2 	amazon:population_2002 	?pop02 . "
+		// + "       ?muni2 	amazon:population_2001 	?pop01 . "
+		// + "       ?muni2 	amazon:population_2000 	?pop00 . "
+		// +
+		// "       ?muni <http://data.ordnancesurvey.co.uk/ontology/spatialrelations/within>	<http://www.dbpedia.org/resource/Para_State>. "
+		// + "        }";
 
 		String sparqlQueryString2 = "prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> "
 				+ "prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> "
@@ -97,6 +155,7 @@ public class DataRetriever {
 				+ "       ?muni2 	amazon:population_2001 	?pop01 . "
 				+ "       ?muni2 	amazon:population_2000 	?pop00 . "
 				+ "       ?muni <http://data.ordnancesurvey.co.uk/ontology/spatialrelations/within>	<http://www.dbpedia.org/resource/Para_State>. "
+				// + "       ?cell 	amazon:hasItsCentroidInsideOf 	?muni . "
 				+ "		?cell amazon:DEFOR_2002 ?defor2002 ."
 				+ "		?cell amazon:DEFOR_2003 ?defor2003 ."
 				+ "		?cell amazon:DEFOR_2004 ?defor2004 ."
@@ -148,12 +207,31 @@ public class DataRetriever {
 
 				+ "        }";
 
+		String deforValueQuery = "prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> "
+				+ "prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> "
+				+ "prefix lsv: <http://linkedscience.org/lsv/ns#> "
+				+ "prefix amazon: <http://spatial.linkedscience.org/context/amazon/> "
+				+ "prefix foaf: <http://xmlns.com/foaf/0.1/> "
+				+ "prefix owl: <http://www.w3.org/2002/07/owl#> "
+				+ "  SELECT ?muni ?micro ?meso ?microName ?mesoName  WHERE {"
+				+ "       ?muni rdf:type <http://dbpedia.org/resource/Municipalities_of_Brazil> . "
+				+ "       ?muni <http://data.ordnancesurvey.co.uk/ontology/spatialrelations/within>	?micro. "
+				+ "     ?micro foaf:name ?microName  . "
+				+ "     ?micro <http://data.ordnancesurvey.co.uk/ontology/spatialrelations/within> ?meso  . "
+				+ "     ?meso foaf:name ?mesoName  . "
+				// + "     ?meso lsv:border ?mesoBorder  . "
+				+ "     ?micro lsv:border ?microBorder  . "
+
+				+ "        }";
+
+		// System.out.println(sparqlQueryString1);
 		Query query = QueryFactory.create(sparqlQueryString2);
 
 		ARQ.getContext().setTrue(ARQ.useSAX);
 		QueryExecution qexec = QueryExecutionFactory.create(query, model);
 
 		ResultSet results = qexec.execSelect();
+		// ResultSetFormatter.out(System.out, results, query);
 		int i = 0;
 		boolean muniAvailable = false;
 		while (results.hasNext()) {
@@ -240,7 +318,59 @@ public class DataRetriever {
 						soln.getLiteral("permAgr06").getDouble());
 			}
 
+			// i++;
+			// // System.out.println("HIER");
+			// QuerySolution soln = results.nextSolution();
+			// pop0.add(soln.getLiteral("defor2008"));
+			// pop1.add(soln.getLiteral("defor2007"));
+			// pop2.add(soln.getLiteral("defor2006"));
+			// pop3.add(soln.getLiteral("defor2005"));
+			// pop4.add(soln.getLiteral("defor2004"));
+			// pop5.add(soln.getLiteral("defor2003"));
+			// pop6.add(soln.getLiteral("defor2002"));
+			// munis.add(soln.getResource("muni"));
+			// // pop8.add(soln.getLiteral("pop08"));
+			// // pop9.add(soln.getLiteral("pop09"));
+			//
+			// // border.add(soln.getLiteral("border"));
+			// // label.add(soln.getLiteral("name"));
+			// //
+			// System.out.println(soln.get("?defor2008"));
+
+			// resultModel.add(soln.getResource("muni"),
+			// resultModel.createProperty("http://spatial.linkedscience.org/context/amazon/aggregatedData"),
+			// "true");
+			//
+			// resultModel.add(soln.getResource("muni"),
+			// resultModel.createProperty("http://spatial.linkedscience.org/context/amazon/defor2002"),
+			// soln.getLiteral("defor2002"));
+			// resultModel.add(soln.getResource("muni"),
+			// resultModel.createProperty("http://spatial.linkedscience.org/context/amazon/defor2003"),
+			// soln.getLiteral("defor2003"));
+			// resultModel.add(soln.getResource("muni"),
+			// resultModel.createProperty("http://spatial.linkedscience.org/context/amazon/defor2004"),
+			// soln.getLiteral("defor2004"));
+			// resultModel.add(soln.getResource("muni"),
+			// resultModel.createProperty("http://spatial.linkedscience.org/context/amazon/defor2005"),
+			// soln.getLiteral("defor2005"));
+			// resultModel.add(soln.getResource("muni"),
+			// resultModel.createProperty("http://spatial.linkedscience.org/context/amazon/defor2006"),
+			// soln.getLiteral("defor2006"));
+			// resultModel.add(soln.getResource("muni"),
+			// resultModel.createProperty("http://spatial.linkedscience.org/context/amazon/defor2007"),
+			// soln.getLiteral("defor2007"));
+			// resultModel.add(soln.getResource("muni"),
+			// resultModel.createProperty("http://spatial.linkedscience.org/context/amazon/defor2008"),
+			// soln.getLiteral("defor2008"));
+
 		}
+
+		// ResIterator munisRes =
+		// resultModel.listResourcesWithProperty(resultModel.createProperty("http://spatial.linkedscience.org/context/amazon/aggregatedData"));
+		// List<Resource> muniList = munisRes.toList();
+		// for(Resource muniResource : muniList){
+		//
+		// }
 
 		qexec.close();
 		orderMuniInMicroMeso();
@@ -317,13 +447,16 @@ public class DataRetriever {
 				"http://spatial.linkedscience.org/sparql", query);
 
 		ResultSet results = qexec.execSelect();
+		// ResultSetFormatter.out(System.out, results, query);
 		int i = 0;
 		while (results.hasNext() && i < 1000) {
 			i++;
+			// System.out.println("HIER");
 			QuerySolution soln = results.nextSolution();
 			defora2008.add(soln.getLiteral("defor2008"));
 			border.add(soln.getLiteral("border"));
 			label.add(soln.getLiteral("label"));
+			// System.out.println(soln.get("?defor2008"));
 
 		}
 
@@ -460,4 +593,17 @@ public class DataRetriever {
 		this.microRegions = microRegions;
 	}
 
+	public static void main(String[] args) {
+		DataRetriever dataR = new DataRetriever();
+		dataR.queryForStates();
+		// dataR.queryEndpoint();
+		// AmazonTest ama = new AmazonTest(dataR.getBorder(), dataR.getLabel(),
+		// dataR.getPop0(), dataR.getPop1(), dataR.getPop2(), dataR.getPop3(),
+		// dataR.getPop4(), dataR.getPop5(), dataR.getPop6(), dataR.getPop7(),
+		// dataR.getPop8(), dataR.getPop9());
+		// System.out.println(dataR.getDefora2008().size());
+		// ama.start("World Wind Extruded Polygons", AppFrame.class);
+		// ResultSet results = dataR.queryEndpoint();
+
+	}
 }

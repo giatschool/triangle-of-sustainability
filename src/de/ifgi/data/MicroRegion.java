@@ -1,17 +1,13 @@
 package de.ifgi.data;
 
 import java.util.ArrayList;
-/**
- * 
- * @author Umut Tas
- *
- */
+
 public class MicroRegion {
 
 	private String border;
 	private String name;
 	private ArrayList<MunicipalityDataItem> muniItems = new ArrayList<MunicipalityDataItem>();
-	
+
 	public MicroRegion(String border, String name,
 			MunicipalityDataItem muniItems) {
 		super();
@@ -43,7 +39,5 @@ public class MicroRegion {
 	public void setMuniItems(ArrayList<MunicipalityDataItem> muniItems) {
 		this.muniItems = muniItems;
 	}
-	
-	
-	
+
 }
