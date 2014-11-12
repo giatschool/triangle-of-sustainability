@@ -186,7 +186,64 @@ public class Skeletons {
 			System.exit(1);
 		}
 	} // end of configure()
+/* public void text(){
 
+ public String example = "Warten Sie bitte 15 Sekunden";
+   public String transfer = "";
+   public Timer t;
+   public int i = 0;
+   public JFrame f;
+   public JLabel l;
+   
+    f = new JFrame("Example");   
+      l = new JLabel();
+
+      f.add(l);
+
+      f.setSize(450, 200);
+
+      f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+
+      f.setVisible(true);
+
+
+      TimerListener tl = new TimerListener();
+
+      t = new Timer(0, tl);
+
+      t.start();
+}
+
+   private class TimerListener implements ActionListener
+   {
+
+      public void actionPerformed(ActionEvent e)
+      {
+
+         if(i < example.length())
+         {
+
+            transfer += (example.charAt(i));
+            l.setText(transfer);
+            i++;
+
+
+
+         }
+
+         if(i >= example.length())
+         {
+
+            t.stop();
+
+         }
+
+
+
+      }
+
+   } */
 	// --------------- updating ----------------------------
 
 	public void update()
@@ -198,8 +255,9 @@ public class Skeletons {
 		System.out.println("User1: " + user1);
 		System.out.println("UserE: " + userE);
 		System.out.println("UserL: " + userL);
-//		if(userE == false && userL ==
-//				 true)Toolkit.getDefaultToolkit().beep();
+		if(userE == false && userL == true){
+				 Toolkit.getDefaultToolkit().beep();
+				 }
 		try {
 			int[] userIDs = userGen.getUsers(); // there may be many users in
 												// the scene
